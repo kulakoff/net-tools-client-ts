@@ -1,10 +1,11 @@
 import { FC, ReactNode } from "react";
+import { Outlet } from "react-router-dom";
 
-const Layout: FC<ReactNode> = ({ children }) => {
+const Layout: FC<ReactNode> = (props) => {
   return (
     <>
       "Toolbar"
-      <main>{children}</main>
+      <Outlet />
     </>
   );
 };

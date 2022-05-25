@@ -1,4 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom"
 import { Context } from "./index";
 import "./App.css";
 import LoginForm from "./components/LoginForm";
@@ -27,12 +28,21 @@ const App: FC = () => {
   };
 
   if (store.isLoading) {
-    return <div>Зашрузка ...</div>;
+    return <div>Загрузка ...</div>;
   }
 
   if (!store.isAuth) {
     return (
       <>
+       <nav
+        style={{
+          borderBottom: "solid 1px",
+          paddingBottom: "1rem",
+        }}
+      >
+        <Link to="/invoices">Invoices</Link> | {" "}
+        <Link to="/expenses">Expenses</Link>
+      </nav>
         <LoginForm />
         <div>
           <button onClick={() => getUsers()}>Show users</button>

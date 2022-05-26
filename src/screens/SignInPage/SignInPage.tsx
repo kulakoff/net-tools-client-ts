@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import {
   Typography,
   Container,
@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { observer } from "mobx-react-lite";
@@ -22,6 +22,8 @@ import { observer } from "mobx-react-lite";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
 
 // const theme = createTheme();
 
@@ -30,8 +32,12 @@ import validationSchema from "./validation";
 // };
 
 const SignIn = () => {
-//   const { store } = useContext(Context);
-  const [isLoadingForn, setIsLoadingForm] = useState(false);
+  const { user } = useTypedSelector((state) => state);
+  const { singInUser, logoutUser } = useActions();
+  const navigate = useNavigate();
+  // console.log("state >> ", user);
+  // console.log("singInUser >> ", singInUser);
+  //   const { store } = useContext(Context);
 
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault();
@@ -59,19 +65,10 @@ const SignIn = () => {
   };
 
   const onSubmit = async (data: any) => {
-    console.log(data);
-    try {
-    //   store.setLoading(true);
-      const { email, password } = data;
-      console.log("button disabled");
-    //   store.login(email, password, handlerErrorForm);
-    } catch (error) {
-    } finally {
-      setTimeout(() => {
-        // store.setLoading(false);
-        console.log("button enabled");
-      }, 3000);
-    }
+    console.log("data on form : ", data);
+    singInUser(data);
+    //TODO: сделать проверку на ошибку
+    navigate("/", { replace: true });
   };
 
   return (
@@ -152,7 +149,7 @@ const SignIn = () => {
                 type="submit"
                 // fullWidth={true}
                 size="large"
-                // disabled={store.isLoading}
+                disabled={user.isLoading}
               >
                 Войти
               </Button>
@@ -163,7 +160,7 @@ const SignIn = () => {
                 size="large"
                 component={NavLink}
                 to="/signup"
-                sx={{ml:2}}
+                sx={{ ml: 2 }}
               >
                 Создать учетную запись
               </Button>

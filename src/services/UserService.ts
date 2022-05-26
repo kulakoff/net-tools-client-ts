@@ -1,7 +1,9 @@
+//
+
 import api from "./../http";
 import { AxiosResponse } from "axios";
-import { AuthResponse } from "../models/response/AuthResponse";
-import { IUser } from "../models/IUser";
+import { IAuthResponse } from "../types/response/IAuthResponse"
+import { IUser } from "../types/user";
 
 export default class UserService {
   static async fetchUsers(): Promise<AxiosResponse<IUser[]>> {

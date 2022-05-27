@@ -68,7 +68,12 @@ const SignIn = () => {
     console.log("data on form : ", data);
     singInUser(data);
     //TODO: сделать проверку на ошибку
-    navigate("/", { replace: true });
+    // if (!user.error) {
+    //   navigate("/", { replace: true });
+    // } else {
+    //   alert(user.error);
+    // }
+    if (!user.error) alert("ok")
   };
 
   return (

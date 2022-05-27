@@ -23,7 +23,7 @@ export const singInUser = (singInData: IUserSignIn) => {
             console.log("singInUser error: >>> ", error);
             dispatch({
                 type: UserActionTypes.FETCHING_USER_FAILURE,
-                payload: "Ошибка авторизации, тест."
+                payload: "Ошибка авторизации, тест"
             })
         }
     }

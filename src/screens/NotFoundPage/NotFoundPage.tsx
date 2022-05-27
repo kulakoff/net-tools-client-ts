@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 type Props = {};
@@ -8,7 +9,7 @@ const NotFoundPage = (props: Props) => {
     <div>
       <h1>NotFound Page</h1>
       <div>
-        <button onClick={() => navigate("/")}>go to home</button>
+        <Button onClick={() => navigate("/")}>Go to Home</Button>
       </div>
     </div>
   );

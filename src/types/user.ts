@@ -25,11 +25,13 @@ export enum UserActionTypes {
   FETCHING_USER = "FETCHING_USER",
   FETCHING_USER_SUCCESS = "FETCHING_USER_SUCCESS",
   FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE',
+  FETCHING_TOKEN = 'FETCHING_TOKEN',
+  FETCHING_TOKEN_SUCCESS = 'FETCHING_TOKEN_SUCCESS',
+  FETCHING_TOKEN_FAILURE = 'FETCHING_TOKEN_FAILURE',
   USER_AUTH = 'USER_AUTH',
   USER_UNAUTH = 'USER_UNAUTH',
 
 }
-
 
 /**Форма авторизации */
 export interface IUserSignInAction {
@@ -42,8 +44,7 @@ export interface IUserSignUpAction {
   type: UserActionTypes.USER_SIGNUP,
   payload: IUserSignIn
 }
-
-
+//удалить
 export interface IAuthUserAction {
   type: UserActionTypes.USER_AUTH,
 }
@@ -51,11 +52,10 @@ export interface IUnauthUserAction {
   type: UserActionTypes.USER_UNAUTH,
 }
 
+
 export interface IFetchingUserAction {
   type: UserActionTypes.FETCHING_USER,
-
 }
-
 export interface IFetchingUserSuccessAction {
   type: UserActionTypes.FETCHING_USER_SUCCESS,
   payload: IAuthResponse
@@ -66,8 +66,18 @@ export interface IFetchingUserFailureAction {
   payload: string,
 }
 
-
-
+//бновление access token
+export interface IFetchingTokenAction {
+  type: UserActionTypes.FETCHING_TOKEN
+}
+export interface IFetchingTokenSuccessAction {
+  type: UserActionTypes.FETCHING_TOKEN_SUCCESS,
+  payload: IAuthResponse
+}
+export interface IFetchingTokenFailureAction {
+  type: UserActionTypes.FETCHING_TOKEN_FAILURE,
+  payload: string
+}
 
 export type UserAtions =
   | IFetchingUserAction
@@ -75,4 +85,7 @@ export type UserAtions =
   | IUnauthUserAction
   | IFetchingUserSuccessAction
   | IFetchingUserFailureAction
+  | IFetchingTokenAction
+  | IFetchingTokenSuccessAction
+  | IFetchingTokenFailureAction
 

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -7,8 +7,21 @@ import DemoPage from "./screens/DemoPage";
 import MainPage from "./screens/MainPage";
 import NotFoundPage from "./screens/NotFoundPage";
 import SignInPage from "./screens/SignInPage";
+import { useTypedSelector } from "./hooks/useTypedSelector";
+import { useActions } from "./hooks/useActions";
 
 const App: FC = () => {
+  const { user } = useTypedSelector((state) => state);
+  const {checkAuth} = useActions();
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      console.log("useEffect, token exist in localStorage");
+      checkAuth()
+    } else {
+      console.log("useEffect token not found in localStorage");
+      
+    }
+  }, []);
   return (
     <div className="App">
       <Routes>

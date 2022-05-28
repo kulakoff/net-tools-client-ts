@@ -33,7 +33,7 @@ import { useActions } from "../../hooks/useActions";
 
 const SignIn = () => {
   const { user } = useTypedSelector((state) => state);
-  const { singInUser, logoutUser } = useActions();
+  const { singInUser, signOut } = useActions();
   const navigate = useNavigate();
   // console.log("state >> ", user);
   // console.log("singInUser >> ", singInUser);

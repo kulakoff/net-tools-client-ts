@@ -52,7 +52,6 @@ export interface IUnauthUserAction {
   type: UserActionTypes.USER_UNAUTH,
 }
 
-
 export interface IFetchingUserAction {
   type: UserActionTypes.FETCHING_USER,
 }

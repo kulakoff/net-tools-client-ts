@@ -9,17 +9,18 @@ import NotFoundPage from "./screens/NotFoundPage";
 import SignInPage from "./screens/SignInPage";
 import { useTypedSelector } from "./hooks/useTypedSelector";
 import { useActions } from "./hooks/useActions";
+import RequireAuthRoute from "./routes/RequireAuthRoute";
+import DevicesPage from "./screens/DevicesPage";
 
 const App: FC = () => {
   const { user } = useTypedSelector((state) => state);
-  const {checkAuth} = useActions();
+  const { checkAuth } = useActions();
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      console.log("useEffect, token exist in localStorage");
-      checkAuth()
+      console.log("token exist in localStorage, refresh");
+      checkAuth();
     } else {
-      console.log("useEffect token not found in localStorage");
-      
+      console.log("token not found in localStorage, login please");
     }
   }, []);
   return (
@@ -27,7 +28,22 @@ const App: FC = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="demo" element={<DemoPage />} />
+          <Route
+            path="demo"
+            element={
+              <RequireAuthRoute>
+                <DemoPage />
+              </RequireAuthRoute>
+            }
+          />
+          <Route
+            path="devices"
+            element={
+              <RequireAuthRoute>
+                <DevicesPage />
+              </RequireAuthRoute>
+            }
+          />
           <Route path="signin" element={<SignInPage />} />
           <Route path="signup" element={<SignInPage />} />
           <Route path="*" element={<NotFoundPage />} />

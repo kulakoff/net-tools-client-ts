@@ -30,6 +30,7 @@ import { useActions } from "../../hooks/useActions";
 // ];
 // const pages = ["Device", "Pricing", "Blog","login","info"];
 const pages = [
+  { name: "Demo", url: "/demo" },
   { name: "Devices", url: "/devices" },
   { name: "Test", url: "/test" },
   { name: "Войти", url: "/signin" },
@@ -40,13 +41,14 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
   const { user } = useTypedSelector((state) => state);
-  const { singInUser, logoutUser } = useActions();
+  const { singInUser, signOut } = useActions();
   const navigate = useNavigate();
 
   const onLogOut = () => {
     console.log("push logout button");
     handleCloseNavMenu();
     // store.logout();
+    signOut()
     navigate("/");
   };
 

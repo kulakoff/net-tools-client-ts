@@ -9,8 +9,6 @@ export const userReducer = (
   state = initialState,
   action: UserAtions
 ): IUserState => {
-  console.log("userReducer action : ", action);
-
   switch (action.type) {
     case UserActionTypes.FETCHING_USER:
       return { isLoading: true, error: null, user: null };
@@ -25,6 +23,9 @@ export const userReducer = (
       return { isLoading: false, error: null, user: action.payload.user };
     case UserActionTypes.FETCHING_TOKEN_FAILURE:
       return { ...state, isLoading: false, user: null, error: action.payload };
+
+    case UserActionTypes.USER_UNAUTH:
+      return { ...state, user: null };
 
     default:
       return state;

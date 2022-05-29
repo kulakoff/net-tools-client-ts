@@ -9,7 +9,9 @@ const NotFoundPage = (props: Props) => {
     <div>
       <h1>NotFound Page</h1>
       <div>
-        <Button onClick={() => navigate("/")}>Go to Home</Button>
+        <Button variant="contained" onClick={() => navigate("/")}>
+          Go to Home
+        </Button>
       </div>
     </div>
   );

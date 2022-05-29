@@ -10,7 +10,9 @@ import SignInPage from "./screens/SignInPage";
 import { useTypedSelector } from "./hooks/useTypedSelector";
 import { useActions } from "./hooks/useActions";
 import RequireAuthRoute from "./routes/RequireAuthRoute";
-import DevicesPage from "./screens/DevicesPage";
+import RequireAuthRoute2 from "./routes/RequireAuthRoute2";
+import DisabledRouteWithAuth from "./routes/DisabledRouteWithAuth";
+import DevicesPage from "./screens/DevicesPage/";
 
 const App: FC = () => {
   const { user } = useTypedSelector((state) => state);
@@ -27,25 +29,19 @@ const App: FC = () => {
     <div className="App">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
-          <Route
-            path="demo"
-            element={
-              <RequireAuthRoute>
-                <DemoPage />
-              </RequireAuthRoute>
-            }
-          />
-          <Route
-            path="devices"
-            element={
-              <RequireAuthRoute>
-                <DevicesPage />
-              </RequireAuthRoute>
-            }
-          />
-          <Route path="signin" element={<SignInPage />} />
-          <Route path="signup" element={<SignInPage />} />
+          {/* <Route index element={<MainPage />} /> */}
+          {/* Private routes */}
+          <Route element={<RequireAuthRoute2 />}>
+            <Route index element={<MainPage />} />
+            <Route path="demo" element={<DemoPage />} />
+            <Route path="meters" element={<DemoPage />} />
+            <Route path="devices" element={<DevicesPage />} />
+          </Route>
+          {/* Public routes */}
+          <Route element={<DisabledRouteWithAuth />}>
+            <Route path="signin" element={<SignInPage />} />
+            <Route path="signup" element={<SignInPage />} />
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

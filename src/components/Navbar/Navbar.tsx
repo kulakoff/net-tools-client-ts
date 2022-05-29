@@ -31,6 +31,7 @@ import { useActions } from "../../hooks/useActions";
 // const pages = ["Device", "Pricing", "Blog","login","info"];
 const pages = [
   { name: "Demo", url: "/demo" },
+  { name: "Показания приборов учета", url: "/meters" },
   { name: "Devices", url: "/devices" },
   { name: "Test", url: "/test" },
   { name: "Войти", url: "/signin" },
@@ -155,7 +156,7 @@ const Navbar = () => {
 Правое меню
 */}
             <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-              {/* <Tooltip title="Open settings">
+              <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
@@ -182,7 +183,7 @@ const Navbar = () => {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
-              </Menu> */}
+              </Menu>
 
               {user.user ? (
                 <>

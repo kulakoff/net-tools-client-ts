@@ -1,1 +1,1 @@
-export { default } from "./DevicesPage";
+export {default} from "./DevicesPage"

@@ -45,7 +45,6 @@ export const signOut = () => {
     dispatch({type:UserActionTypes.USER_UNAUTH})
     localStorage.removeItem("token")
     localStorage.removeItem("user")
-
   };
 };
 

@@ -73,7 +73,7 @@ const SignIn = () => {
     // } else {
     //   alert(user.error);
     // }
-    if (!user.error) alert("ok")
+    // if (!user.error) alert("ok")
   };
 
   return (

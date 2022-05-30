@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
@@ -12,6 +12,7 @@ import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
 import { useForm, Controller } from "react-hook-form";
+import { NavLink } from "react-router-dom";
 
 type Props = {};
 
@@ -34,6 +35,20 @@ const DevicesPage = (props: Props) => {
     });
   };
 
+  const onSubmit = async (data: any) => {
+    console.log("data on form : ", data);
+    // singInUser(data);
+
+    //TODO: сделать проверку на ошибку
+    // if (!user.error) {
+    //   navigate("/", { replace: true });
+    // } else {
+    //   alert(user.error);
+    // }
+    // if (!user.error) alert("ok")
+  };
+  
+
   return (
     <Box
       sx={{
@@ -47,6 +62,7 @@ const DevicesPage = (props: Props) => {
         {/* <IconButton sx={{ p: '10px' }} aria-label="menu">
         <MenuIcon />
       </IconButton> */}
+
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder="serial number"
@@ -55,6 +71,7 @@ const DevicesPage = (props: Props) => {
           onChange={(e) => setText(e.target.value)}
           required
         />
+
         <IconButton
           sx={{ p: "10px" }}
           aria-label="search"
@@ -69,6 +86,43 @@ const DevicesPage = (props: Props) => {
         <DirectionsIcon />
       </IconButton> */}
       </Paper>
+
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Controller
+              name="macAddress"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  required
+                  error={Boolean(errors.macAddress?.message)}
+                  fullWidth={true}
+                  type="macAddress"
+                  label="Mac address"
+                  variant="outlined"
+                  helperText={errors.macAddress?.message}
+                />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              fullWidth={true}
+              size="large"
+              // disabled={user.isLoading}
+            >
+              Поиск
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
     </Box>
   );
 };

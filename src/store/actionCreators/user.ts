@@ -1,5 +1,5 @@
 import axios from "axios";
-import { log } from "console";
+// import { log } from "console";
 import { Dispatch } from "react";
 import { API_URL } from "../../http";
 import AuthService from "../../services/AuthService";

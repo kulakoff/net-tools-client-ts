@@ -6,7 +6,7 @@ const initialState: IDeviceState = {
   error: null
 };
 
-export const userReducer = (
+export const deviceReducer = (
   state = initialState,
   action: DeviceActions
 ): IDeviceState => {
@@ -17,7 +17,6 @@ export const userReducer = (
       return { ...state, isLoading: false, cpe: action.payload };
     case DeviceActionTypes.FETCHING_DEVICE_DATA_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
-
     default:
       return state;
   }

@@ -1,6 +1,16 @@
 import { ErrorType } from "./error"
 import { IDeviceResponse } from "./response/IDeviceResponse"
 
+export type getDeviceValueType = "serialNumber" | "macAddress"
+/**
+ * данные формы поиска CPE.
+ * @request type and value
+ */
+export interface getDevicePropsType {
+    type: getDeviceValueType
+    value: string
+}
+
 export type deviceInfoType = {
     "serialNumber": string,
     "macAddress": string,

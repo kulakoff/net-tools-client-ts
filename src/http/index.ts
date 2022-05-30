@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { IAuthResponse } from "../types/response/IAuthResponse";
-// export const API_URL = "http://localhost:5000/api/v1";
-export const API_URL = "http://192.168.88.25:5000/api/v1"
+export const API_URL = process.env.REACT_APP_API_URL
 
 const api = axios.create({
   withCredentials: true,
@@ -41,3 +40,7 @@ api.interceptors.response.use(
 );
 
 export default api;
+function REACT_APP_API_URL(REACT_APP_API_URL: any) {
+  throw new Error("Function not implemented.");
+}
+

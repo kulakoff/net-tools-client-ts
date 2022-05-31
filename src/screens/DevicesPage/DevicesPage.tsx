@@ -15,6 +15,9 @@ import { useForm, Controller } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
+import Devicecard from "../../components/DeviceCard";
+
+
 
 type Props = {};
 
@@ -48,29 +51,7 @@ const DevicesPage = (props: Props) => {
   };
 
 
-  const cardEl:FC<ReactNode> = ()=>{
-    <Card sx={{ maxWidth: 345 }}>
-    <CardMedia
-      component="img"
-      alt="green iguana"
-      height="140"
-      image="/static/images/cards/contemplative-reptile.jpg"
-    />
-    <CardContent>
-      <Typography gutterBottom variant="h5" component="div">
-        Lizard
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        Lizards are a widespread group of squamate reptiles, with over 6,000
-        species, ranging across all continents except Antarctica
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small">Share</Button>
-      <Button size="small">Learn More</Button>
-    </CardActions>
-  </Card>
-  }
+  
 
   return (
     <Container maxWidth="xs" component="main">
@@ -130,11 +111,9 @@ const DevicesPage = (props: Props) => {
         </Grid>
       </Box>
       : 
-      <div>
-
-        <h1>{device.cpe?._id}</h1>
-        <cardEl/>
-      </div>
+      <Box sx={{ mt: "1.6rem" }}>
+        <Devicecard {...device.cpe}/>
+      </Box>
        }
 
       

@@ -19,17 +19,17 @@ export type deviceInfoType = {
 }
 export type configModeValuesType = "passwd" | "serial"
 export interface configModeType {
-    "configMode": {
+    
         "_value": configModeValuesType,
         "_timestamp": string
-    },
+   
 }
 export interface IWifi {
     "ssid2": {
         "_value": string,
         "_timestamp": string
     },
-    "ssid5"?: {
+    "ssid5": {
         "_value": string,
         "_timestamp": string
     },

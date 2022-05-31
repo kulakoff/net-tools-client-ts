@@ -14,7 +14,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  maxWidth: 400,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -53,15 +53,15 @@ const DeviceCardModal: FC<DeviceCardModalProps> = ({
       >
         <Fade in={openModal}>
           <Box sx={style}>
-            <Grid container sx={{alignItems:"center"}}>
-              <Grid item xs={6}>
+            <Grid container >
+              <Grid item xs={6} >
                 <Typography>SSID: {payload.wifi.ssid2._value}</Typography>
                 <QR
                   ssid={payload.wifi.ssid2._value}
                   password={payload.wifi.keyPassphrase._value}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item  xs={6} >
                 <Typography>SSID: {payload.wifi.ssid5._value}</Typography>
                 <QR
                   ssid={payload.wifi.ssid5._value}

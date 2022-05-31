@@ -31,3 +31,13 @@ export const getDevice = (props: getDevicePropsType) => {
 export const setDevice = () => {
   console.log("setDevice");
 };
+
+export const clearDeviceData = () => {
+  return (dispatch: Dispatch<DeviceActions>) => {
+    try {
+      dispatch({ type: DeviceActionTypes.CLEAR_DEVICE_DATA });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

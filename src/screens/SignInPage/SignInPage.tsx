@@ -51,22 +51,25 @@ const SignIn = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValidating },
     setError,
+    reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
-  const handlerErrorForm = (errorData: any) => {
-    console.log("demo", errorData);
-    // setError("email",{type:"manual",message:errorData})
-    Object.keys(errorData).forEach((key) => {
-      setError(key, { type: "manual", message: errorData[key] });
-    });
-  };
+  // const handlerErrorForm = (errorData: any) => {
+  //   console.log("demo", errorData);
+  //   // setError("email",{type:"manual",message:errorData})
+  //   Object.keys(errorData).forEach((key) => {
+  //     setError(key, { type: "manual", message: errorData[key] });
+  //   });
+  // };
 
   const onSubmit = async (data: any) => {
     console.log("data on form : ", data);
     singInUser(data);
+    reset();
+
     //TODO: сделать проверку на ошибку
     // if (!user.error) {
     //   navigate("/", { replace: true });
@@ -152,7 +155,7 @@ const SignIn = () => {
                 variant="contained"
                 color="primary"
                 type="submit"
-                // fullWidth={true}
+                fullWidth
                 size="large"
                 disabled={user.isLoading}
               >
@@ -162,10 +165,11 @@ const SignIn = () => {
                 color="inherit"
                 variant="text"
                 type="submit"
+                fullWidth
                 size="large"
                 component={NavLink}
                 to="/signup"
-                sx={{ ml: 2 }}
+                // sx={{ ml: 2 }}
               >
                 Создать учетную запись
               </Button>

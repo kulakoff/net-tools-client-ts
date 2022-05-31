@@ -16,9 +16,12 @@ import { useNavigate } from "react-router-dom";
 import { IDeviceResponse } from "../../types/response/IDeviceResponse";
 import DeviceCardModal from "../DeviceCardModal";
 
-interface DevicecardProps extends IDeviceResponse {}
+interface DevicecardProps extends IDeviceResponse {
+  handlerBackToHome: () => void;
+}
 
 const Devicecard: FC<DevicecardProps> = (props) => {
+  
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -57,7 +60,7 @@ const Devicecard: FC<DevicecardProps> = (props) => {
             aria-label="back"
             size="large"
             onClick={() => {
-              navigate("/");
+              props.handlerBackToHome();
             }}
           >
             <ArrowBackIosIcon />
@@ -78,6 +81,4 @@ const Devicecard: FC<DevicecardProps> = (props) => {
   );
 };
 export default Devicecard;
-function usestate(arg0: boolean): [any, any] {
-  throw new Error("Function not implemented.");
-}
+

@@ -1,4 +1,17 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Container, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
@@ -12,21 +25,18 @@ import { FC, ReactNode, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
 import { useForm, Controller } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 import Devicecard from "../../components/DeviceCard";
-
-
 
 type Props = {};
 
 const DevicesPage = (props: Props) => {
   // const [text, setText] = useState<string>("");
-
+  const navigate = useNavigate();
   const { device } = useTypedSelector((state) => state);
-  const { getDevice, setDevice } = useActions();
-  console.log(device)
+  const { getDevice, setDevice, clearDeviceData } = useActions();
 
   const {
     control,
@@ -47,76 +57,81 @@ const DevicesPage = (props: Props) => {
 
   const onSubmit = async (data: any) => {
     console.log("data on form : ", data);
-    getDevice(data)
+    getDevice(data);
   };
 
-
   
+  /**
+   * Обработчик кнопки "назад" очистка state  и переход на главную
+   */
+  const handlerBackToHome = () => {
+    clearDeviceData();
+    navigate("/");
+  };
 
   return (
     <Container maxWidth="xs" component="main">
-      {!device.cpe?      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{ mt: "1.6rem" }}
-      >
-        <Grid container spacing={3}>
-        <Grid item xs={12}>
-            <Controller
-              name="idType"
-              control={control}
-              defaultValue=""
-             
-              render={({ field }) => (
-                <Select {...field} required >
-                <MenuItem  value={"macAddress"}>macAddress</MenuItem>
-                <MenuItem  value={"serialNumber"} disabled>serialNumber</MenuItem>
-              </Select>
-              )
-            }
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Controller
-              name="value"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  required
-                  // error={Boo lean(errors.value?.message)}
-                  fullWidth={true}
-                  type="value"
-                  label="value"
-                  variant="outlined"
-                  helperText={errors.value?.message}
-                />
-              )}
-            />
-          </Grid>
+      {!device.cpe ? (
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ mt: "1.6rem" }}
+        >
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Controller
+                name="idType"
+                control={control}
+                defaultValue="macAddress"
+                render={({ field }) => (
+                  <Select {...field} required fullWidth>
+                    <MenuItem value={"macAddress"}>mac address</MenuItem>
+                    <MenuItem value={"serialNumber"} disabled>
+                      serial number
+                    </MenuItem>
+                  </Select>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name="value"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    required
+                    // error={Boo lean(errors.value?.message)}
+                    fullWidth={true}
+                    type="value"
+                    label="value"
+                    variant="outlined"
+                    helperText={errors.value?.message}
+                  />
+                )}
+              />
+            </Grid>
 
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              fullWidth={true}
-              size="large"
-              // disabled={user.isLoading}
-            >
-              Поиск
-            </Button>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth={true}
+                size="large"
+                // disabled={user.isLoading}
+              >
+                Поиск
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-      : 
-      <Box sx={{ mt: "1.6rem" }}>
-        <Devicecard {...device.cpe}/>
-      </Box>
-       }
-
-      
+        </Box>
+      ) : (
+        <Box sx={{ mt: "1.6rem" }}>
+          <Devicecard {...device.cpe} handlerBackToHome={()=>handlerBackToHome()} />
+        </Box>
+      )}
     </Container>
   );
 };

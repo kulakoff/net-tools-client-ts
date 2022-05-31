@@ -1,9 +1,13 @@
-import { DeviceActions, DeviceActionTypes, IDeviceState } from "../../types/cpe";
-import { IDeviceResponse, } from "../../types/response/IDeviceResponse";
+import {
+  DeviceActions,
+  DeviceActionTypes,
+  IDeviceState,
+} from "../../types/cpe";
+import { IDeviceResponse } from "../../types/response/IDeviceResponse";
 const initialState: IDeviceState = {
   cpe: null,
   isLoading: false,
-  error: null
+  error: null,
 };
 
 export const deviceReducer = (
@@ -17,6 +21,8 @@ export const deviceReducer = (
       return { ...state, isLoading: false, cpe: action.payload };
     case DeviceActionTypes.FETCHING_DEVICE_DATA_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
+    case DeviceActionTypes.CLEAR_DEVICE_DATA:
+      return { ...state, cpe: null };
     default:
       return state;
   }

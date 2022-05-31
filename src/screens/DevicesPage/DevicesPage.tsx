@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, MenuItem, Select, TextField } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Container, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
-import { useState } from "react";
+import { FC, ReactNode, useState } from "react";
 
 //
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,7 +23,7 @@ const DevicesPage = (props: Props) => {
 
   const { device } = useTypedSelector((state) => state);
   const { getDevice, setDevice } = useActions();
-  console.table(device)
+  console.log(device)
 
   const {
     control,
@@ -44,11 +44,37 @@ const DevicesPage = (props: Props) => {
 
   const onSubmit = async (data: any) => {
     console.log("data on form : ", data);
+    getDevice(data)
   };
+
+
+  const cardEl:FC<ReactNode> = ()=>{
+    <Card sx={{ maxWidth: 345 }}>
+    <CardMedia
+      component="img"
+      alt="green iguana"
+      height="140"
+      image="/static/images/cards/contemplative-reptile.jpg"
+    />
+    <CardContent>
+      <Typography gutterBottom variant="h5" component="div">
+        Lizard
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        Lizards are a widespread group of squamate reptiles, with over 6,000
+        species, ranging across all continents except Antarctica
+      </Typography>
+    </CardContent>
+    <CardActions>
+      <Button size="small">Share</Button>
+      <Button size="small">Learn More</Button>
+    </CardActions>
+  </Card>
+  }
 
   return (
     <Container maxWidth="xs" component="main">
-      <Box
+      {!device.cpe?      <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         sx={{ mt: "1.6rem" }}
@@ -56,13 +82,14 @@ const DevicesPage = (props: Props) => {
         <Grid container spacing={3}>
         <Grid item xs={12}>
             <Controller
-              name="type"
+              name="idType"
               control={control}
               defaultValue=""
              
               render={({ field }) => (
-                <Select>
-                <MenuItem value={"macAddress"}>1</MenuItem>
+                <Select {...field} required >
+                <MenuItem  value={"macAddress"}>macAddress</MenuItem>
+                <MenuItem  value={"serialNumber"} disabled>serialNumber</MenuItem>
               </Select>
               )
             }
@@ -77,12 +104,12 @@ const DevicesPage = (props: Props) => {
                 <TextField
                   {...field}
                   required
-                  // error={Boo lean(errors.macAddress?.message)}
+                  // error={Boo lean(errors.value?.message)}
                   fullWidth={true}
                   type="value"
                   label="value"
                   variant="outlined"
-                  helperText={errors.macAddress?.message}
+                  helperText={errors.value?.message}
                 />
               )}
             />
@@ -102,6 +129,15 @@ const DevicesPage = (props: Props) => {
           </Grid>
         </Grid>
       </Box>
+      : 
+      <div>
+
+        <h1>{device.cpe?._id}</h1>
+        <cardEl/>
+      </div>
+       }
+
+      
     </Container>
   );
 };

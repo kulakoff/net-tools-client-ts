@@ -7,7 +7,7 @@ export type getDeviceValueType = "serialNumber" | "macAddress"
  * @request type and value
  */
 export interface getDevicePropsType {
-    type: getDeviceValueType
+    idType: getDeviceValueType
     value: string
 }
 

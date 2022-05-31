@@ -10,7 +10,7 @@ export const deviceReducer = (
   state = initialState,
   action: DeviceActions
 ): IDeviceState => {
-  switch (action.type) {
+  switch (action?.type) {
     case DeviceActionTypes.FETCHING_DEVICE_DATA:
       return { ...state, isLoading: true };
     case DeviceActionTypes.FETCHING_DEVICE_DATA_SUCCESS:

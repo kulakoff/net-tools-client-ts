@@ -28,8 +28,9 @@ export const getDevice = (props: getDevicePropsType) => {
   };
 };
 
-export const setDevice = () => {
+export const setDevice = (payload: any) => {
   console.log("setDevice");
+  return async (dispatch: Dispatch<DeviceActions>) => {};
 };
 
 export const clearDeviceData = () => {

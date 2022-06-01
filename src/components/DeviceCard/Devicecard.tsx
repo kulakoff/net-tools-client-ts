@@ -5,24 +5,26 @@ import {
   CardContent,
   CardMedia,
   Divider,
-  Modal,
+  Tooltip,
   Typography,
   IconButton,
 } from "@mui/material";
+import { red } from "@mui/material/colors";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import SyncLockIcon from "@mui/icons-material/SyncLock";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IDeviceResponse } from "../../types/response/IDeviceResponse";
 import DeviceCardModal from "../DeviceCardModal";
+import { useActions } from "../../hooks/useActions";
 
 interface DevicecardProps extends IDeviceResponse {
   handlerBackToHome: () => void;
 }
 
 const Devicecard: FC<DevicecardProps> = (props) => {
-  
-  const navigate = useNavigate();
+ const {setDevice}= useActions();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = () => setOpenModal(true);
@@ -50,9 +52,13 @@ const Devicecard: FC<DevicecardProps> = (props) => {
           </Typography>
           <Typography>
             Password:
-            {props.configMode._value === "passwd"
-              ? props.wifi.keyPassphrase._value
-              : props._deviceInfo.serialNumber}
+            {props.configMode._value === "passwd" ? (
+              props.wifi.keyPassphrase._value
+            ) : (
+              <Typography color={red[500]}>
+                {props._deviceInfo.serialNumber}
+              </Typography>
+            )}
           </Typography>
         </CardContent>
         <CardActions>
@@ -63,11 +69,17 @@ const Devicecard: FC<DevicecardProps> = (props) => {
               props.handlerBackToHome();
             }}
           >
-            <ArrowBackIosIcon />
+            <ArrowBackIosIcon color="primary" />
           </IconButton>
-          <Button size="small">Изменить настройки шаблона</Button>
-          <IconButton size="small" onClick={() => setOpenModal(true)}>
+          <IconButton size="large" onClick={()=>setDevice({})}>
+            <Tooltip title="Изменить базовый шаблон WiFi">
+            <SyncLockIcon color="primary" />
+            </Tooltip>
+          </IconButton>
+          <IconButton size="large" onClick={() => setOpenModal(true)}>
+            <Tooltip title="WiFi QR code">
             <QrCodeIcon color="primary" />
+            </Tooltip>
           </IconButton>
         </CardActions>
       </Card>
@@ -81,4 +93,3 @@ const Devicecard: FC<DevicecardProps> = (props) => {
   );
 };
 export default Devicecard;
-

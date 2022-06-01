@@ -22,18 +22,20 @@ export const singInUser = (singInData: IUserSignIn) => {
       dispatch({
         type: UserActionTypes.FETCHING_USER,
       });
-      const { data } = await AuthService.login(
+      const response = await AuthService.login(
         singInData.email,
         singInData.password
       );
-      localStorage.setItem("token", data.accessToken);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      dispatch({ type: UserActionTypes.FETCHING_USER_SUCCESS, payload: data });
-    } catch (error) {
-      console.log("singInUser error: >>> ", error);
+      // console.log("response: ", response)
+      //      console.log("response: ", response)
+      localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      dispatch({ type: UserActionTypes.FETCHING_USER_SUCCESS, payload: response.data });
+    } catch (error: any) {
+      // console.log("singInUser error: >>> ", error.response?.data)
       dispatch({
         type: UserActionTypes.FETCHING_USER_FAILURE,
-        payload: "Ошибка авторизации, тест",
+        payload: error.response?.data,
       });
     }
   };
@@ -42,7 +44,7 @@ export const singInUser = (singInData: IUserSignIn) => {
 export const signOut = () => {
   return async (dispatch: Dispatch<UserAtions>) => {
     console.log("logoutUser >>>");
-    dispatch({type:UserActionTypes.USER_UNAUTH})
+    dispatch({ type: UserActionTypes.USER_UNAUTH })
     localStorage.removeItem("token")
     localStorage.removeItem("user")
   };

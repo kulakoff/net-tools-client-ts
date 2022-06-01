@@ -1,3 +1,5 @@
+import { ErrorType } from "./error";
+
 export interface IUser {
   email: string;
   isActivated: boolean;
@@ -11,7 +13,7 @@ export interface IAuthResponse {
 export interface IUserState {
   user: IUser | null;
   isLoading: boolean;
-  error: string | null;
+  error: null  | ErrorType;
 }
 
 export interface IUserSignIn {
@@ -62,7 +64,7 @@ export interface IFetchingUserSuccessAction {
 
 export interface IFetchingUserFailureAction {
   type: UserActionTypes.FETCHING_USER_FAILURE,
-  payload: string,
+  payload: ErrorType,
 }
 
 //бновление access token
@@ -75,7 +77,7 @@ export interface IFetchingTokenSuccessAction {
 }
 export interface IFetchingTokenFailureAction {
   type: UserActionTypes.FETCHING_TOKEN_FAILURE,
-  payload: string
+  payload: ErrorType
 }
 
 export type UserAtions =

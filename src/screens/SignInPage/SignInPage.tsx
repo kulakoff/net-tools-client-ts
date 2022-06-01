@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Typography,
   Container,
@@ -24,6 +24,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
+import { ErrorType } from "../../types/error";
 
 // const theme = createTheme();
 
@@ -33,8 +34,30 @@ import { useActions } from "../../hooks/useActions";
 
 const SignIn = () => {
   const { user } = useTypedSelector((state) => state);
+  const { error } = useTypedSelector((state) => state.user);
   const { singInUser, signOut } = useActions();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error) {
+      console.log("error exist");
+      console.log("userERR: ", error);
+      handlerErrorForm(error.errors)
+    }
+  }, [error]);
+
+
+  const handlerErrorForm = (errorData:any) => {
+    console.log("demo", errorData);
+    // setError("email",{type:"manual",message:errorData})
+    Object.keys(errorData).forEach((key) => {
+      setError(key, { type: "manual", message: errorData[key] });
+    });
+    // Object.keys(errorData).forEach((key) => {
+    //   console.log(key, { type: "manual", message: errorData[key] });
+    // });
+  };
+
   // console.log("state >> ", user);
   // console.log("singInUser >> ", singInUser);
   //   const { store } = useContext(Context);
@@ -51,7 +74,7 @@ const SignIn = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isValidating },
+    formState: { errors },
     setError,
     reset,
   } = useForm({
@@ -68,7 +91,7 @@ const SignIn = () => {
   const onSubmit = async (data: any) => {
     console.log("data on form : ", data);
     singInUser(data);
-    reset();
+    // reset();
 
     //TODO: сделать проверку на ошибку
     // if (!user.error) {
@@ -181,4 +204,4 @@ const SignIn = () => {
   );
 };
 
-export default observer(SignIn);
+export default SignIn;

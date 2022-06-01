@@ -35,7 +35,7 @@ const Devicecard: FC<DevicecardProps> = (props) => {
         component="img"
         alt="green iguana"
         height="140"
-        image="https://picsum.photos/350/200"
+        iThunk Callback after dispatching an actionmage="https://picsum.photos/350/200"
       /> */}
         <CardContent>
           <Divider>CPE info</Divider>

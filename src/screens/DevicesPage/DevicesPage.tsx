@@ -66,7 +66,7 @@ const DevicesPage = (props: Props) => {
    */
   const handlerBackToHome = () => {
     clearDeviceData();
-    navigate("/");
+    navigate("/devices");
   };
 
   return (

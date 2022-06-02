@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { IDeviceResponse } from "../../types/response/IDeviceResponse";
 import DeviceCardModal from "../DeviceCardModal";
 import { useActions } from "../../hooks/useActions";
+import DialogComponent from "../DialogComponent";
 
 interface DevicecardProps extends IDeviceResponse {
   handlerBackToHome: () => void;
@@ -26,6 +27,8 @@ interface DevicecardProps extends IDeviceResponse {
 const Devicecard: FC<DevicecardProps> = (props) => {
   const { setDevice } = useActions();
   const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -37,7 +40,10 @@ const Devicecard: FC<DevicecardProps> = (props) => {
         macAddress: props._deviceInfo.macAddress,
         configMode: "passwd",
       });
+    handlerDialogClose();
   };
+  const handlerDialogClose = () => setIsDialogOpen(false);
+  const handlerDialogOpen = () => setIsDialogOpen(true);
 
   return (
     <>
@@ -82,7 +88,7 @@ const Devicecard: FC<DevicecardProps> = (props) => {
           </IconButton>
           <IconButton
             size="large"
-            onClick={handleChengeTemplate}
+            onClick={handlerDialogOpen}
             disabled={props.configMode._value == "passwd" ? true : false}
           >
             <Tooltip title="Изменить базовый шаблон WiFi">
@@ -101,6 +107,12 @@ const Devicecard: FC<DevicecardProps> = (props) => {
         handleOpenModal={() => handleOpenModal()}
         handleCloseModal={() => handleCloseModal()}
         payload={props}
+      />
+      <DialogComponent
+        handlerClose={() => handlerDialogClose()}
+        open={isDialogOpen}
+        handlerActionAccept={() => handleChengeTemplate()}
+        content={"Изменить параметры типового шаблона WiFi?"}
       />
     </>
   );

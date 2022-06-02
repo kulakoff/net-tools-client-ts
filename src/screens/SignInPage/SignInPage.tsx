@@ -149,6 +149,7 @@ const SignIn = () => {
                     label="Адрес электроной почты"
                     variant="outlined"
                     helperText={errors.email?.message}
+                    autoFocus
                   />
                 )}
               />

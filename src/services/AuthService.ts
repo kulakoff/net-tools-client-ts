@@ -10,6 +10,7 @@ export default class AuthService {
     return api.post<IAuthResponse>("login", { email, password });
   }
 
+  //TODO: сделать регистрацию
   static async registration(
     email: string,
     password: string
@@ -20,4 +21,8 @@ export default class AuthService {
   static async logout(): Promise<void> {
     return api.post("/logout");
   }
+
+
+
+ 
 }

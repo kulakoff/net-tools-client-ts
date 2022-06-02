@@ -24,11 +24,20 @@ interface DevicecardProps extends IDeviceResponse {
 }
 
 const Devicecard: FC<DevicecardProps> = (props) => {
- const {setDevice}= useActions();
+  const { setDevice } = useActions();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
+  const handleChengeTemplate = () => {
+    console.log("set shange config");
+    if (props.configMode._value !== "passwd")
+      setDevice({
+        serialNumber: props._deviceInfo.serialNumber,
+        macAddress: props._deviceInfo.macAddress,
+        configMode: "passwd",
+      });
+  };
 
   return (
     <>
@@ -71,14 +80,18 @@ const Devicecard: FC<DevicecardProps> = (props) => {
           >
             <ArrowBackIosIcon color="primary" />
           </IconButton>
-          <IconButton size="large" onClick={()=>setDevice({})}>
+          <IconButton
+            size="large"
+            onClick={handleChengeTemplate}
+            disabled={props.configMode._value == "passwd" ? true : false}
+          >
             <Tooltip title="Изменить базовый шаблон WiFi">
-            <SyncLockIcon color="primary" />
+              <SyncLockIcon color="primary" />
             </Tooltip>
           </IconButton>
           <IconButton size="large" onClick={() => setOpenModal(true)}>
             <Tooltip title="WiFi QR code">
-            <QrCodeIcon color="primary" />
+              <QrCodeIcon color="primary" />
             </Tooltip>
           </IconButton>
         </CardActions>

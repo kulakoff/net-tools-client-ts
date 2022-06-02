@@ -1,6 +1,13 @@
 import { ErrorType } from "./error";
 import { IDeviceResponse } from "./response/IDeviceResponse";
 
+
+export interface ISetDeviceConfigMode {
+  serialNumber: string;
+  macAddress: string;
+  configMode: string
+}
+
 export type getDeviceValueType = "serialNumber" | "macAddress";
 /**
  * данные формы поиска CPE.

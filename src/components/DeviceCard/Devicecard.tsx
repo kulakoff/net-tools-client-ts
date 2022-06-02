@@ -19,6 +19,7 @@ import { IDeviceResponse } from "../../types/response/IDeviceResponse";
 import DeviceCardModal from "../DeviceCardModal";
 import { useActions } from "../../hooks/useActions";
 import DialogComponent from "../DialogComponent";
+import AlertComponent from "../AlertComponent";
 
 interface DevicecardProps extends IDeviceResponse {
   handlerBackToHome: () => void;
@@ -114,6 +115,8 @@ const Devicecard: FC<DevicecardProps> = (props) => {
         handlerActionAccept={() => handleChengeTemplate()}
         content={"Изменить параметры типового шаблона WiFi?"}
       />
+
+      <AlertComponent/>
     </>
   );
 };

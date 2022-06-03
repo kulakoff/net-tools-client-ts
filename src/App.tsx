@@ -13,6 +13,7 @@ import RequireAuthRoute from "./routes/RequireAuthRoute";
 import RequireAuthRoute2 from "./routes/RequireAuthRoute2";
 import DisabledRouteWithAuth from "./routes/DisabledRouteWithAuth";
 import DevicesPage from "./screens/DevicesPage/";
+import MetersPage from "./screens/MetersPage";
 
 const App: FC = () => {
   const { user } = useTypedSelector((state) => state);
@@ -34,7 +35,7 @@ const App: FC = () => {
           <Route element={<RequireAuthRoute2 />}>
             <Route index element={<MainPage />} />
             <Route path="demo" element={<DemoPage />} />
-            <Route path="meters" element={<DemoPage />} />
+            <Route path="meters" element={<MetersPage />} />
             <Route path="devices" element={<DevicesPage />} />
           </Route>
           {/* Public routes */}

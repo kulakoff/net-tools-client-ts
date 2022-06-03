@@ -47,9 +47,9 @@ const DialogComponent: FC<IDialogComponentProps> = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handlerClose}>Close</Button>
+          <Button onClick={handlerClose}>Отмена</Button>
           <Button onClick={handlerActionAccept} autoFocus>
-            OK
+            Да
           </Button>
         </DialogActions>
       </Dialog>

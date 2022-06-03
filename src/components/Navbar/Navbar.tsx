@@ -18,6 +18,7 @@ import Avatar from "@mui/material/Avatar";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import BugReportOutlinedIcon from "@mui/icons-material/BugReportOutlined";
+import SettingsIcon from "@mui/icons-material/Settings";
 // import Box from "@mui/material/Box";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
@@ -30,10 +31,10 @@ import { useActions } from "../../hooks/useActions";
 // ];
 // const pages = ["Device", "Pricing", "Blog","login","info"];
 const pages = [
-  { name: "Demo", url: "/demo" },
-  { name: "Показания приборов учета", url: "/meters" },
-  { name: "Devices", url: "/devices" },
-  { name: "Test", url: "/test" },
+  { name: "🚀 Demo ", url: "/demo" },
+  { name: "😀 Test ", url: "/test" },
+  { name: "Приборы учета ⏱️", url: "/meters" },
+  { name: "Абонентские устройства", url: "/devices" },
   { name: "Войти", url: "/signin" },
   { name: "Регистрация", url: "/signup" },
   // { name: "Выйти", url: "/" },
@@ -49,7 +50,7 @@ const Navbar = () => {
     console.log("push logout button");
     handleCloseNavMenu();
     // store.logout();
-    signOut()
+    signOut();
     navigate("/");
   };
 
@@ -119,14 +120,20 @@ const Navbar = () => {
                 // }}
               >
                 {pages.map((page: any) => (
-                  <MenuItem key={page.nameAuthorization}>
-                    <NavLink to={page.url} onClick={handleCloseNavMenu}>
-                      {page.name}
-                    </NavLink>
+                  <MenuItem
+                    key={page.nameAuthorization}
+                    component={NavLink}
+                    to={page.url}
+                    onClick={handleCloseNavMenu}
+                  >
+                    {page.name}
                   </MenuItem>
                 ))}
-                <MenuItem>
-                  <Button onClick={onLogOut}>Выйти</Button>
+
+                <MenuItem onClick={onLogOut}>
+                  {/* <Button onClick={onLogOut}> */}
+                  Выйти
+                  {/* </Button> */}
                 </MenuItem>
               </Menu>
             </Box>
@@ -137,6 +144,7 @@ const Navbar = () => {
               component="div"
               sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
             >
+              <SettingsIcon sx={{ mr: 1 }} />
               Net-tools-app mobile
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -161,7 +169,7 @@ const Navbar = () => {
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
-            
+
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"

@@ -7,10 +7,16 @@ import Stack from "@mui/material/Stack";
 const AlertComponent = () => {
   return (
     <Stack sx={{ width: "100%" }} spacing={2}>
-      <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+      <Alert
+      role="alert"
+        icon={<CheckIcon fontSize="inherit" />}
+        severity="warning"
+        onClick={() => console.log("alert click")}
+        
+      >
         This is a success alert — check it out!
       </Alert>
-      <Alert
+      {/* <Alert
         iconMapping={{
           success: <CheckCircleOutlineIcon fontSize="inherit" />,
         }}
@@ -19,7 +25,7 @@ const AlertComponent = () => {
       </Alert>
       <Alert icon={false} severity="success">
         This is a success alert — check it out!
-      </Alert>
+      </Alert> */}
     </Stack>
   );
 };

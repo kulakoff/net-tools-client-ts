@@ -13,7 +13,8 @@ import { red } from "@mui/material/colors";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SyncLockIcon from "@mui/icons-material/SyncLock";
 import QrCodeIcon from "@mui/icons-material/QrCode";
-import { FC, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { FC, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IDeviceResponse } from "../../types/response/IDeviceResponse";
 import DeviceCardModal from "../DeviceCardModal";
@@ -21,16 +22,28 @@ import { useActions } from "../../hooks/useActions";
 import DialogComponent from "../DialogComponent";
 import AlertComponent from "../AlertComponent";
 
+import "react-toastify/dist/ReactToastify.css";
+
 interface DevicecardProps extends IDeviceResponse {
   handlerBackToHome: () => void;
 }
 
 const Devicecard: FC<DevicecardProps> = (props) => {
+  const wifiPass = props.configMode._value;
   const { setDevice } = useActions();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (wifiPass === "serial") {
+      notify("🚀 Необходимо изменить базовый шаблон WiFi");
+      console.log("is pass");
+    }
+  }, [wifiPass]);
+
+  const notify = (message: string) =>
+    toast.warn(message, { position: "top-center", autoClose: 5000 });
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
   const handleChengeTemplate = () => {
@@ -48,16 +61,13 @@ const Devicecard: FC<DevicecardProps> = (props) => {
 
   return (
     <>
+      {/* <AlertComponent /> */}
       <Card sx={{ maxWidth: 345 }}>
-        {/* <CardMedia
-        component="img"
-        alt="green iguana"
-        height="140"
-        iThunk Callback after dispatching an actionmage="https://picsum.photos/350/200"
-      /> */}
         <CardContent>
           <Divider>CPE info</Divider>
-          <Typography> Reg Data: {props.createDateTime}</Typography>
+          <Typography>
+            Manufacturer: {props._deviceInfo.manufacturer}
+          </Typography>
           <Typography>
             Serial number: {props._deviceInfo.serialNumber}
           </Typography>
@@ -78,21 +88,24 @@ const Devicecard: FC<DevicecardProps> = (props) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <IconButton
-            aria-label="back"
-            size="large"
-            onClick={() => {
-              props.handlerBackToHome();
-            }}
-          >
-            <ArrowBackIosIcon color="primary" />
-          </IconButton>
+          <Tooltip title="Назад">
+            <IconButton
+              aria-label="back"
+              size="large"
+              onClick={() => {
+                props.handlerBackToHome();
+              }}
+            >
+              <ArrowBackIosIcon color="primary" />
+            </IconButton>
+          </Tooltip>
+
           <IconButton
             size="large"
             onClick={handlerDialogOpen}
             disabled={props.configMode._value == "passwd" ? true : false}
           >
-            <Tooltip title="Изменить базовый шаблон WiFi">
+            <Tooltip title="🚀 Изменить базовый шаблон WiFi">
               <SyncLockIcon color="primary" />
             </Tooltip>
           </IconButton>
@@ -101,6 +114,11 @@ const Devicecard: FC<DevicecardProps> = (props) => {
               <QrCodeIcon color="primary" />
             </Tooltip>
           </IconButton>
+          <Button
+            onClick={() => notify("🚀 Необходимо изменить базовый шаблон WiFi")}
+          >
+            informer test
+          </Button>
         </CardActions>
       </Card>
       <DeviceCardModal
@@ -116,7 +134,7 @@ const Devicecard: FC<DevicecardProps> = (props) => {
         content={"Изменить параметры типового шаблона WiFi?"}
       />
 
-      <AlertComponent/>
+      <ToastContainer />
     </>
   );
 };

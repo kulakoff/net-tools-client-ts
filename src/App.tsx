@@ -10,20 +10,21 @@ import SignInPage from "./screens/SignInPage";
 import { useTypedSelector } from "./hooks/useTypedSelector";
 import { useActions } from "./hooks/useActions";
 import RequireAuthRoute from "./routes/RequireAuthRoute";
-import RequireAuthRoute2 from "./routes/RequireAuthRoute2";
 import DisabledRouteWithAuth from "./routes/DisabledRouteWithAuth";
 import DevicesPage from "./screens/DevicesPage/";
 import MetersPage from "./screens/MetersPage";
+import SignUpPage from "./screens/SignUpPage";
+import SuccessfullyPage from "./screens/SuccessfullyPage";
 
 const App: FC = () => {
   const { user } = useTypedSelector((state) => state);
   const { checkAuth } = useActions();
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      console.log("token exist in localStorage, refresh");
+      // console.log("token exist in localStorage, refresh");
       checkAuth();
     } else {
-      console.log("token not found in localStorage, login please");
+      // console.log("token not found in localStorage, login please");
     }
   }, []);
   return (
@@ -32,17 +33,19 @@ const App: FC = () => {
         <Route path="/" element={<Layout />}>
           {/* <Route index element={<MainPage />} /> */}
           {/* Private routes */}
-          <Route element={<RequireAuthRoute2 />}>
+          <Route element={<RequireAuthRoute />}>
             <Route index element={<MainPage />} />
             <Route path="demo" element={<DemoPage />} />
             <Route path="meters" element={<MetersPage />} />
             <Route path="devices" element={<DevicesPage />} />
+            <Route path="signup-succes" element={<SuccessfullyPage />} />
           </Route>
           {/* Public routes */}
           <Route element={<DisabledRouteWithAuth />}>
             <Route path="signin" element={<SignInPage />} />
-            <Route path="signup" element={<SignInPage />} />
+            <Route path="signup" element={<SignUpPage />} />
           </Route>
+
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

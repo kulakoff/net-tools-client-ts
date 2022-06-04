@@ -12,11 +12,11 @@ import {
   CssBaseline,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import FormControlLabel from "@mui/material/FormControlLabel";
+// import FormControlLabel from "@mui/material/FormControlLabel";
 import { NavLink, useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { observer } from "mobx-react-lite";
+// import { observer } from "mobx-react-lite";
 // import { Context } from "../../index";
 // import { useContext, useState } from "react";
 
@@ -32,10 +32,10 @@ import { ErrorType } from "../../types/error";
 //   console.log("Вы нажали кнопку ВОЙТИ");
 // };
 
-const SignIn = () => {
+const SignUpPage = () => {
   const { user } = useTypedSelector((state) => state);
   const { error } = useTypedSelector((state) => state.user);
-  const { singInUser, signOut } = useActions();
+  const { singUpUser } = useActions();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,7 +89,7 @@ const SignIn = () => {
 
   const onSubmit = async (data: any) => {
     console.log("data on form : ", data);
-    singInUser(data);
+    singUpUser(data);
     // reset();
 
     //TODO: сделать проверку на ошибку
@@ -126,13 +126,76 @@ const SignIn = () => {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Требуется авторизация
+                Регистрация
               </Typography>
             </Box>
           </Grid>
         </Grid>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <Controller
+                name="firstName"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    required
+                    error={Boolean(errors.firstName?.message)}
+                    fullWidth={true}
+                    type="text"
+                    label="Имя"
+                    variant="outlined"
+                    helperText={errors.firstName?.message}
+                    autoFocus
+                  />
+                )}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Controller
+                name="lastName"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    required
+                    error={Boolean(errors.lastName?.message)}
+                    fullWidth={true}
+                    type="text"
+                    label="Фамилия"
+                    variant="outlined"
+                    helperText={errors.lastName?.message}
+                    autoFocus
+                  />
+                )}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Controller
+                name="phoneNumber"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    required
+                    error={Boolean(errors.phoneNumber?.message)}
+                    fullWidth={true}
+                    type="phone"
+                    label="Номер телефона"
+                    variant="outlined"
+                    helperText={errors.phoneNumber?.message}
+                    autoFocus
+                  />
+                )}
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <Controller
                 name="email"
@@ -182,19 +245,19 @@ const SignIn = () => {
                 size="large"
                 disabled={user.isLoading}
               >
-                Войти
+                Регистрация
               </Button>
               <Button
                 color="inherit"
                 variant="text"
-                type="submit"
+                // type="submit"
                 fullWidth
                 size="large"
                 component={NavLink}
-                to="/signup"
+                to="/signin"
                 // sx={{ ml: 2 }}
               >
-                Создать учетную запись
+                Есть аккаунт? Вход
               </Button>
             </Grid>
           </Grid>
@@ -204,4 +267,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUpPage;

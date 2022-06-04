@@ -1,6 +1,7 @@
 import api from "../http";
 import { AxiosResponse } from "axios";
 import { IAuthResponse } from "../types/response/IAuthResponse"
+import { IUserSignUp } from "../types/user";
 
 export default class AuthService {
   static async login(
@@ -12,17 +13,13 @@ export default class AuthService {
 
   //TODO: сделать регистрацию
   static async registration(
-    email: string,
-    password: string
+    regProps:IUserSignUp
   ): Promise<AxiosResponse<IAuthResponse>> {
-    return api.post<IAuthResponse>("registration", { email, password });
+    console.log("auth-service registration",regProps)
+    return api.post<IAuthResponse>("registration", regProps);
   }
 
   static async logout(): Promise<void> {
     return api.post("/logout");
   }
-
-
-
- 
 }

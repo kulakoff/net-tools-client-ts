@@ -40,7 +40,7 @@ api.interceptors.response.use(
 );
 
 export default api;
-function REACT_APP_API_URL(REACT_APP_API_URL: any) {
-  throw new Error("Function not implemented.");
-}
+// function REACT_APP_API_URL(REACT_APP_API_URL: any) {
+//   throw new Error("Function not implemented.");
+// }
 

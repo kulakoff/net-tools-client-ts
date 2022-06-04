@@ -8,6 +8,7 @@ import {
   UserActionTypes,
   IUserSignIn,
   IAuthResponse,
+  IUserSignUp,
 } from "../../types/user";
 
 export const singInUser = (singInData: IUserSignIn) => {
@@ -30,7 +31,10 @@ export const singInUser = (singInData: IUserSignIn) => {
       //      console.log("response: ", response)
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      dispatch({ type: UserActionTypes.FETCHING_USER_SUCCESS, payload: response.data });
+      dispatch({
+        type: UserActionTypes.FETCHING_USER_SUCCESS,
+        payload: response.data,
+      });
     } catch (error: any) {
       // console.log("singInUser error: >>> ", error.response?.data)
       dispatch({
@@ -44,9 +48,9 @@ export const singInUser = (singInData: IUserSignIn) => {
 export const signOut = () => {
   return async (dispatch: Dispatch<UserAtions>) => {
     console.log("logoutUser >>>");
-    dispatch({ type: UserActionTypes.USER_UNAUTH })
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
+    dispatch({ type: UserActionTypes.USER_UNAUTH });
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 };
 
@@ -79,6 +83,36 @@ export const checkAuth = () => {
     } finally {
       //this.setLoading(false);
       console.log("this.setLoading(false)");
+    }
+  };
+};
+
+export const singUpUser = (singUpData: IUserSignUp) => {
+  return async (dispatch: Dispatch<UserAtions>) => {
+    try {
+      console.log(
+        "singUpUser input props: ",
+        singUpData
+      );
+      //FETCHING_USER
+      dispatch({
+        type: UserActionTypes.FETCHING_USER,
+      });
+      const response = await AuthService.registration(singUpData);
+      // console.log("response: ", response)
+      //      console.log("response: ", response)
+      localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      dispatch({
+        type: UserActionTypes.FETCHING_USER_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error: any) {
+      // console.log("singInUser error: >>> ", error.response?.data)
+      dispatch({
+        type: UserActionTypes.FETCHING_USER_FAILURE,
+        payload: error.response?.data,
+      });
     }
   };
 };

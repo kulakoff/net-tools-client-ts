@@ -30,8 +30,9 @@ import { useActions } from "../../hooks/useActions";
 //   { name: "Blog", url: "#" },
 // ];
 // const pages = ["Device", "Pricing", "Blog","login","info"];
-const pages = [
+const pages:any[] = [
   { name: "🚀 Demo ", url: "/demo" },
+  { name: "🚀 Success registration ", url: "/signup-succes" },
   { name: "😀 Test ", url: "/test" },
   { name: "Приборы учета ⏱️", url: "/meters" },
   { name: "Абонентские устройства", url: "/devices" },
@@ -119,9 +120,9 @@ const Navbar = () => {
                 //   "aria-labelledby": "basic-button",
                 // }}
               >
-                {pages.map((page: any) => (
+                {pages.map((page: any, key) => (
                   <MenuItem
-                    key={page.nameAuthorization}
+                    key={key}
                     component={NavLink}
                     to={page.url}
                     onClick={handleCloseNavMenu}
@@ -165,8 +166,8 @@ const Navbar = () => {
 */}
             <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                  <Avatar alt={user?.user?.email} src="https://i.pravatar.cc/100" />
                 </IconButton>
               </Tooltip>
 
@@ -186,8 +187,8 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                {settings.map((setting, key) => (
+                  <MenuItem key={key} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
@@ -195,7 +196,7 @@ const Navbar = () => {
 
               {user.user ? (
                 <>
-                  <Typography variant="h6" component="h6">
+                  <Typography variant="h6" component="h1">
                     {user.user.email}
                   </Typography>
                   <BugReportOutlinedIcon />

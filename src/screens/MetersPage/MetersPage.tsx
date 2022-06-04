@@ -46,12 +46,15 @@ export default function MetersPage() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <Box sx={{ width: "100%" , height: 600}}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
         >
           <Tab label="Передать показания" {...a11yProps(0)} />
           <Tab label="Просмотр показаний" {...a11yProps(1)} />
@@ -59,16 +62,14 @@ export default function MetersPage() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-      
-      <SendMeters/>
+        <SendMeters />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      Просмотр показаний приборов учета
+        Просмотр показаний приборов учета
       </TabPanel>
       <TabPanel value={value} index={2}>
-      Статистика
+        Статистика
       </TabPanel>
-
     </Box>
   );
 }

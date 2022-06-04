@@ -19,9 +19,11 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import DirectionsIcon from "@mui/icons-material/Directions";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 
 //
+import { ToastContainer, toast } from "react-toastify";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
 import { useForm, Controller } from "react-hook-form";
@@ -36,7 +38,24 @@ const DevicesPage = (props: Props) => {
   // const [text, setText] = useState<string>("");
   const navigate = useNavigate();
   const { device } = useTypedSelector((state) => state);
+  const { error } = device;
+
   const { getDevice, setDevice, clearDeviceData } = useActions();
+
+  const notify = (message: string) =>
+    toast.info(message, {
+      position: "top-center",
+      autoClose: 5000,
+      closeButton: false,
+      onClick: () => clearDeviceData(),
+    });
+
+  useEffect(() => {
+    if (error) {
+      console.log("error");
+      notify(`🚀  ${error?.message}`);
+    }
+  }, [error]);
 
   const {
     control,
@@ -60,7 +79,6 @@ const DevicesPage = (props: Props) => {
     getDevice(data);
   };
 
-  
   /**
    * Обработчик кнопки "назад" очистка state  и переход на главную
    */
@@ -77,17 +95,22 @@ const DevicesPage = (props: Props) => {
           onSubmit={handleSubmit(onSubmit)}
           sx={{ mt: "1.6rem" }}
         >
-          <Grid container spacing={3}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography variant="h5" component="h1">
+                Поиск абонентского роутера
+              </Typography>
+            </Grid>
             <Grid item xs={12}>
               <Controller
                 name="idType"
                 control={control}
                 defaultValue="macAddress"
                 render={({ field }) => (
-                  <Select {...field} required fullWidth>
-                    <MenuItem value={"macAddress"}>mac address</MenuItem>
+                  <Select {...field} required fullWidth size="small">
+                    <MenuItem value={"macAddress"}>MAC Address</MenuItem>
                     <MenuItem value={"serialNumber"} disabled>
-                      serial number
+                      Serial Number
                     </MenuItem>
                   </Select>
                 )}
@@ -102,7 +125,8 @@ const DevicesPage = (props: Props) => {
                   <TextField
                     {...field}
                     required
-                    // error={Boo lean(errors.value?.message)}
+                    size="small"
+                    error={Boolean(errors.value?.message)}
                     fullWidth={true}
                     type="value"
                     label="value"
@@ -120,7 +144,7 @@ const DevicesPage = (props: Props) => {
                 type="submit"
                 fullWidth={true}
                 size="large"
-                // disabled={user.isLoading}
+                disabled={device.isLoading}
               >
                 Поиск
               </Button>
@@ -129,9 +153,13 @@ const DevicesPage = (props: Props) => {
         </Box>
       ) : (
         <Box sx={{ mt: "1.6rem" }}>
-          <Devicecard {...device.cpe} handlerBackToHome={()=>handlerBackToHome()} />
+          <Devicecard
+            {...device.cpe}
+            handlerBackToHome={() => handlerBackToHome()}
+          />
         </Box>
       )}
+      <ToastContainer />
     </Container>
   );
 };

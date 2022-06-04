@@ -1,15 +1,26 @@
+import { Outbound } from "@mui/icons-material";
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
-const RequireAuthRoute = ({ children }: { children: JSX.Element }) => {
-  const { user } = useTypedSelector((state) => state);
-  let location = useLocation();
-  if (user.user === null) {
-    return <Navigate to="/signin" state={{ from: location }} replace />;
-  }
+const RequireAuthRoute = () => {
+  const { user } = useTypedSelector((state) => state.user);
+  const location = useLocation();
+  const url = new URLSearchParams();
+  url.set("redirect", location.pathname + location.search);
 
-  return children;
+  console.log("user: ", user);
+  console.log("location: ", location);
+  return user !== null ? (
+    <Outlet />
+  ) : (
+    <Navigate 
+    to={{
+      pathname: "/signin",
+      search: url.toString(),
+    }}
+     />
+  );
 };
 
 export default RequireAuthRoute;

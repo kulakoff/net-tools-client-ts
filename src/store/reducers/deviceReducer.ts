@@ -22,7 +22,7 @@ export const deviceReducer = (
     case DeviceActionTypes.FETCHING_DEVICE_DATA_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
     case DeviceActionTypes.CLEAR_DEVICE_DATA:
-      return { ...state, cpe: null };
+      return { ...state, cpe: null, error: null };
     default:
       return state;
   }

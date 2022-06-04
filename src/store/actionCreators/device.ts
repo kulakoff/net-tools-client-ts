@@ -7,6 +7,7 @@ import {
   getDevicePropsType,
   ISetDeviceConfigMode,
 } from "../../types/cpe";
+import { ErrorType } from "../../types/error";
 
 export const getDevice = (props: getDevicePropsType) => {
   return async (dispatch: Dispatch<DeviceActions>) => {
@@ -16,15 +17,20 @@ export const getDevice = (props: getDevicePropsType) => {
       });
       console.log("getDevice");
       console.log("getDevice props > ", props);
-      const { data } = await DeviceService.getDevice(props);
-      console.log(data);
+      const response = await DeviceService.getDevice(props);
+      const { data } = response;
+      console.log(response);
       if (data)
         dispatch({
           type: DeviceActionTypes.FETCHING_DEVICE_DATA_SUCCESS,
           payload: data,
         });
-    } catch (error) {
+    } catch (error: any) {
       console.log("getDevice error : ", error);
+      dispatch({
+        type: DeviceActionTypes.FETCHING_DEVICE_DATA_FAILURE,
+        payload: error.response.data,
+      });
     }
   };
 };
@@ -37,7 +43,7 @@ export const setDevice = (payload: ISetDeviceConfigMode) => {
         type: DeviceActionTypes.FETCHING_DEVICE_DATA,
       });
 
-      const { data } = await DeviceService.setDevice(payload)
+      const { data } = await DeviceService.setDevice(payload);
       console.log(data);
       if (data)
         dispatch({
@@ -47,9 +53,6 @@ export const setDevice = (payload: ISetDeviceConfigMode) => {
     } catch (error) {
       console.log("setDevice error : ", error);
     }
-
-
-
   };
 };
 

@@ -48,9 +48,13 @@ export const singInUser = (singInData: IUserSignIn) => {
 export const signOut = () => {
   return async (dispatch: Dispatch<UserAtions>) => {
     console.log("logoutUser >>>");
-    dispatch({ type: UserActionTypes.USER_UNAUTH });
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    await AuthService.logout().then(() => {
+      dispatch({ type: UserActionTypes.USER_UNAUTH });
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
+    })
+
+
   };
 };
 

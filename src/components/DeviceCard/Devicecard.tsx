@@ -131,9 +131,10 @@ const Devicecard: FC<DevicecardProps> = (props) => {
         handlerClose={() => handlerDialogClose()}
         open={isDialogOpen}
         handlerActionAccept={() => handleChengeTemplate()}
-        content={"Изменить параметры типового шаблона WiFi?"}
+        content={
+          "Изменить параметры типового шаблона WiFi? После обязательно выполнить сброс настроек CPE."
+        }
       />
-
       <ToastContainer />
     </>
   );

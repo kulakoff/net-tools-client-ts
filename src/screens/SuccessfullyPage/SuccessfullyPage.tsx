@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   Divider,
   Grid,
@@ -20,6 +21,7 @@ const SuccessfullyPage: FC = (props: Props) => {
         sx={{
           padding: 1,
           marginTop: "10rem",
+          paddingBottom:"10rem",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -43,10 +45,11 @@ const SuccessfullyPage: FC = (props: Props) => {
                 <Divider />
               </Box>
             </Grid>
-            <Grid item>
+            <Grid item xs={12} sx={{mb:"2rem"}}>
               <Typography gutterBottom variant="h5">
                 На email: {user?.email} отпралено письмо для активации.
               </Typography>
+              <Button variant="contained">OK</Button>
             </Grid>
           </Grid>
         </Paper>

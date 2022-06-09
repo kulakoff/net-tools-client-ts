@@ -21,7 +21,7 @@ const SuccessfullyPage: FC = (props: Props) => {
         sx={{
           padding: 1,
           marginTop: "10rem",
-          paddingBottom:"10rem",
+          paddingBottom: "10rem",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -45,11 +45,16 @@ const SuccessfullyPage: FC = (props: Props) => {
                 <Divider />
               </Box>
             </Grid>
-            <Grid item xs={12} sx={{mb:"2rem"}}>
-              <Typography gutterBottom variant="h5">
-                На email: {user?.email} отпралено письмо для активации.
+            <Grid item xs={12} sx={{ mb: "2rem" }}>
+              <Typography gutterBottom variant="body1" component="body">
+                Чтобы активировать аккаунт, перейдите по ссылке в нашем письме,
+                отправленному на адрес: {user?.email}
               </Typography>
-              <Button variant="contained">OK</Button>
+
+              <Button size="small" variant="outlined">
+                OK
+              </Button>
+              <Typography></Typography>
             </Grid>
           </Grid>
         </Paper>

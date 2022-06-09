@@ -131,7 +131,7 @@ const DevicesPage = (props: Props) => {
                     type="value"
                     label="value"
                     variant="outlined"
-                    helperText={errors.value?.message}
+                    helperText={errors.value?.message || "Укажтите MAC роутера"}
                   />
                 )}
               />

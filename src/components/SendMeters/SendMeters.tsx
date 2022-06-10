@@ -4,12 +4,22 @@ import {
   Button,
   Container,
   Grid,
+  Paper,
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+
+import {
+  DatePicker,
+  LocalizationProvider,
+  MobileDateTimePicker,
+} from "@mui/x-date-pickers";
+
 import { Controller, useForm } from "react-hook-form";
+
 import validationSchema from "./validation";
+import { useState } from "react";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 type Props = {};
 
@@ -26,87 +36,105 @@ const SendMeters = (props: Props) => {
 
   const onSubmit = async (data: any) => {
     console.log("data on form : ", data);
-    // singInUser(data);
-    // reset();
+    reset();
   };
 
   return (
     <Container>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Box>
-            <Typography variant="h6" component="h2">
-              Выберите прибор учета:
-            </Typography>
-          </Box>
-        </Grid>
+      <Box>
+        <Box sx={{ mb: "1.5rem" }}>
+          <Typography component="h2" variant="h6">
+            Выберите прибор учета
+          </Typography>
+          <Typography>гараж ул. Рылеева</Typography>
+        </Box>
 
-        <Grid item xs={12}>
-          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Controller
-                
-                  name="metersCount1"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      required
-                      error={Boolean(errors.metersCount1?.message)}
-                      fullWidth={true}
-                    
-                      // name="metersCount"
-                      type="number"
-                      label="Счетчик 1"
-                      variant="outlined"
-                      helperText={
-                        errors.metersCount1?.message || "Сериный номер: 1111"
-                      }
-                    />
-                  )}
-                />
-              </Grid>
-
-              {/* <Grid item xs={12}>
-                <Controller
-                  name="metersCount"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      required
-                      error={Boolean(errors.metersCount?.message)}
-                      fullWidth={true}
-                      name="metersCount2"
-                      type="number"
-                      label="Счетчик 1"
-                      variant="outlined"
-                      helperText={
-                        errors.metersCount?.message || "Сериный номер: 222"
-                      }
-                    />
-                  )}
-                />
-              </Grid> */}
-
-              <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  fullWidth
-                  size="large"
-                >
-                  Отправить показания
-                </Button>
-              </Grid>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Controller
+                key="111"
+                name="serialNember"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    required
+                    error={Boolean(errors.serialNember?.message)}
+                    fullWidth={true}
+                    type="number"
+                    label="Cерийный номер прибора учета"
+                    variant="outlined"
+                    helperText={errors.serialNember?.message}
+                    autoFocus
+                  />
+                )}
+              />
             </Grid>
-          </Box>
-        </Grid>
-      </Grid>
+
+            <Grid item xs={12}>
+              <Controller
+                key="222"
+                name="metersCount"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    required
+                    error={Boolean(errors.metersCount?.message)}
+                    type="number"
+                    fullWidth={true}
+                    label="Показание прибора учета"
+                    variant="outlined"
+                    helperText={errors.metersCount?.message}
+                  />
+                )}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Controller
+                name="metersDate"
+                defaultValue={new Date()}
+                control={control}
+                render={({ field }) => (
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <MobileDateTimePicker
+                      {...field}
+                      inputFormat="dd/MM/yyyy"
+                      label="Дата передачи показаний"
+                      value={field.value}
+                      onChange={(e) => field.onChange(e)}
+                      renderInput={(props) => (
+                        <TextField
+                          error={Boolean(errors.metersDate?.message)}
+                          helperText={errors.metersDate?.message}
+                          fullWidth
+                          {...props}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                )}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+                size="large"
+              >
+                Отправить
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
     </Container>
   );
 };

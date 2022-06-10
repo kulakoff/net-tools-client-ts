@@ -62,7 +62,7 @@ const SendMeters = (props: Props) => {
                       label="Счетчик 1"
                       variant="outlined"
                       helperText={
-                        errors.metersCount1?.message || "Сериный номер: 111"
+                        errors.metersCount1?.message || "Сериный номер: 1111"
                       }
                     />
                   )}

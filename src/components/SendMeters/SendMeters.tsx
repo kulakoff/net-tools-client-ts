@@ -13,6 +13,7 @@ import {
   DatePicker,
   LocalizationProvider,
   MobileDateTimePicker,
+
 } from "@mui/x-date-pickers";
 
 import { Controller, useForm } from "react-hook-form";
@@ -36,7 +37,7 @@ const SendMeters = (props: Props) => {
 
   const onSubmit = async (data: any) => {
     console.log("data on form : ", data);
-    reset();
+    // reset();
   };
 
   return (
@@ -96,11 +97,11 @@ const SendMeters = (props: Props) => {
 
             <Grid item xs={12}>
               <Controller
-                name="metersDate"
+                name="reportDate"
                 defaultValue={new Date()}
                 control={control}
                 render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} >
                     <MobileDateTimePicker
                       {...field}
                       inputFormat="dd/MM/yyyy"
@@ -109,8 +110,8 @@ const SendMeters = (props: Props) => {
                       onChange={(e) => field.onChange(e)}
                       renderInput={(props) => (
                         <TextField
-                          error={Boolean(errors.metersDate?.message)}
-                          helperText={errors.metersDate?.message}
+                          error={Boolean(errors.reportDate?.message)}
+                          helperText={errors.reportDate?.message}
                           fullWidth
                           {...props}
                         />

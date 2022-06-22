@@ -59,7 +59,8 @@ export default function MetersPage() {
         >
           <Tab label="Передать показания" {...a11yProps(0)} />
           <Tab label="Просмотр показаний" {...a11yProps(1)} />
-          <Tab label="Статистика" {...a11yProps(2)} />
+          <Tab label="Приборы учета" {...a11yProps(2)} />
+          <Tab label="Статистика" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -69,6 +70,9 @@ export default function MetersPage() {
         <ShowMeters />
       </TabPanel>
       <TabPanel value={value} index={2}>
+        Приборы учета
+      </TabPanel>
+      <TabPanel value={value} index={3}>
         Статистика
       </TabPanel>
     </Box>

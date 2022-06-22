@@ -30,7 +30,7 @@ import { useActions } from "../../hooks/useActions";
 //   { name: "Blog", url: "#" },
 // ];
 // const pages = ["Device", "Pricing", "Blog","login","info"];
-const pages:any[] = [
+const pages: any[] = [
   { name: "🚀 Demo ", url: "/demo" },
   { name: "🚀 Success registration ", url: "/signup-succes" },
   { name: "😀 Test ", url: "/test" },
@@ -131,14 +131,11 @@ const Navbar = () => {
                   </MenuItem>
                 ))}
 
-                <MenuItem onClick={onLogOut}>
-                  {/* <Button onClick={onLogOut}> */}
-                  Выйти
-                  {/* </Button> */}
-                </MenuItem>
+                <MenuItem onClick={onLogOut}>Выйти</MenuItem>
               </Menu>
             </Box>
 
+            {/* mobile mmenu */}
             <Typography
               variant="h6"
               noWrap
@@ -148,6 +145,7 @@ const Navbar = () => {
               <SettingsIcon sx={{ mr: 1 }} />
               Net-tools-app mobile
             </Typography>
+
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <Button
@@ -164,57 +162,65 @@ const Navbar = () => {
             {/*
 Правое меню
 */}
-            <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
-                  <Avatar alt={user?.user?.email} src="https://i.pravatar.cc/100" />
-                </IconButton>
-              </Tooltip>
 
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting, key) => (
-                  <MenuItem key={key} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
+            {user.user ? (
+              <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                    <Avatar
+                      alt={user?.user?.email}
+                      src="https://i.pravatar.cc/100"
+                    />
+                  </IconButton>
+                </Tooltip>
 
-              {user.user ? (
-                <>
-                  <Typography variant="h6" component="h1">
-                    {user.user.email}
-                  </Typography>
-                  <BugReportOutlinedIcon />
-                  <Button color="inherit" onClick={onLogOut}>
-                    Выйти
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button color="inherit" component={Link} to="/signin">
-                    Войти
-                  </Button>
-                  <Button color="inherit" component={Link} to="/signup">
-                    Регистрация
-                  </Button>
-                </>
-              )}
-            </Box>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting, key) => (
+                    <MenuItem key={key} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+
+                {user.user ? (
+                  <>
+                    <Typography variant="h6" component="h1">
+                      {user.user.email}
+                    </Typography>
+                    <BugReportOutlinedIcon />
+                    <Button color="inherit" onClick={onLogOut}>
+                      Выйти
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button color="inherit" component={Link} to="/signin">
+                      Войти
+                    </Button>
+                    <Button color="inherit" component={Link} to="/signup">
+                      Регистрация
+                    </Button>
+                  </>
+                )}
+              </Box>
+            ) : (
+              ""
+            )}
           </Toolbar>
         </Container>
       </AppBar>

@@ -2,19 +2,16 @@ import { Dispatch } from "react";
 import { API_URL } from "../../http";
 import { DeviceService } from "../../services/DeviceService";
 import {
-  DeviceActions,
-  DeviceActionTypes,
-  getDevicePropsType,
-  ISetDeviceConfigMode,
-} from "../../types/cpe";
+  CountersActions
+} from "../../types/counters";
 
 import { ErrorType } from "../../types/error";
 
-export const getDevice = (props: getDevicePropsType) => {
-  return async (dispatch: Dispatch<DeviceActions>) => {
+export const getCounters = () => {
+  return async (dispatch: Dispatch<CountersActions>) => {
     try {
       dispatch({
-        type: DeviceActionTypes.FETCHING_DEVICE_DATA,
+        type: CountersActions.FETCHING_COUNTERS_DATA,
       });
       console.log("getDevice");
       console.log("getDevice props > ", props);
@@ -23,20 +20,20 @@ export const getDevice = (props: getDevicePropsType) => {
       console.log(response);
       if (data)
         dispatch({
-          type: DeviceActionTypes.FETCHING_DEVICE_DATA_SUCCESS,
+          type: CountersActions.FETCHING_DEVICE_DATA_SUCCESS,
           payload: data,
         });
     } catch (error: any) {
       console.log("getDevice error : ", error);
       dispatch({
-        type: DeviceActionTypes.FETCHING_DEVICE_DATA_FAILURE,
+        type: CountersActions.FETCHING_DEVICE_DATA_FAILURE,
         payload: error.response.data,
       });
     }
   };
 };
 
-export const setDevice = (payload: ISetDeviceConfigMode) => {
+export const getCountersItem = (payload: ISetDeviceConfigMode) => {
   console.log("setDevice payload: ", payload);
   return async (dispatch: Dispatch<DeviceActions>) => {
     try {

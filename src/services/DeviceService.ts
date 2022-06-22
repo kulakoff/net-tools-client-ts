@@ -9,7 +9,7 @@ export class DeviceService {
     props: getDevicePropsType
   ): Promise<AxiosResponse<IDeviceResponse>> {
     return api.get<IDeviceResponse>(
-      `/device?cpe[type]=${props.idType}&cpe[value]=${props.value}`
+      `/device?type=${props.idType}&value=${props.value}`
     );
   }
 

@@ -1,13 +1,23 @@
 import { ErrorType } from "./error";
 
+
+export interface ICountersState {
+  // data: ResponseCounterItem[] | null,
+  data: ResponseCounterItem[] | null
+  isLoading: boolean,
+  error: ErrorType | null
+}
+
 export type counterModel = "CE-300" | "CE-301" | "CE-102M";
-export type RsponseCounterItem = {
-  id: string;
+
+export type ResponseCounterItem = {
+  id: number;
   model: counterModel;
   serial_number: string;
   address: string;
   telemetry: boolean;
 };
+
 
 /**
  * Данные полученные из формы отправик показаний прибора учета
@@ -29,7 +39,9 @@ export interface ISendingData {
   meters: [IFormCountersData];
 }
 
-export interface IMetersResponse {}
+// export interface IMetersResponse {
+
+// }
 
 export enum CountersActionTypes {
   FETCHING_COUNTERS_DATA = "FETCHING_COUNTERS_DATA",
@@ -39,11 +51,11 @@ export enum CountersActionTypes {
 
 export interface IFetchingCountersData {
   type: CountersActionTypes.FETCHING_COUNTERS_DATA;
-  payload: IFormCountersData;
+  // payload?: IFormCountersData;
 }
 export interface IFetchingCountersDataSuccess {
   type: CountersActionTypes.FETCHING_COUNTERS_DATA_SUCCESS;
-  payload: IMetersResponse;
+  payload: ResponseCounterItem[];
 }
 export interface IFetchingCountersDataFailure {
   type: CountersActionTypes.FETCHING_COUNTERS_DATA_FAILURE;

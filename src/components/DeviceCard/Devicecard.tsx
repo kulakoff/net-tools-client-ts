@@ -8,6 +8,9 @@ import {
   Tooltip,
   Typography,
   IconButton,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -23,6 +26,7 @@ import DialogComponent from "../DialogComponent";
 import AlertComponent from "../AlertComponent";
 
 import "react-toastify/dist/ReactToastify.css";
+import { color } from "@mui/system";
 
 interface DevicecardProps extends IDeviceResponse {
   handlerBackToHome: () => void;
@@ -65,18 +69,62 @@ const Devicecard: FC<DevicecardProps> = (props) => {
       <Card sx={{ maxWidth: 345 }}>
         <CardContent>
           <Divider>CPE info</Divider>
-          <Typography>
+          {/* <Typography>
             Manufacturer: {props._deviceInfo.manufacturer}
-          </Typography>
-          <Typography>
+          </Typography> */}
+
+          <List>
+            <ListItem>Manufacturer: {props._deviceInfo.manufacturer}</ListItem>
+            <ListItem>Serial number: {props._deviceInfo.serialNumber}</ListItem>
+            <ListItem>Mac address: {props._deviceInfo.macAddress}</ListItem>
+          </List>
+
+          {/* <Typography>
             Serial number: {props._deviceInfo.serialNumber}
           </Typography>
-          <Typography> Mac address: {props._deviceInfo.macAddress}</Typography>
+          <Typography> Mac address: {props._deviceInfo.macAddress}</Typography> */}
           <Divider>WiFi</Divider>
-          <Typography>
+          <List>
+            <ListItem>
+              <ListItemText
+                primary="Имя сети:"
+                secondary={`${props.wifi.ssid2._value} / ${props.wifi.ssid5?._value}`}
+                primaryTypographyProps={{
+                  variant: "subtitle1",
+                }}
+                secondaryTypographyProps={{
+                  variant: "subtitle1",
+                  // component: "body",
+                }}
+              />
+              <ListItemText />
+            </ListItem>
+            <ListItem disabled={props.configMode._value !== "passwd"}
+            >
+              <ListItemText  primary="Пароль:" 
+              secondary={props.configMode._value === "passwd" ? (
+                props.wifi.keyPassphrase._value
+              ) : (
+                <Typography color={red[500]}>
+                  {props._deviceInfo.serialNumber}
+                </Typography>
+              )}/>
+
+              {/* <Typography>
+                {props.configMode._value === "passwd" ? (
+                  props.wifi.keyPassphrase._value
+                ) : (
+                  <Typography color={red[500]}>
+                    {props._deviceInfo.serialNumber}
+                  </Typography>
+                )}
+              </Typography> */}
+            </ListItem>
+          </List>
+          {/* <Typography>
             SSID: {props.wifi.ssid2._value} / {props.wifi.ssid5?._value}{" "}
-          </Typography>
-          <Typography>
+          </Typography> */}
+          {/* <Typography>
             Password:
             {props.configMode._value === "passwd" ? (
               props.wifi.keyPassphrase._value
@@ -85,7 +133,7 @@ const Devicecard: FC<DevicecardProps> = (props) => {
                 {props._deviceInfo.serialNumber}
               </Typography>
             )}
-          </Typography>
+          </Typography> */}
         </CardContent>
         <CardActions>
           <Tooltip title="Назад">
@@ -114,11 +162,12 @@ const Devicecard: FC<DevicecardProps> = (props) => {
               <QrCodeIcon color="primary" />
             </Tooltip>
           </IconButton>
-          <Button
+
+          {/* <Button
             onClick={() => notify("🚀 Необходимо изменить базовый шаблон WiFi")}
           >
             informer test
-          </Button>
+          </Button> */}
         </CardActions>
       </Card>
       <DeviceCardModal

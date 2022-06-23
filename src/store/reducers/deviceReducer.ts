@@ -3,7 +3,7 @@ import {
   DeviceActionTypes,
   IDeviceState,
 } from "../../types/cpe";
-import { IDeviceResponse } from "../../types/response/IDeviceResponse";
+// import { IDeviceResponse } from "../../types/response/IDeviceResponse";
 const initialState: IDeviceState = {
   cpe: null,
   isLoading: false,

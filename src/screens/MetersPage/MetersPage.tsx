@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import SendMeters from "../../components/SendMeters";
 import ShowMeters from "../../components/ShowMeters";
+import ShowMetersAll from "../../components/ShowMetersAll";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -70,7 +71,7 @@ export default function MetersPage() {
         <ShowMeters />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Приборы учета
+        <ShowMetersAll />
       </TabPanel>
       <TabPanel value={value} index={3}>
         Статистика

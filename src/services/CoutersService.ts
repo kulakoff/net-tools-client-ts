@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import api from "../http";
-import { RsponseCounterItem} from "../types/counters";
+import { ResponseCounterItem } from "../types/counters";
 
 export class CoutersService {
   /**
@@ -8,9 +8,9 @@ export class CoutersService {
    *
    * @returns массив с данными приборов учета
    */
-  static async getCounters() {
-    console.log("|CoutersService|getCounters|");
-    return null;
+  static async getCounters(): Promise<AxiosResponse<ResponseCounterItem[]>> {
+    console.log("|CoutersService|getCounters all|");
+    return api.get<ResponseCounterItem[]>('/counters')
   }
 
 

@@ -74,9 +74,24 @@ const Devicecard: FC<DevicecardProps> = (props) => {
           </Typography> */}
 
           <List>
-            <ListItem>Manufacturer: {props._deviceInfo.manufacturer}</ListItem>
-            <ListItem>Serial number: {props._deviceInfo.serialNumber}</ListItem>
-            <ListItem>Mac address: {props._deviceInfo.macAddress}</ListItem>
+            <ListItem sx={{ pb: "0", pt: "0" }}>
+              <ListItemText
+                primary="Произодитель:"
+                secondary={props._deviceInfo.manufacturer}
+              />
+            </ListItem>
+            <ListItem sx={{ pb: "0", pt: "0" }}>
+              <ListItemText
+                primary="Серийный номер:"
+                secondary={props._deviceInfo.serialNumber}
+              />
+            </ListItem>
+            <ListItem sx={{ pb: "0", pt: "0" }}>
+              <ListItemText
+                primary="MAC адрес:"
+                secondary={props._deviceInfo.macAddress}
+              />
+            </ListItem>
           </List>
 
           {/* <Typography>
@@ -85,7 +100,7 @@ const Devicecard: FC<DevicecardProps> = (props) => {
           <Typography> Mac address: {props._deviceInfo.macAddress}</Typography> */}
           <Divider>WiFi</Divider>
           <List>
-            <ListItem>
+            <ListItem sx={{ pb: "0", pt: "0" }}>
               <ListItemText
                 primary="Имя сети:"
                 secondary={`${props.wifi.ssid2._value} / ${props.wifi.ssid5?._value}`}
@@ -99,16 +114,22 @@ const Devicecard: FC<DevicecardProps> = (props) => {
               />
               <ListItemText />
             </ListItem>
-            <ListItem disabled={props.configMode._value !== "passwd"}
+            <ListItem
+              disabled={props.configMode._value !== "passwd"}
+              sx={{ pb: "0", pt: "0" }}
             >
-              <ListItemText  primary="Пароль:" 
-              secondary={props.configMode._value === "passwd" ? (
-                props.wifi.keyPassphrase._value
-              ) : (
-                <Typography color={red[500]}>
-                  {props._deviceInfo.serialNumber}
-                </Typography>
-              )}/>
+              <ListItemText
+                primary="Пароль:"
+                secondary={
+                  props.configMode._value === "passwd" ? (
+                    props.wifi.keyPassphrase._value
+                  ) : (
+                    <Typography color={red[500]}>
+                      {props._deviceInfo.serialNumber}
+                    </Typography>
+                  )
+                }
+              />
 
               {/* <Typography>
                 {props.configMode._value === "passwd" ? (

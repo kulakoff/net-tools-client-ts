@@ -59,16 +59,20 @@ const ShowMetersAll = (props: Props) => {
           {counters.data ? (
             <List>
               {counters.data.map((item, index) => (
-                <ListItem disablePadding key={index}>
+                <ListItem disablePadding key={index} sx={{display:"flex", flexDirection:"column"}}>
                   <ListItemButton>
+                    <ListItemText primary="Адрес:"
+                    secondary={item.address}/>
                     <ListItemText
+                    primary={item.serial_number}/>
+                    {/* <ListItemText
                       primary={item.address}
                       secondary={
                         <Typography color={"grey"}>
                           Серийный номер: {item.serial_number}
                         </Typography>
                       }
-                    />
+                    /> */}
                   </ListItemButton>
                 </ListItem>
               ))}

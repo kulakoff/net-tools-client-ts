@@ -21,10 +21,14 @@ import { Controller, useForm } from "react-hook-form";
 import validationSchema from "./validation";
 import { useState } from "react";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
 
 type Props = {};
 
 const SendMeters = (props: Props) => {
+  const { counters } = useTypedSelector((state) => state);
+  const { sendCountersData } = useActions();
   const {
     control,
     handleSubmit,
@@ -36,12 +40,13 @@ const SendMeters = (props: Props) => {
   });
 
   const onSubmit = async (data: any) => {
-    console.log("data on form : ", data);
+    // console.log("data on form : ", data);
+    sendCountersData(data)
     // reset();
   };
 
   return (
-    <Container>
+    <Container maxWidth="xs" component="main">
       <Box>
         <Box sx={{ mb: "1.5rem" }}>
           <Typography component="h2" variant="h6">

@@ -15,7 +15,7 @@ export interface IDialogComponentProps {
 
 const DialogComponent: FC<IDialogComponentProps> = ({
   open,
-  title = "Вы уверены",
+  title = "Вы уверены?",
   content ,
   handlerClose,
   handlerActionAccept,

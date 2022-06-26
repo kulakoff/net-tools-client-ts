@@ -7,7 +7,7 @@ const Layout: FC<ReactNode> = (props) => {
   return (
     <>
       <Navbar />
-      <Container maxWidth="sm">
+      <Container sx={{maxWidth:{mx:"xs",md:"lg"}}}>
         <Outlet />
       </Container>
     </>

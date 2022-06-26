@@ -1,11 +1,10 @@
 import { ErrorType } from "./error";
 
-
 export interface ICountersState {
   // data: ResponseCounterItem[] | null,
-  data: ResponseCounterItem[] | null
-  isLoading: boolean,
-  error: ErrorType | null
+  data: ResponseCounterItem[] | null;
+  isLoading: boolean;
+  error: ErrorType | null;
 }
 
 export type counterModel = "CE-300" | "CE-301" | "CE-102M";
@@ -18,13 +17,13 @@ export type ResponseCounterItem = {
   telemetry: boolean;
 };
 
-
 /**
  * Данные полученные из формы отправик показаний прибора учета
  */
 export type CounterFormData = {
   serial_number: string;
   value: string;
+  timestamp: Date;
 };
 export type CounterItemData = {
   id?: number;

@@ -2,7 +2,9 @@ import { Dispatch } from "react";
 import { API_URL } from "../../http";
 import { CoutersService } from "../../services/CoutersService";
 import {
-  CountersActions, CountersActionTypes
+  CounterFormData,
+  CountersActions,
+  CountersActionTypes,
 } from "../../types/counters";
 
 import { ErrorType } from "../../types/error";
@@ -13,11 +15,11 @@ export const getCounters = () => {
       dispatch({
         type: CountersActionTypes.FETCHING_COUNTERS_DATA,
       });
-      console.log("getCounters");
+      // console.log("getCounters");
       // console.log("getDevice props > ", props);
-      const response = await CoutersService.getCounters();
-      const { data } = response;
-      console.log(response);
+      const { data } = await CoutersService.getCounters();
+      // const { data } = response;
+      console.log(data);
       if (data)
         dispatch({
           type: CountersActionTypes.FETCHING_COUNTERS_DATA_SUCCESS,
@@ -25,6 +27,23 @@ export const getCounters = () => {
         });
     } catch (error: any) {
       console.log("getDevice error : ", error);
+      dispatch({
+        type: CountersActionTypes.FETCHING_COUNTERS_DATA_FAILURE,
+        payload: error.response.data,
+      });
+    }
+  };
+};
+
+export const sendCountersData = (formData: CounterFormData) => {
+  return async (dispatch: Dispatch<CountersActions>) => {
+    console.log("sendCountersData >>> ", formData);
+    try {
+      dispatch({
+        type: CountersActionTypes.FETCHING_COUNTERS_DATA,
+      });
+    } catch (error: any) {
+      console.log("sendCountersData error : ", error);
       dispatch({
         type: CountersActionTypes.FETCHING_COUNTERS_DATA_FAILURE,
         payload: error.response.data,
@@ -53,4 +72,3 @@ export const getCounters = () => {
 //     }
 //   };
 // };
-

@@ -4,112 +4,80 @@ import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-import { DatePicker, CalendarPicker, MobileDateTimePicker } from "@mui/x-date-pickers/";
+import {
+  DatePicker,
+  CalendarPicker,
+  MobileDateTimePicker,
+} from "@mui/x-date-pickers/";
 import { Controller, useForm } from "react-hook-form";
-import { Button, Box } from "@mui/material";
+import {
+  Button,
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
+
+import axios from "axios";
+
+// function createData(name:string, username:string, email:string, phone:string, website:string) {
+//   return { name, username, email, phone, website };
+//  }
+
+
 
 type Props = {};
 
 const DemoPage = (props: Props) => {
-  const [value, setValue] = React.useState<Date | null>(null);
+  const [data, setData] = React.useState<any[]>([]);
 
-  const handleChange = (newValue: Date | null) => {
-    setValue(newValue);
-  };
+  React.useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        setData(res.data);
+        console.log("Result:", data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
-
-  const onSubmit = async (data: any) => {
-    console.log("data on form : ", data.demo_date);
-    alert(data.demo_date)
-  };
-
+  
   return (
-    <div>
-      <h1>Demo components page</h1>
-      <span>Раздел в разработке</span>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="demo_date"
-          defaultValue={new Date()}
-          control={control}
-          render={({ field }) => (
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <MobileDateTimePicker
-                {...field}
-                inputFormat="dd/MM/yyyy"
-                label="Дата передачи показаний"
-                value={field.value}
-                onChange={(e) => field.onChange(e)}
-                renderInput={(props) => <TextField 
-                  error={Boolean(errors.demo_date?.message)}
-                  helperText={errors.demo_date?.message}
-                  fullWidth {...props} />}
-              />
-            </LocalizationProvider>
-          )}
-        />
-        <Button 
-        type="submit"
-        fullWidth
-        variant="contained"
-        >SHOW</Button>
-      </Box>
-    </div>
+    <TableContainer component={Paper}>
+      <Table aria-label="simple table" stickyHeader>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="left">Username</TableCell>
+            <TableCell align="left">Email</TableCell>
+            <TableCell align="left">Phone</TableCell>
+            <TableCell align="left">Website</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row) => (
+            <TableRow key={row.id} onClick={()=>console.log(row)}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="left">{row.username}</TableCell>
+              <TableCell align="left">{row.email}</TableCell>
+              <TableCell align="left">{row.phone}</TableCell>
+              <TableCell align="left">{row.website}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
-
-// export function MaterialUIPickers() {
-//   const [value, setValue] = React.useState<Date | null>(new Date());
-
-//   const handleChange = (newValue: Date | null) => {
-//     setValue(newValue);
-//   };
-
-//   return (
-//     <LocalizationProvider dateAdapter={AdapterDateFns}>
-//       <Stack spacing={3}>
-//         <DesktopDatePicker
-//           label="Date desktop"
-//           inputFormat="MM/dd/yyyy"
-//           value={value}
-//           onChange={handleChange}
-//           renderInput={(params) => <TextField {...params} />}
-//         />
-//         <MobileDatePicker
-//           label="Date mobile"
-//           inputFormat="MM/dd/yyyy"
-//           value={value}
-//           onChange={handleChange}
-//           renderInput={(params) => <TextField {...params} />}
-//         />
-
-//         <DateTimePicker
-//           label="Date&Time picker"
-//           value={value}
-//           onChange={handleChange}
-//           renderInput={(params) => <TextField {...params} />}
-//         />
-
-//         <DatePicker
-//           label="base picker"
-//           value={value}
-//           onChange={handleChange}
-//           renderInput={(params) => <TextField {...params} />}
-//         />
-//       </Stack>
-//     </LocalizationProvider>
-//   );
-// }
 
 export default DemoPage;

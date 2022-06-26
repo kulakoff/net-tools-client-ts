@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import SendMeters from "../../components/SendMeters";
 import ShowMeters from "../../components/ShowMeters";
 import ShowMetersAll from "../../components/ShowMetersAll";
+import ShowMetersAll2 from "../../components/ShowMetersAll2";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,7 +49,7 @@ export default function MetersPage() {
   };
 
   return (
-    <Box sx={{ width: "100%", height: 600 }}>
+    <Box sx={{ width: "100%", height: 900 }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
         <Tabs
           value={value}
@@ -61,7 +62,8 @@ export default function MetersPage() {
           <Tab label="Передать показания" {...a11yProps(0)} />
           <Tab label="Просмотр показаний" {...a11yProps(1)} />
           <Tab label="Приборы учета" {...a11yProps(2)} />
-          <Tab label="Статистика" {...a11yProps(3)} />
+          <Tab label="Приборы учета (table)" {...a11yProps(3)} />
+          <Tab label="Статистика" {...a11yProps(4)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -74,6 +76,9 @@ export default function MetersPage() {
         <ShowMetersAll />
       </TabPanel>
       <TabPanel value={value} index={3}>
+        <ShowMetersAll2 />
+      </TabPanel>
+      <TabPanel value={value} index={4}>
         Статистика
       </TabPanel>
     </Box>

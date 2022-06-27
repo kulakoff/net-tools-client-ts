@@ -17,6 +17,16 @@ export type ResponseCounterItem = {
   telemetry: boolean;
 };
 
+export type responseValues = {
+  val: "CURRENT_TIMESTAMP"
+}
+export interface IResponseSendCounters {
+  timestamp: responseValues,
+  id: number,
+  counter_id: string,
+  value: number
+}
+
 /**
  * Данные полученные из формы отправик показаний прибора учета
  */
@@ -25,6 +35,9 @@ export type CounterFormData = {
   value: string;
   timestamp: Date;
 };
+
+
+
 export type CounterItemData = {
   id?: number;
   counter_id: number;
@@ -46,7 +59,12 @@ export enum CountersActionTypes {
   FETCHING_COUNTERS_DATA = "FETCHING_COUNTERS_DATA",
   FETCHING_COUNTERS_DATA_SUCCESS = "FETCHING_COUNTERS_SUCCESS",
   FETCHING_COUNTERS_DATA_FAILURE = "FETCHING_COUNTERS_FAILURE",
+  SENDING_COUNTERS_DATA = "SENDING_COUNTERS_DATA",
+  SENDING_COUNTERS_DATA_SUCCESS = "SENDING_COUNTERS_DATA_SUCCESS",
+  SENDING_COUNTERS_DATA_FAILURE = "SENDING_COUNTERS_DATA_FAILURE"
 }
+
+
 
 export interface IFetchingCountersData {
   type: CountersActionTypes.FETCHING_COUNTERS_DATA;
@@ -61,7 +79,35 @@ export interface IFetchingCountersDataFailure {
   payload: ErrorType;
 }
 
+/**
+ * Отправка показания прибора учета
+ */
+export interface ISendingConutersData {
+  type: CountersActionTypes.SENDING_COUNTERS_DATA
+  payload: CounterFormData
+}
+
+/**
+ * Успешная показания прибора учета
+ */
+export interface ISendingConutersDataSuccess {
+  type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
+  payload: IResponseSendCounters
+}
+
+/**
+ * Ошибка при отправке показаний прибора учета
+ */
+export interface ISendingConutersDataFailure {
+  type: CountersActionTypes.SENDING_COUNTERS_DATA_FAILURE,
+  payload: ErrorType;
+
+}
+
 export type CountersActions =
   | IFetchingCountersData
   | IFetchingCountersDataSuccess
-  | IFetchingCountersDataFailure;
+  | IFetchingCountersDataFailure
+  | ISendingConutersData
+  | ISendingConutersDataSuccess
+  | ISendingConutersDataFailure

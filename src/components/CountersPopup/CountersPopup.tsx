@@ -5,7 +5,8 @@ type ICountersPopupProps = {
   openPopup: boolean;
   handleClose: () => void;
   title: string;
-  children: any;
+  children: ReactNode;
+  payload?:any
 };
 
 const CountersPopup: FC<ICountersPopupProps> = ({
@@ -13,6 +14,7 @@ const CountersPopup: FC<ICountersPopupProps> = ({
   title,
   children,
   handleClose,
+  payload,
 }) => {
   return (
     <Dialog

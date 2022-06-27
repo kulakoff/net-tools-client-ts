@@ -32,6 +32,8 @@ import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 import CountersPopup from "../CountersPopup";
 import SendCountersForm from "../SendCountersForm";
+import SendMeters from "../SendMeters";
+import { CounterFormData, ResponseCounterItem } from "../../types/counters";
 
 type Props = {};
 
@@ -79,8 +81,18 @@ export function BasicModal({
           <Typography id="modal-modal-description" sx={{ m: 2 }}>
             Адрес: {payload?.address}
           </Typography>
-          <TextField id="outlined-basic" label="Serial" variant="outlined" value={payload?.serial_number} />
-          <TextField id="outlined-basic" label="value" variant="outlined"  type={"number"}/>
+          <TextField
+            id="outlined-basic"
+            label="Serial"
+            variant="outlined"
+            value={payload?.serial_number}
+          />
+          <TextField
+            id="outlined-basic"
+            label="value"
+            variant="outlined"
+            type={"number"}
+          />
           <Button>send</Button>
         </Box>
       </Modal>
@@ -90,16 +102,18 @@ export function BasicModal({
 
 const ShowMetersAll2 = (props: Props) => {
   const { counters } = useTypedSelector((state) => state);
-  const { getCounters } = useActions();
+  const { getCounters, sendCountersData } = useActions();
 
   const [open, setOpen] = React.useState(false);
-  const [counterItem, setCounterItem] = React.useState<any>(null);
+  const [counterItem, setCounterItem] = React.useState<ResponseCounterItem|null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const showMetersPopup = (item: any) => {
     setCounterItem(item);
     handleOpen();
   };
+
+  // const sendCountersHandler = () => sendCountersData();
 
   console.log(counters);
   React.useEffect(() => {
@@ -187,12 +201,15 @@ const ShowMetersAll2 = (props: Props) => {
         payload={counterItem}
       /> */}
       <CountersPopup
-      openPopup={open}
-      handleClose={handleClose}
-      title={"Передать показания прибора учета"}
-     
+        openPopup={open}
+        handleClose={handleClose}
+        title={"Передать показания прибора учета"}
       >
-        <SendCountersForm/>
+        <SendCountersForm
+          counterItem={counterItem}
+          sendFormData = {(data)=>sendCountersData(data)}
+          // sendCountersData_={((data:CounterFormData)=>console.log(data))}
+        />
       </CountersPopup>
     </>
     // </Box>

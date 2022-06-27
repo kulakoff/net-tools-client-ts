@@ -40,12 +40,17 @@ export const sendCountersData = (formData: CounterFormData) => {
     console.log("sendCountersData >>> ", formData);
     try {
       dispatch({
-        type: CountersActionTypes.FETCHING_COUNTERS_DATA,
+        type: CountersActionTypes.SENDING_COUNTERS_DATA,
+        payload:formData
       });
+
+      
+      // dispatch({type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
+      // payload: ""})
     } catch (error: any) {
       console.log("sendCountersData error : ", error);
       dispatch({
-        type: CountersActionTypes.FETCHING_COUNTERS_DATA_FAILURE,
+        type: CountersActionTypes.SENDING_COUNTERS_DATA_FAILURE,
         payload: error.response.data,
       });
     }

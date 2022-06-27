@@ -30,6 +30,8 @@ import {
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 import { useActions } from "../../hooks/useActions";
+import CountersPopup from "../CountersPopup";
+import SendCountersForm from "../SendCountersForm";
 
 type Props = {};
 
@@ -94,7 +96,7 @@ const ShowMetersAll2 = (props: Props) => {
   const [counterItem, setCounterItem] = React.useState<any>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const showMetersModal = (item: any) => {
+  const showMetersPopup = (item: any) => {
     setCounterItem(item);
     handleOpen();
   };
@@ -165,7 +167,7 @@ const ShowMetersAll2 = (props: Props) => {
                       <TableCell align="left">
                         {!row.telemetry && (
                           <Tooltip title="Передать показания вручную">
-                            <Button onClick={() => showMetersModal(row)}>
+                            <Button onClick={() => showMetersPopup(row)}>
                               🚀
                             </Button>
                           </Tooltip>
@@ -178,12 +180,20 @@ const ShowMetersAll2 = (props: Props) => {
           </TableContainer>
         </Grid>
       </Grid>
-      <BasicModal
+      {/* <BasicModal
         open={open}
         handleOpen={handleOpen}
         handleClose={handleClose}
         payload={counterItem}
-      />
+      /> */}
+      <CountersPopup
+      openPopup={open}
+      handleClose={handleClose}
+      title={"Передать показания прибора учета"}
+     
+      >
+        <SendCountersForm/>
+      </CountersPopup>
     </>
     // </Box>
   );

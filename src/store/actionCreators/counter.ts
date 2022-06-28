@@ -44,7 +44,7 @@ export const sendCountersData = (formData: CounterFormData) => {
         payload:formData
       });
 
-      
+      const { data } = await CoutersService.getCounters();
       // dispatch({type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
       // payload: ""})
     } catch (error: any) {

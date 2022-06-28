@@ -23,4 +23,9 @@ export class CoutersService {
     console.log("|CoutersService|getCountersItem|");
     return null;
   }
+
+
+  static async sendCountersData ():Promise<AxiosResponse>{
+    return api.post
+  }
 }

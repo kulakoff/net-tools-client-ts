@@ -5,6 +5,7 @@ import {
   CounterFormData,
   CountersActions,
   CountersActionTypes,
+  ISendMetersDataForm,
 } from "../../types/counters";
 
 import { ErrorType } from "../../types/error";
@@ -41,12 +42,16 @@ export const sendCountersData = (formData: CounterFormData) => {
     try {
       dispatch({
         type: CountersActionTypes.SENDING_COUNTERS_DATA,
-        payload:formData
+        payload: formData
       });
 
-      const { data } = await CoutersService.getCounters();
-      // dispatch({type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
-      // payload: ""})
+      const { data } = await CoutersService.sendCountersData(formData);
+
+      dispatch({
+        type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
+        payload: data
+      })
+      
     } catch (error: any) {
       console.log("sendCountersData error : ", error);
       dispatch({

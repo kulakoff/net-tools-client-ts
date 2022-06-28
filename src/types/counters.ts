@@ -1,8 +1,15 @@
 import { ErrorType } from "./error";
 
+export interface ISendMetersDataForm {
+  payload: {
+    serial_number: string,
+    value: number
+  }
+}
+
 export interface ICountersState {
-  // data: ResponseCounterItem[] | null,
   data: ResponseCounterItem[] | null;
+  sendingResponse: any
   isLoading: boolean;
   error: ErrorType | null;
 }
@@ -23,7 +30,7 @@ export type responseValues = {
 export interface IResponseSendCounters {
   timestamp: responseValues,
   id: number,
-  counter_id: string,
+  counter_id: number,
   value: number
 }
 

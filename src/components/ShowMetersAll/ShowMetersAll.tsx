@@ -86,7 +86,7 @@ const ShowMetersAll = (props: Props) => {
       <Box>
         <FormGroup sx={{ pb: "1rem" }}>
           <FormControlLabel
-            control={<Switch disabled />}
+            control={<Switch />}
             label="Только счетчики без телеметрии"
           />
         </FormGroup>
@@ -94,7 +94,11 @@ const ShowMetersAll = (props: Props) => {
         <Stack spacing={2}>
           {counters.data &&
             counters.data.map((item) => (
-              <Paper sx={{ textAlign: "left", p: "1rem" }}>
+              <Paper
+                sx={{ textAlign: "left", p: "1rem" }}
+                elevation={5}
+                variant="elevation"
+              >
                 <Typography> Адрес: {item.address}</Typography>
                 <Typography>Серийный номер: {item.serial_number} </Typography>
                 <Typography>Модель: {item.model} </Typography>
@@ -103,14 +107,16 @@ const ShowMetersAll = (props: Props) => {
                 </Typography>
                 <Divider />
                 <Box>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    disabled={item.telemetry}
-                    onClick={() => showMetersPopup(item)}
-                  >
-                    🚀 Передать показания
-                  </Button>
+                  <Tooltip title="Передать показания для приборов не оснащеннх телеметрией">
+                    <Button
+                      fullWidth
+                      disabled={item.telemetry}
+                      onClick={() => showMetersPopup(item)}
+                    >
+                      🚀 Передать показания
+                    </Button>
+                  </Tooltip>
+
                   <Button
                     fullWidth
                     onClick={() => showCounterHistoryPopup(item)}

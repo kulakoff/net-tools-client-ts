@@ -59,24 +59,27 @@ export default function MetersPage() {
           scrollButtons
           allowScrollButtonsMobile
         >
-          <Tab label="Передать показания" {...a11yProps(0)} />
-          <Tab label="Просмотр показаний" {...a11yProps(1)} />
-          <Tab label="Приборы учета (mobile)" {...a11yProps(2)} />
-          <Tab label="Приборы учета (desctop)" {...a11yProps(3)} />
+          <Tab label="Приборы учета (mobile)" {...a11yProps(0)} />
+          <Tab label="Приборы учета (desctop)" {...a11yProps(1)} />
+          <Tab label="Просмотр показаний" {...a11yProps(2)} />
+          <Tab label="Передать показания" {...a11yProps(3)} />
           <Tab label="Отчеты в сбытовую компанию" {...a11yProps(4)} />
+          {/* <Tab label="Приборы учета (mobile)" {...a11yProps(2)} />
+          <Tab label="Приборы учета (desctop)" {...a11yProps(3)} />
+          <Tab label="Отчеты в сбытовую компанию" {...a11yProps(4)} /> */}
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <SendMeters />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ShowMeters />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
         <ShowMetersAll />
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel value={value} index={1}>
         <ShowMetersAll2 />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <ShowMeters />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <SendMeters />
       </TabPanel>
       <TabPanel value={value} index={4}>
         Статистика

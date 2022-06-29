@@ -8,6 +8,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
+import SendIcon from '@mui/icons-material/Send';
 
 import {
   DatePicker,
@@ -25,11 +27,16 @@ import { useActions } from "../../hooks/useActions";
 import { CounterFormData, ResponseCounterItem } from "../../types/counters";
 
 interface SendMetersProps {
+  isLoading: boolean;
   counterItem: ResponseCounterItem | null;
   sendFormData: (data: CounterFormData) => void;
 }
 
-const SendMeters = ({ counterItem, sendFormData }: SendMetersProps) => {
+const SendMeters = ({
+  isLoading,
+  counterItem,
+  sendFormData,
+}: SendMetersProps) => {
   // debugger
   const { counters } = useTypedSelector((state) => state);
   // const { sendCountersData } = useActions();
@@ -50,7 +57,7 @@ const SendMeters = ({ counterItem, sendFormData }: SendMetersProps) => {
   };
 
   return (
-    <Container maxWidth="xs" component="main">
+    <Container maxWidth="xs" component="main" sx={{display: "flex", justifyContent:"space-between"}}>
       <Box>
         <Box sx={{ mb: "1.5rem" }}>
           <Typography variant="caption" component="div">
@@ -65,7 +72,6 @@ const SendMeters = ({ counterItem, sendFormData }: SendMetersProps) => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Controller
-              
                 key="111"
                 name="serial_number"
                 control={control}
@@ -139,15 +145,17 @@ const SendMeters = ({ counterItem, sendFormData }: SendMetersProps) => {
             </Grid>
 
             <Grid item xs={12}>
-              <Button
+              <LoadingButton
                 variant="contained"
                 color="primary"
                 type="submit"
                 fullWidth
                 size="large"
+                loading={isLoading}
+                endIcon={<SendIcon/>}
               >
                 Отправить
-              </Button>
+              </LoadingButton>
             </Grid>
           </Grid>
         </Box>

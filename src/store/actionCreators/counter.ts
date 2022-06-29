@@ -1,3 +1,4 @@
+//actionCreator counters
 import { Dispatch } from "react";
 import { API_URL } from "../../http";
 import { CoutersService } from "../../services/CoutersService";
@@ -38,7 +39,6 @@ export const getCounters = () => {
 
 export const sendCountersData = (formData: CounterFormData) => {
   return async (dispatch: Dispatch<CountersActions>) => {
-    console.log("sendCountersData >>> ", formData);
     try {
       dispatch({
         type: CountersActionTypes.SENDING_COUNTERS_DATA,

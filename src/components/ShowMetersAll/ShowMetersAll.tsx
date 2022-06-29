@@ -50,21 +50,28 @@ const ShowMetersAll = (props: Props) => {
   // };
 
   return (
-    // <Box>
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Typography marginBottom="1rem">Приборы учета</Typography>
+    <>
+   
+     {/* <Grid container spacing={2}> */}
+      {/* <Grid item xs={12}> */}
+        <Typography marginBottom="1rem" component="div" variant="overline">
+          Приборы учета
+        </Typography>
 
-        <Box sx={{ width: "100%", maxWidth: 460, bgcolor: "background.paper" }}>
+        <Box >
           {counters.data ? (
-            <List>
+            <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
               {counters.data.map((item, index) => (
-                <ListItem disablePadding key={index} sx={{display:"flex", flexDirection:"column"}}>
+                <ListItem
+                  disablePadding
+                  key={index}
+                  sx={{ display: "flex", 
+                  flexDirection: "column"
+                 }}
+                >
                   <ListItemButton>
-                    <ListItemText primary="Адрес:"
-                    secondary={item.address}/>
-                    <ListItemText
-                    primary={item.serial_number}/>
+                    <ListItemText primary="Адрес:" secondary={item.address} />
+                    {/* <ListItemText primary={item.serial_number} /> */}
                     {/* <ListItemText
                       primary={item.address}
                       secondary={
@@ -87,46 +94,8 @@ const ShowMetersAll = (props: Props) => {
             "NULL"
           )}
         </Box>
+        </>
 
-        {/* <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Controller
-                name="metersDate"
-                defaultValue={new Date()}
-                control={control}
-                render={({ field }) => (
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <MobileDatePicker
-                      {...field}
-                      inputFormat="dd/MM/yyyy"
-                      label="Дата"
-                      value={field.value}
-                      onChange={(e) => field.onChange(e)}
-                      renderInput={(props) => (
-                        <TextField
-                          error={Boolean(errors.metersDate?.message)}
-                          helperText={errors.metersDate?.message}
-                          fullWidth
-                          {...props}
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
-                )}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <Button type="submit" fullWidth variant="contained">
-                Поиск
-              </Button>
-            </Grid>
-          </Grid>
-        </Box> */}
-      </Grid>
-    </Grid>
-    // </Box>
   );
 };
 

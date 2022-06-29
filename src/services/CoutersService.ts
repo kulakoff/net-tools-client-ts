@@ -26,9 +26,9 @@ export class CoutersService {
 
 
   static async sendCountersData(props: CounterFormData): Promise<AxiosResponse<IResponseSendCounters>> {
-    console.log("|CoutersService|sendCountersData|", props);
+    // console.log("|CoutersService|sendCountersData|", props);
     const sendData = { payload: { ...props } }
-    console.log("|CoutersService|sendCountersData|", sendData);
+    // console.log("|CoutersService|sendCountersData|", sendData);
 
     return api.post<IResponseSendCounters>('/counters/data', sendData)
   }

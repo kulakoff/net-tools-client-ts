@@ -9,8 +9,8 @@ const RequireAuthRoute = () => {
   const url = new URLSearchParams();
   url.set("redirect", location.pathname + location.search);
 
-  console.log("user: ", user);
-  console.log("location: ", location);
+  // console.log("user: ", user);
+  // console.log("location: ", location);
   return user !== null ? (
     <Outlet />
   ) : (

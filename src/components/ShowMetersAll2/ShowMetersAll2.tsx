@@ -103,19 +103,23 @@ export function BasicModal({
 const ShowMetersAll2 = (props: Props) => {
   const { counters } = useTypedSelector((state) => state);
   const { getCounters, sendCountersData } = useActions();
+  const [openPopup, setOpenPopup] = React.useState(false);
+  const [counterItem, setCounterItem] =
+    React.useState<ResponseCounterItem | null>(null);
 
-  const [open, setOpen] = React.useState(false);
-  const [counterItem, setCounterItem] = React.useState<ResponseCounterItem|null>(null);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpenPopup = () => setOpenPopup(true);
+  const handleClosePopup = () => setOpenPopup(false);
   const showMetersPopup = (item: any) => {
     setCounterItem(item);
-    handleOpen();
+    handleOpenPopup();
   };
+  const handleSendCounterData = (data:CounterFormData)=>{
+    sendCountersData(data)
+    handleClosePopup();
+  }
 
   // const sendCountersHandler = () => sendCountersData();
-
-  console.log(counters);
+ 
   React.useEffect(() => {
     getCounters();
   }, []);
@@ -141,8 +145,8 @@ const ShowMetersAll2 = (props: Props) => {
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography marginBottom="1rem">
-            Приборы учета (test table)
+          <Typography component="div" variant="overline" >
+            Приборы учета
           </Typography>
           <TableContainer component={Paper}>
             <Table
@@ -201,13 +205,14 @@ const ShowMetersAll2 = (props: Props) => {
         payload={counterItem}
       /> */}
       <CountersPopup
-        openPopup={open}
-        handleClose={handleClose}
+        openPopup={openPopup}
+        handleClose={handleClosePopup}
         title={"Передать показания прибора учета"}
       >
         <SendCountersForm
+          isLoading={counters.isLoading}
           counterItem={counterItem}
-          sendFormData = {(data)=>sendCountersData(data)}
+          sendFormData={(data) => handleSendCounterData(data)}
           // sendCountersData_={((data:CounterFormData)=>console.log(data))}
         />
       </CountersPopup>

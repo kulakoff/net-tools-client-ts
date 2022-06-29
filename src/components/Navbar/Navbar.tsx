@@ -24,20 +24,15 @@ import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 
-// const pages = [
-//   { name: "Products", url: "#" },
-//   { name: "Pricing", url: "#" },
-//   { name: "Blog", url: "#" },
-// ];
-// const pages = ["Device", "Pricing", "Blog","login","info"];
+
 const pages: any[] = [
-  { name: "🚀 Demo ", url: "/demo" },
-  { name: "🚀 Success registration ", url: "/signup-succes" },
-  { name: "😀 Test ", url: "/test" },
   { name: "Приборы учета ⏱️", url: "/meters" },
   { name: "Абонентские устройства", url: "/devices" },
-  { name: "Войти", url: "/signin" },
-  { name: "Регистрация", url: "/signup" },
+  // { name: "🚀 Demo ", url: "/demo" },
+  { name: "🚀 Success registration ", url: "/signup-succes" },
+  // { name: "😀 Test ", url: "/test" },
+  // { name: "Войти", url: "/signin" },
+  // { name: "Регистрация", url: "/signup" },
   // { name: "Выйти", url: "/" },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];

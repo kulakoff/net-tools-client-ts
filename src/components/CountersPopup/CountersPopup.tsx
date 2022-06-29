@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Container, Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
 import React, { FC, ReactNode } from "react";
 
 type ICountersPopupProps = {
@@ -17,20 +17,21 @@ const CountersPopup: FC<ICountersPopupProps> = ({
   payload,
 }) => {
   return (
+
     <Dialog
       open={openPopup}
       onClose={handleClose}
-      sx={{ minWidth: 500, minHeight: 500 }}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle>
-        <Typography variant="h6" component="div">
+        <Typography variant="overline" component="div">
           {title}
         </Typography>
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
     </Dialog>
+
   );
 };
 

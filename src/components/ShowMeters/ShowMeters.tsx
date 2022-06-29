@@ -6,7 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { MobileDatePicker } from "@mui/x-date-pickers/";
 import { Controller, useForm } from "react-hook-form";
-import { Button, Box, Typography, Grid } from "@mui/material";
+import { Button, Box, Typography, Grid, Container } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
 
@@ -31,8 +31,8 @@ const ShowMeters = (props: Props) => {
   };
 
   return (
-    // <Box>
-    <Grid container spacing={2}>
+   <Container maxWidth="sm">
+    <Grid container spacing={2} >
       <Grid item xs={12}>
         <Typography marginBottom="1rem">
           Просмотр показаний приборов учета
@@ -76,7 +76,8 @@ const ShowMeters = (props: Props) => {
         </Box>
       </Grid>
     </Grid>
-    // </Box>
+   </Container>
+
   );
 };
 

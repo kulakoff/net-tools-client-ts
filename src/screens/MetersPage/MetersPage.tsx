@@ -63,7 +63,7 @@ export default function MetersPage() {
           <Tab label="Просмотр показаний" {...a11yProps(1)} />
           <Tab label="Приборы учета (mobile)" {...a11yProps(2)} />
           <Tab label="Приборы учета (desctop)" {...a11yProps(3)} />
-          <Tab label="Статистика" {...a11yProps(4)} />
+          <Tab label="Отчеты в сбытовую компанию" {...a11yProps(4)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

@@ -51,7 +51,7 @@ export const sendCountersData = (formData: CounterFormData) => {
         type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
         payload: data
       })
-      
+
     } catch (error: any) {
       console.log("sendCountersData error : ", error);
       dispatch({
@@ -62,23 +62,38 @@ export const sendCountersData = (formData: CounterFormData) => {
   };
 };
 
-// export const getCountersItem = (payload: ISetDeviceConfigMode) => {
-//   console.log("setDevice payload: ", payload);
-//   return async (dispatch: Dispatch<DeviceActions>) => {
-//     try {
-//       dispatch({
-//         type: DeviceActionTypes.FETCHING_DEVICE_DATA,
-//       });
+export const getCounterHistory = (id: number) => {
+  return async (dispatch: Dispatch<CountersActions>) => {
+    try {
+      dispatch({
+        type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY,
+      });
+      //Получаем историю показаний  выбранного прибора учета
+      const { data } = await CoutersService.getCounterItemHistory(id)
 
-//       const { data } = await DeviceService.setDevice(payload);
-//       console.log(data);
-//       if (data)
-//         dispatch({
-//           type: DeviceActionTypes.FETCHING_DEVICE_DATA_SUCCESS,
-//           payload: data,
-//         });
-//     } catch (error) {
-//       console.log("setDevice error : ", error);
-//     }
-//   };
-// };
+      dispatch({
+        type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_SCUCCESS,
+        payload: data
+      })
+
+    } catch (error: any) {
+      console.log("sendCountersData error : ", error);
+      dispatch({
+        type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_FAILURE,
+        payload: error.response.data,
+      });
+    }
+  }
+}
+
+export const clearCountersSelectedItem = () => {
+  return async (dispatch: Dispatch<CountersActions>) => {
+    try {
+      dispatch({
+        type: CountersActionTypes.CLEAR_COUNTERS_SELECTEDITEM
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}

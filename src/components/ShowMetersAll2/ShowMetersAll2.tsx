@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -6,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { MobileDatePicker } from "@mui/x-date-pickers/";
 import { Controller, useForm } from "react-hook-form";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {
   Tooltip,
   Button,
@@ -34,6 +35,7 @@ import CountersPopup from "../CountersPopup";
 import SendCountersForm from "../SendCountersForm";
 import SendMeters from "../SendMeters";
 import { CounterFormData, ResponseCounterItem } from "../../types/counters";
+import ShowMetersItemHistory from "../ShowMetersItemHistory";
 
 type Props = {};
 
@@ -49,103 +51,56 @@ const style = {
   p: 4,
 };
 
-export interface IBasicModalProps {
-  open: boolean;
-  payload: any;
-  handleOpen: () => void;
-  handleClose: () => void;
-}
-export function BasicModal({
-  open,
-  handleOpen,
-  handleClose,
-  payload,
-}: IBasicModalProps) {
-  // const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-
-  return (
-    <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Отправить показания прибора учета
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ m: 2 }}>
-            Адрес: {payload?.address}
-          </Typography>
-          <TextField
-            id="outlined-basic"
-            label="Serial"
-            variant="outlined"
-            value={payload?.serial_number}
-          />
-          <TextField
-            id="outlined-basic"
-            label="value"
-            variant="outlined"
-            type={"number"}
-          />
-          <Button>send</Button>
-        </Box>
-      </Modal>
-    </div>
-  );
-}
-
 const ShowMetersAll2 = (props: Props) => {
   const { counters } = useTypedSelector((state) => state);
-  const { getCounters, sendCountersData } = useActions();
-  const [openPopup, setOpenPopup] = React.useState(false);
-  const [counterItem, setCounterItem] =
-    React.useState<ResponseCounterItem | null>(null);
+  const {
+    getCounters,
+    sendCountersData,
+    getCounterHistory,
+    clearCountersSelectedItem,
+  } = useActions();
+  const [openPopup, setOpenPopup] = useState(false);
+  const [openPopupHitory, setOpenPopupHitory] = useState(false);
+  const [counterItem, setCounterItem] = useState<ResponseCounterItem | null>(
+    null
+  );
 
   const handleOpenPopup = () => setOpenPopup(true);
   const handleClosePopup = () => setOpenPopup(false);
+
+  const handleOpenPopupHitory = () => setOpenPopupHitory(true);
+  const handleClosePopupHitory = () => setOpenPopupHitory(false);
+
+  const showCounterHistoryPopup = (item: any) => {
+    console.log(item);
+    handleOpenPopupHitory();
+    getCounterHistory(item.id);
+  };
+
+  const closeCounterHistoryPopup = () => {
+    handleClosePopupHitory();
+    clearCountersSelectedItem();
+  };
+
   const showMetersPopup = (item: any) => {
     setCounterItem(item);
     handleOpenPopup();
   };
-  const handleSendCounterData = (data:CounterFormData)=>{
-    sendCountersData(data)
+  const handleSendCounterData = (data: CounterFormData) => {
+    sendCountersData(data);
     handleClosePopup();
-  }
+  };
 
-  // const sendCountersHandler = () => sendCountersData();
- 
-  React.useEffect(() => {
+  useEffect(() => {
     getCounters();
   }, []);
-  // const [value, setValue] = React.useState<Date | null>(null);
-
-  // const {
-  //   control,
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   setError,
-  // } = useForm({
-  //   resolver: yupResolver(validationSchema),
-  // });
-
-  // const onSubmit = async (data: any) => {
-  //   console.log("data on form : ", data.metersDate);
-  //   alert(data.metersDate);
-  // };
 
   return (
     // <Box>
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography component="div" variant="overline" >
+          <Typography component="div" variant="overline">
             Приборы учета
           </Typography>
           <TableContainer component={Paper}>
@@ -162,7 +117,7 @@ const ShowMetersAll2 = (props: Props) => {
                   <TableCell align="left">Серийный номер</TableCell>
                   <TableCell align="left">Адрес</TableCell>
                   <TableCell align="left">Телеметрия</TableCell>
-                  <TableCell align="center">Передать показания</TableCell>
+                  <TableCell align="center">Показания прибора учета</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -183,13 +138,28 @@ const ShowMetersAll2 = (props: Props) => {
                         {row.telemetry ? "✅" : "⛔️"}
                       </TableCell>
                       <TableCell align="left">
-                        {!row.telemetry && (
-                          <Tooltip title="Передать показания вручную">
-                            <Button onClick={() => showMetersPopup(row)}>
-                              🚀
-                            </Button>
-                          </Tooltip>
-                        )}
+                        {
+                          <>
+                            <Tooltip title="История показаний">
+                              <Button
+                                variant="text"
+                                onClick={() => showCounterHistoryPopup(row)}
+                              >
+                                📅
+                              </Button>
+                            </Tooltip>
+                            {!row.telemetry && (
+                              <Tooltip title="Передать показания вручную">
+                                <Button
+                                  variant="text"
+                                  onClick={() => showMetersPopup(row)}
+                                >
+                                  🚀
+                                </Button>
+                              </Tooltip>
+                            )}
+                          </>
+                        }
                       </TableCell>
                     </TableRow>
                   ))}
@@ -215,6 +185,13 @@ const ShowMetersAll2 = (props: Props) => {
           sendFormData={(data) => handleSendCounterData(data)}
           // sendCountersData_={((data:CounterFormData)=>console.log(data))}
         />
+      </CountersPopup>
+      <CountersPopup
+        openPopup={openPopupHitory}
+        handleClose={closeCounterHistoryPopup}
+        title={"История переданных показаний"}
+      >
+        <ShowMetersItemHistory />
       </CountersPopup>
     </>
     // </Box>

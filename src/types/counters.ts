@@ -1,5 +1,11 @@
 import { ErrorType } from "./error";
 
+export interface IResponseTelemetryItem {
+  id: number,
+  value: string,
+  timestamp: string
+}
+
 export interface ISendMetersDataForm {
   payload: {
     serial_number: string,
@@ -9,7 +15,8 @@ export interface ISendMetersDataForm {
 
 export interface ICountersState {
   data: ResponseCounterItem[] | null;
-  sendingResponse: any
+  sendingResponse: any;
+  selectedItem: { history: IResponseTelemetryItem[] } | null;
   isLoading: boolean;
   error: ErrorType | null;
 }
@@ -62,16 +69,21 @@ export interface ISendingData {
 
 // }
 
+/**
+ * Action типы
+ */
 export enum CountersActionTypes {
   FETCHING_COUNTERS_DATA = "FETCHING_COUNTERS_DATA",
   FETCHING_COUNTERS_DATA_SUCCESS = "FETCHING_COUNTERS_SUCCESS",
   FETCHING_COUNTERS_DATA_FAILURE = "FETCHING_COUNTERS_FAILURE",
   SENDING_COUNTERS_DATA = "SENDING_COUNTERS_DATA",
   SENDING_COUNTERS_DATA_SUCCESS = "SENDING_COUNTERS_DATA_SUCCESS",
-  SENDING_COUNTERS_DATA_FAILURE = "SENDING_COUNTERS_DATA_FAILURE"
+  SENDING_COUNTERS_DATA_FAILURE = "SENDING_COUNTERS_DATA_FAILURE",
+  FETCHING_COUNTERS_TELEMETRY = "FETCHING_COUNTERS_TELEMETRY",
+  FETCHING_COUNTERS_TELEMETRY_SCUCCESS = "FETCHING_COUNTERS_TELEMETRY_SCUCCESS",
+  FETCHING_COUNTERS_TELEMETRY_FAILURE = "FETCHING_COUNTERS_TELEMETRY_FAILURE",
+  CLEAR_COUNTERS_SELECTEDITEM = "CLEAR_COUNTERS_SELECTEDITEM"
 }
-
-
 
 export interface IFetchingCountersData {
   type: CountersActionTypes.FETCHING_COUNTERS_DATA;
@@ -93,7 +105,6 @@ export interface ISendingConutersData {
   type: CountersActionTypes.SENDING_COUNTERS_DATA
   payload: CounterFormData
 }
-
 /**
  * Успешная показания прибора учета
  */
@@ -101,7 +112,6 @@ export interface ISendingConutersDataSuccess {
   type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
   payload: IResponseSendCounters
 }
-
 /**
  * Ошибка при отправке показаний прибора учета
  */
@@ -111,6 +121,31 @@ export interface ISendingConutersDataFailure {
 
 }
 
+/**
+ * Получение истории показанйи прибора учета
+ */
+export interface IFeychingCountersTelemetry {
+  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY
+}
+/**
+ * Успешное получение истории показанйи прибора учета
+ */
+export interface IFeychingCountersTelemetrySuccess {
+  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_SCUCCESS,
+  payload: IResponseTelemetryItem[];
+}
+/**
+ * Ошибка получения истории показанйи прибора учета
+ */
+export interface IFeychingCountersTelemetryFailure {
+  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_FAILURE,
+  payload: ErrorType;
+}
+
+export interface IClearCountersSelectedItem {
+  type: CountersActionTypes.CLEAR_COUNTERS_SELECTEDITEM
+}
+
 export type CountersActions =
   | IFetchingCountersData
   | IFetchingCountersDataSuccess
@@ -118,3 +153,7 @@ export type CountersActions =
   | ISendingConutersData
   | ISendingConutersDataSuccess
   | ISendingConutersDataFailure
+  | IFeychingCountersTelemetry
+  | IFeychingCountersTelemetrySuccess
+  | IFeychingCountersTelemetryFailure
+  | IClearCountersSelectedItem

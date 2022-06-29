@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import api from "../http";
-import { CounterFormData, IResponseSendCounters, ISendMetersDataForm, ResponseCounterItem } from "../types/counters";
+import { CounterFormData, IResponseSendCounters, IResponseTelemetryItem, ISendMetersDataForm, ResponseCounterItem } from "../types/counters";
 
 export class CoutersService {
   /**
@@ -32,4 +32,9 @@ export class CoutersService {
 
     return api.post<IResponseSendCounters>('/counters/data', sendData)
   }
+
+  static async getCounterItemHistory(id: number): Promise<AxiosResponse<IResponseTelemetryItem[]>> {
+    return api.get<IResponseTelemetryItem[]>(`counters/${id}/history`)
+  }
+
 }

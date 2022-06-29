@@ -1,5 +1,4 @@
 import * as React from "react";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -7,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/";
 import { Controller, useForm } from "react-hook-form";
 import {
+  Paper,
   Button,
   Box,
   Typography,
@@ -16,9 +16,13 @@ import {
   ListItemText,
   ListItemButton,
   Divider,
+  Stack,
+  Switch,
+  FormGroup,
+  FormControlLabel,
 } from "@mui/material";
-import { yupResolver } from "@hookform/resolvers/yup";
-import validationSchema from "./validation";
+import { styled } from "@mui/material/styles";
+
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 import { useActions } from "../../hooks/useActions";
@@ -32,70 +36,30 @@ const ShowMetersAll = (props: Props) => {
   React.useEffect(() => {
     getCounters();
   }, []);
-  // const [value, setValue] = React.useState<Date | null>(null);
-
-  // const {
-  //   control,
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   setError,
-  // } = useForm({
-  //   resolver: yupResolver(validationSchema),
-  // });
-
-  // const onSubmit = async (data: any) => {
-  //   console.log("data on form : ", data.metersDate);
-  //   alert(data.metersDate);
-  // };
 
   return (
-    <>
-   
-     {/* <Grid container spacing={2}> */}
-      {/* <Grid item xs={12}> */}
-        <Typography marginBottom="1rem" component="div" variant="overline">
-          Приборы учета
-        </Typography>
+    <Box sx={{ width: "100%" }}>
+      <FormGroup>
+        <FormControlLabel
+          control={<Switch />}
+          label="Только счетчики без телеметрии 🚧"
+        />
+      </FormGroup>
 
-        <Box >
-          {counters.data ? (
-            <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-              {counters.data.map((item, index) => (
-                <ListItem
-                  disablePadding
-                  key={index}
-                  sx={{ display: "flex", 
-                  flexDirection: "column"
-                 }}
-                >
-                  <ListItemButton>
-                    <ListItemText primary="Адрес:" secondary={item.address} />
-                    {/* <ListItemText primary={item.serial_number} /> */}
-                    {/* <ListItemText
-                      primary={item.address}
-                      secondary={
-                        <Typography color={"grey"}>
-                          Серийный номер: {item.serial_number}
-                        </Typography>
-                      }
-                    /> */}
-                  </ListItemButton>
-                </ListItem>
-              ))}
+      <Stack spacing={2}>
+        {counters.data && counters.data.map((item)=>(
+          <Paper sx={{ textAlign: "left", p: "1rem" }}>
+          🚧
+          <Typography>{item.address}</Typography>
+          <Typography>Серийный номер: {item.serial_number} </Typography>
+          <Button disabled={item.telemetry}>🚀 Передать показания </Button>
+          <Button>📅 Просмотр истории показаний</Button>
+        </Paper>
+        ))}
 
-              {/* <ListItem disablePadding>
-                <ListItemButton component="a" href="#simple-list">
-                  <ListItemText primary="Spam" />
-                </ListItemButton>
-              </ListItem> */}
-            </List>
-          ) : (
-            "NULL"
-          )}
-        </Box>
-        </>
-
+        
+      </Stack>
+    </Box>
   );
 };
 

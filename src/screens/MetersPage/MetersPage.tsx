@@ -49,7 +49,7 @@ export default function MetersPage() {
   };
 
   return (
-    <Box sx={{ width: "100%", height: 900 }}>
+    <Box sx={{ width: "100%", height: 1000 }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
         <Tabs
           value={value}

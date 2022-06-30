@@ -26,6 +26,7 @@ import {
   TableRow,
   Paper,
   Modal,
+  Collapse,
 } from "@mui/material";
 
 import { useTypedSelector } from "../../hooks/useTypedSelector";
@@ -109,6 +110,7 @@ const ShowMetersAll2 = (props: Props) => {
               size="small"
               aria-label="a dense table"
             >
+              <caption>Приборы учета электроэнергии на узлах связи LanTa оснащены удаленным сбором показаний</caption>
               <TableHead>
                 <TableRow>
                   <TableCell>_id</TableCell>
@@ -146,6 +148,14 @@ const ShowMetersAll2 = (props: Props) => {
                                 onClick={() => showCounterHistoryPopup(row)}
                               >
                                 📅
+                              </Button>
+                            </Tooltip>
+                            <Tooltip title="Показать всплывашку с историей показаний">
+                              <Button
+                                variant="text"
+                                onClick={() => showCounterHistoryPopup(row)}
+                              >
+                                🚧
                               </Button>
                             </Tooltip>
                             {!row.telemetry && (
@@ -197,5 +207,6 @@ const ShowMetersAll2 = (props: Props) => {
     // </Box>
   );
 };
+
 
 export default ShowMetersAll2;

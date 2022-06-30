@@ -58,6 +58,7 @@ const DevicesPage = (props: Props) => {
   }, [error]);
 
   const {
+    reset,
     control,
     handleSubmit,
     formState: { errors },
@@ -124,6 +125,7 @@ const DevicesPage = (props: Props) => {
                 render={({ field }) => (
                   <TextField
                     {...field}
+                    inputProps={<Button>X</Button>}
                     required
                     size="small"
                     error={Boolean(errors.value?.message)}
@@ -147,6 +149,15 @@ const DevicesPage = (props: Props) => {
                 disabled={device.isLoading}
               >
                 Поиск
+              </Button>
+              <Button
+                onClick={() => reset()}
+                variant="text"
+                fullWidth={true}
+                size="large"
+                disabled={device.isLoading}
+              >
+                Сброс
               </Button>
             </Grid>
           </Grid>

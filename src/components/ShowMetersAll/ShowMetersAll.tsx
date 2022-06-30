@@ -89,6 +89,7 @@ const ShowMetersAll = (props: Props) => {
             control={<Switch />}
             label="Только счетчики без телеметрии"
           />
+          <Button >Добавить</Button>
         </FormGroup>
 
         <Stack spacing={2}>

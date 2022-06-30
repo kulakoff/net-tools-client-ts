@@ -71,7 +71,7 @@ const Navbar = () => {
   // const Layout = () => {
   return (
     <>
-      <AppBar position="fixed">
+      <AppBar position="relative">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {user.user ? (

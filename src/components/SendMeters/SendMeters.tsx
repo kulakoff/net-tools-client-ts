@@ -59,7 +59,7 @@ const SendMeters = (props: Props) => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Controller
-                key="111"
+                // key="111"
                 name="serialNember"
                 control={control}
                 defaultValue=""
@@ -73,7 +73,7 @@ const SendMeters = (props: Props) => {
                     label="Cерийный номер прибора учета"
                     variant="outlined"
                     helperText={errors.serialNember?.message}
-                    autoFocus
+                    // autoFocus
                   />
                 )}
               />
@@ -81,7 +81,7 @@ const SendMeters = (props: Props) => {
 
             <Grid item xs={12}>
               <Controller
-                key="222"
+                // key="222"
                 name="metersCount"
                 control={control}
                 defaultValue=""

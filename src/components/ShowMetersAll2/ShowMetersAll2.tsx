@@ -150,14 +150,7 @@ const ShowMetersAll2 = (props: Props) => {
                                 📅
                               </Button>
                             </Tooltip>
-                            <Tooltip title="Показать всплывашку с историей показаний">
-                              <Button
-                                variant="text"
-                                onClick={() => showCounterHistoryPopup(row)}
-                              >
-                                🚧
-                              </Button>
-                            </Tooltip>
+                            
                             {!row.telemetry && (
                               <Tooltip title="Передать показания вручную">
                                 <Button

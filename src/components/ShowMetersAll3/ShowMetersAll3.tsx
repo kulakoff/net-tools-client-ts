@@ -73,25 +73,26 @@ const Row = (props: { row: ResponseCounterItem }) => {
         <TableCell component="th" scope="row">
           {row.id}
         </TableCell>
-        <TableCell align="right">{row.model}</TableCell>
-        <TableCell align="right">{row.serial_number}</TableCell>
-        <TableCell align="right">{row.address}</TableCell>
+        <TableCell align="left">{row.model}</TableCell>
+        <TableCell align="left">{row.serial_number}</TableCell>
+        <TableCell align="left">{row.address}</TableCell>
+        <TableCell align="left">{row.telemetry && "🔥"}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={openCollapse} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                История переданных показаний
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Value</TableCell>
+                    <TableCell>Дата</TableCell>
+                    <TableCell>Показаник</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
+                {/* <TableBody>
                   {row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>
                       <TableCell component="th" scope="row">
@@ -104,7 +105,7 @@ const Row = (props: { row: ResponseCounterItem }) => {
                       </TableCell>
                     </TableRow>
                   ))}
-                </TableBody>
+                </TableBody> */}
               </Table>
             </Box>
           </Collapse>
@@ -172,7 +173,11 @@ const ShowMetersAll3 = (props: Props) => {
             <TableCell align="center">Показания прибора учета</TableCell>
           </TableRow>
         </TableHead>
-        <TableHead></TableHead>
+        <TableBody>
+          {counters.data && counters.data.map((row)=>(
+            <Row key={row.id} row={row} />
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );

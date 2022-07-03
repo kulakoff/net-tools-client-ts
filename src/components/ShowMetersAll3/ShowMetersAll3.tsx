@@ -174,9 +174,8 @@ const ShowMetersAll3 = (props: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {counters.data && counters.data.map((row)=>(
-            <Row key={row.id} row={row} />
-          ))}
+          {counters.dataCounters &&
+            counters.dataCounters.map((row) => <Row key={row.id} row={row} />)}
         </TableBody>
       </Table>
     </TableContainer>

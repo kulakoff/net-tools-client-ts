@@ -1,20 +1,41 @@
 import { ErrorType } from "./error";
 
+export type reportActionType = "SEND_REPORT" | "CHECK_REPORT_DATA";
+export enum ReportActions {
+  SEND_REPORT = "SEND_REPORT",
+  CHECK_REPORT_DATA = "CHECK_REPORT_DATA",
+}
+
+/**
+ *  API response report item
+ * интерфейс экземпляра возвращаемого массива
+ */
+export interface IResponseReportItem {
+  id: number;
+  serial_number: string;
+  model: counterModel;
+  address: string;
+  telemetry: boolean;
+  card_number: string;
+  counters_data: IResponseTelemetryItem[];
+}
+
 export interface IResponseTelemetryItem {
-  id: number,
-  value: string,
-  timestamp: string
+  id: number;
+  value: string;
+  timestamp: string;
 }
 
 export interface ISendMetersDataForm {
   payload: {
-    serial_number: string,
-    value: number
-  }
+    serial_number: string;
+    value: number;
+  };
 }
 
 export interface ICountersState {
-  data: ResponseCounterItem[] | null;
+  dataCounters?: ResponseCounterItem[] | null;
+  dataReport?:IResponseReportItem[] | null;
   sendingResponse: any;
   selectedItem: { history: IResponseTelemetryItem[] } | null;
   isLoading: boolean;
@@ -32,13 +53,13 @@ export type ResponseCounterItem = {
 };
 
 export type responseValues = {
-  val: "CURRENT_TIMESTAMP"
-}
+  val: "CURRENT_TIMESTAMP";
+};
 export interface IResponseSendCounters {
-  timestamp: responseValues,
-  id: number,
-  counter_id: number,
-  value: number
+  timestamp: responseValues;
+  id: number;
+  counter_id: number;
+  value: number;
 }
 
 /**
@@ -49,8 +70,6 @@ export type CounterFormData = {
   value: string;
   timestamp: Date;
 };
-
-
 
 export type CounterItemData = {
   id?: number;
@@ -82,7 +101,10 @@ export enum CountersActionTypes {
   FETCHING_COUNTERS_TELEMETRY = "FETCHING_COUNTERS_TELEMETRY",
   FETCHING_COUNTERS_TELEMETRY_SCUCCESS = "FETCHING_COUNTERS_TELEMETRY_SCUCCESS",
   FETCHING_COUNTERS_TELEMETRY_FAILURE = "FETCHING_COUNTERS_TELEMETRY_FAILURE",
-  CLEAR_COUNTERS_SELECTEDITEM = "CLEAR_COUNTERS_SELECTEDITEM"
+  CLEAR_COUNTERS_SELECTEDITEM = "CLEAR_COUNTERS_SELECTEDITEM",
+  SENDING_CHECK_REPORT = "SENDING_CHECK_REPORT",
+  SENDING_CHECK_REPORT_SUCCESS = "SENDING_CHECK_REPORT_SUCCESS",
+  SENDING_CHECK_REPORT_FAILURE = "SENDING_CHECK_REPORT_FAILURE",
 }
 
 export interface IFetchingCountersData {
@@ -102,48 +124,65 @@ export interface IFetchingCountersDataFailure {
  * Отправка показания прибора учета
  */
 export interface ISendingConutersData {
-  type: CountersActionTypes.SENDING_COUNTERS_DATA
-  payload: CounterFormData
+  type: CountersActionTypes.SENDING_COUNTERS_DATA;
+  payload: CounterFormData;
 }
 /**
  * Успешная показания прибора учета
  */
 export interface ISendingConutersDataSuccess {
-  type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
-  payload: IResponseSendCounters
+  type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS;
+  payload: IResponseSendCounters;
 }
 /**
  * Ошибка при отправке показаний прибора учета
  */
 export interface ISendingConutersDataFailure {
-  type: CountersActionTypes.SENDING_COUNTERS_DATA_FAILURE,
+  type: CountersActionTypes.SENDING_COUNTERS_DATA_FAILURE;
   payload: ErrorType;
-
 }
 
 /**
  * Получение истории показанйи прибора учета
  */
 export interface IFeychingCountersTelemetry {
-  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY
+  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY;
 }
 /**
  * Успешное получение истории показанйи прибора учета
  */
 export interface IFeychingCountersTelemetrySuccess {
-  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_SCUCCESS,
+  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_SCUCCESS;
   payload: IResponseTelemetryItem[];
 }
 /**
  * Ошибка получения истории показанйи прибора учета
  */
 export interface IFeychingCountersTelemetryFailure {
-  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_FAILURE,
+  type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_FAILURE;
   payload: ErrorType;
 }
 
 export interface IClearCountersSelectedItem {
-  type: CountersActionTypes.CLEAR_COUNTERS_SELECTEDITEM
+  type: CountersActionTypes.CLEAR_COUNTERS_SELECTEDITEM;
+}
+
+/**
+ * Получение данных для отчета
+ */
+export interface ISendingCheckReport {
+  type: CountersActionTypes.SENDING_CHECK_REPORT;
+}
+/**
+ * Успешное получение данных для отчета, сохраняием в state
+ */
+export interface ISendingCheckReportSuccess {
+  type: CountersActionTypes.SENDING_CHECK_REPORT_SUCCESS;
+  payload: IResponseReportItem[];
+}
+export interface ISendingCheckReportFailure {
+  type: CountersActionTypes.SENDING_CHECK_REPORT_FAILURE;
+  payload: ErrorType;
 }
 
 export type CountersActions =
@@ -157,3 +196,6 @@ export type CountersActions =
   | IFeychingCountersTelemetrySuccess
   | IFeychingCountersTelemetryFailure
   | IClearCountersSelectedItem
+  | ISendingCheckReport
+  | ISendingCheckReportSuccess
+  | ISendingCheckReportFailure;

@@ -123,8 +123,8 @@ const ShowMetersAll2 = (props: Props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {counters.data &&
-                  counters.data.map((row) => (
+                {counters.dataCounters &&
+                  counters.dataCounters.map((row) => (
                     <TableRow
                       key={row.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

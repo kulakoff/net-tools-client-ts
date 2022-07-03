@@ -93,8 +93,8 @@ const ShowMetersAll = (props: Props) => {
         </FormGroup>
 
         <Stack spacing={2}>
-          {counters.data &&
-            counters.data.map((item) => (
+          {counters.dataCounters &&
+            counters.dataCounters.map((item) => (
               <Paper
                 sx={{ textAlign: "left", p: "1rem" }}
                 elevation={5}

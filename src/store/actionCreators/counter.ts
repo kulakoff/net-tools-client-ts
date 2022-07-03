@@ -7,6 +7,8 @@ import {
   CountersActions,
   CountersActionTypes,
   ISendMetersDataForm,
+  ReportActions,
+  reportActionType,
 } from "../../types/counters";
 
 import { ErrorType } from "../../types/error";
@@ -42,16 +44,15 @@ export const sendCountersData = (formData: CounterFormData) => {
     try {
       dispatch({
         type: CountersActionTypes.SENDING_COUNTERS_DATA,
-        payload: formData
+        payload: formData,
       });
 
       const { data } = await CoutersService.sendCountersData(formData);
 
       dispatch({
         type: CountersActionTypes.SENDING_COUNTERS_DATA_SUCCESS,
-        payload: data
-      })
-
+        payload: data,
+      });
     } catch (error: any) {
       console.log("sendCountersData error : ", error);
       dispatch({
@@ -69,13 +70,12 @@ export const getCounterHistory = (id: number) => {
         type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY,
       });
       //Получаем историю показаний  выбранного прибора учета
-      const { data } = await CoutersService.getCounterItemHistory(id)
+      const { data } = await CoutersService.getCounterItemHistory(id);
 
       dispatch({
         type: CountersActionTypes.FETCHING_COUNTERS_TELEMETRY_SCUCCESS,
-        payload: data
-      })
-
+        payload: data,
+      });
     } catch (error: any) {
       console.log("sendCountersData error : ", error);
       dispatch({
@@ -83,17 +83,44 @@ export const getCounterHistory = (id: number) => {
         payload: error.response.data,
       });
     }
-  }
-}
+  };
+};
 
 export const clearCountersSelectedItem = () => {
   return async (dispatch: Dispatch<CountersActions>) => {
     try {
       dispatch({
-        type: CountersActionTypes.CLEAR_COUNTERS_SELECTEDITEM
-      })
+        type: CountersActionTypes.CLEAR_COUNTERS_SELECTEDITEM,
+      });
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
+
+export const getReport = (action: reportActionType) => {
+  return async (dispatch: Dispatch<CountersActions>) => {
+    try {
+      dispatch({
+        type: CountersActionTypes.SENDING_CHECK_REPORT,
+      });
+
+      switch (action) {
+        case ReportActions.CHECK_REPORT_DATA:
+          const { data } = await CoutersService.getReport(action);
+          if (data) {
+            dispatch({
+              type: CountersActionTypes.SENDING_CHECK_REPORT_SUCCESS,
+              payload: data,
+            });
+          }
+      }
+    } catch (error: any) {
+      console.log("getReport error : ", error);
+      dispatch({
+        type: CountersActionTypes.SENDING_CHECK_REPORT_FAILURE,
+        payload: error.response.data,
+      });
+    }
+  };
+};

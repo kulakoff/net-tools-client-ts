@@ -1,6 +1,14 @@
 import { AxiosResponse } from "axios";
 import api from "../http";
-import { CounterFormData, IResponseSendCounters, IResponseTelemetryItem, ISendMetersDataForm, ResponseCounterItem } from "../types/counters";
+import {
+  CounterFormData,
+  IResponseReportItem,
+  IResponseSendCounters,
+  IResponseTelemetryItem,
+  ISendMetersDataForm,
+  reportActionType,
+  ResponseCounterItem,
+} from "../types/counters";
 
 export class CoutersService {
   /**
@@ -10,9 +18,8 @@ export class CoutersService {
    */
   static async getCounters(): Promise<AxiosResponse<ResponseCounterItem[]>> {
     console.log("|CoutersService|getCounters all|");
-    return api.get<ResponseCounterItem[]>('/counters')
+    return api.get<ResponseCounterItem[]>("/counters");
   }
-
 
   /**
    *Получить данные по указанному прибору учета
@@ -24,17 +31,24 @@ export class CoutersService {
     return null;
   }
 
-
-  static async sendCountersData(props: CounterFormData): Promise<AxiosResponse<IResponseSendCounters>> {
+  static async sendCountersData(
+    props: CounterFormData
+  ): Promise<AxiosResponse<IResponseSendCounters>> {
     // console.log("|CoutersService|sendCountersData|", props);
-    const sendData = { payload: { ...props } }
+    const sendData = { payload: { ...props } };
     // console.log("|CoutersService|sendCountersData|", sendData);
 
-    return api.post<IResponseSendCounters>('/counters/data', sendData)
+    return api.post<IResponseSendCounters>("/counters/data", sendData);
   }
 
-  static async getCounterItemHistory(id: number): Promise<AxiosResponse<IResponseTelemetryItem[]>> {
-    return api.get<IResponseTelemetryItem[]>(`counters/${id}/history`)
+  static async getCounterItemHistory(
+    id: number
+  ): Promise<AxiosResponse<IResponseTelemetryItem[]>> {
+    return api.get<IResponseTelemetryItem[]>(`counters/${id}/history`);
   }
-
+  static async getReport(
+    action: reportActionType
+  ): Promise<AxiosResponse<IResponseReportItem[]>> {
+    return api.post<IResponseReportItem[]>("main/report",{action});
+  }
 }

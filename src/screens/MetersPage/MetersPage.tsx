@@ -8,6 +8,7 @@ import ShowMeters from "../../components/ShowMeters";
 import ShowMetersAll from "../../components/ShowMetersAll";
 import ShowMetersAll2 from "../../components/ShowMetersAll2";
 import ShowMetersAll3 from "../../components/ShowMetersAll3";
+import TelemetryReport from "../../components/TelemetryReport";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,7 +44,7 @@ function a11yProps(index: number) {
 }
 
 export default function MetersPage() {
-  const [value, setValue] = React.useState(5);
+  const [value, setValue] = React.useState(4);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -84,7 +85,7 @@ export default function MetersPage() {
         <SendMeters />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Статистика
+        <TelemetryReport/>
       </TabPanel>
       <TabPanel value={value} index={5}>
         <ShowMetersAll3 />

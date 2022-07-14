@@ -1,9 +1,9 @@
 import { ErrorType } from "./error";
 
-export type reportActionType = "SEND_REPORT" | "CHECK_REPORT_DATA";
+export type reportActionType = "SEND_REPORT" | "REPORT_CHECK_DATA";
 export enum ReportActions {
   SEND_REPORT = "SEND_REPORT",
-  CHECK_REPORT_DATA = "CHECK_REPORT_DATA",
+  REPORT_CHECK_DATA = "REPORT_CHECK_DATA",
 }
 
 /**

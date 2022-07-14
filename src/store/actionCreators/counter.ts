@@ -106,7 +106,7 @@ export const getReport = (action: reportActionType) => {
       });
 
       switch (action) {
-        case ReportActions.CHECK_REPORT_DATA:
+        case ReportActions.REPORT_CHECK_DATA:
           const { data } = await CoutersService.getReport(action);
           if (data) {
             dispatch({

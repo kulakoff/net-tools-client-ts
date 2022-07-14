@@ -18,14 +18,23 @@ const ReportRow = (props: { row: IResponseReportItem }) => {
   const { row } = props;
   return (
     <TableRow
-    key={row.id}
-    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      key={row.id}
+      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
-     <TableCell> {row.card_number}</TableCell>
-     <TableCell> {row.address}</TableCell>
-     <TableCell> {row.model} / {row.serial_number}</TableCell>
-     <TableCell> {row.counters_data[1]?.value} / {row.counters_data[1]?.timestamp}</TableCell>
-     <TableCell> {row.counters_data[0]?.value} / {row.counters_data[0]?.timestamp}</TableCell>
+      <TableCell> {row.card_number}</TableCell>
+      <TableCell> {row.address}</TableCell>
+      <TableCell>
+        {" "}
+        {row.model} / {row.serial_number}
+      </TableCell>
+      <TableCell>
+        {" "}
+        {row.counters_data[1]?.value} / {row.counters_data[1]?.timestamp}
+      </TableCell>
+      <TableCell>
+        {" "}
+        {row.counters_data[0]?.value} / {row.counters_data[0]?.timestamp}
+      </TableCell>
     </TableRow>
   );
 };
@@ -36,8 +45,11 @@ const TelemetryReport: FC<Props> = (props) => {
   return (
     <>
       TelemetryReport
-      <Button onClick={() => getReport(ReportActions.CHECK_REPORT_DATA)}>
-        SHOW
+      <Button onClick={() => getReport(ReportActions.REPORT_CHECK_DATA)}>
+        Сформировать отчет
+      </Button>
+      <Button disabled={counters.dataReport ? false : true}>
+        Отправить отчет
       </Button>
       <TableContainer>
         <Table size="small">
@@ -49,8 +61,10 @@ const TelemetryReport: FC<Props> = (props) => {
             <TableCell align="left">Последнеe показание</TableCell>
           </TableHead>
           <TableBody>
-            {counters.dataReport && 
-            counters.dataReport.map((row) => <ReportRow key={row.id} row={row}/>)}
+            {counters.dataReport &&
+              counters.dataReport.map((row) => (
+                <ReportRow key={row.id} row={row} />
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

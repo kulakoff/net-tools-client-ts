@@ -124,3 +124,28 @@ export const getReport = (action: reportActionType) => {
     }
   };
 };
+
+export const sendTelemetryReport = () => {
+  return async (dispatch: Dispatch<CountersActions>) => {
+    try {
+      dispatch({
+        type: CountersActionTypes.SENDING_TELEMETRY_REPORT,
+      })
+
+      const {data} = await CoutersService.sendTelemetryReport({ customer_id: 12, provider_id: 1, action: "REPORT_SEND_TO_EMAIL" })
+      // console.log("sendReport >>> ", data)
+      alert(JSON.stringify(data.message))
+      dispatch({
+        type:CountersActionTypes.SENDING_TELEMETRY_REPORT_SUCCESS,
+        // payload:
+      })
+    } catch (error: any) {
+      const errorMessage =  JSON.parse(error.request.response)
+      alert(errorMessage.message)
+      dispatch({
+        type: CountersActionTypes.SENDING_TELEMETRY_REPORT_FAILURE,
+        payload: JSON.parse(error.request.response)
+      })
+    }
+  }
+}

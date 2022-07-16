@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import React, { FC } from "react";
 import { useActions } from "../../hooks/useActions";
@@ -24,16 +25,13 @@ const ReportRow = (props: { row: IResponseReportItem }) => {
       <TableCell> {row.card_number}</TableCell>
       <TableCell> {row.address}</TableCell>
       <TableCell>
-        {" "}
         {row.model} / {row.serial_number}
       </TableCell>
       <TableCell>
-        {" "}
-        {row.counters_data[1]?.value} / {row.counters_data[1]?.timestamp}
+          {row.counters_data[1]?.value} / {new Date(row.counters_data[1]?.timestamp).toLocaleString("RU")}
       </TableCell>
       <TableCell>
-        {" "}
-        {row.counters_data[0]?.value} / {row.counters_data[0]?.timestamp}
+        {row.counters_data[0]?.value} / {new Date(row.counters_data[0]?.timestamp).toLocaleString("RU")}
       </TableCell>
     </TableRow>
   );
@@ -41,14 +39,19 @@ const ReportRow = (props: { row: IResponseReportItem }) => {
 
 const TelemetryReport: FC<Props> = (props) => {
   const { counters } = useTypedSelector((state) => state);
-  const { getReport } = useActions();
+  const { getReport,sendTelemetryReport } = useActions();
   return (
     <>
-      TelemetryReport
+      <Typography component="div" variant="overline">
+     Отправка отчета в сбытовую компанию
+      </Typography>
       <Button onClick={() => getReport(ReportActions.REPORT_CHECK_DATA)}>
-        Сформировать отчет
+        {!counters.dataReport ? "Сформировать отчет" : "Обновить"}
       </Button>
-      <Button disabled={counters.dataReport ? false : true}>
+      <Button disabled={counters.dataReport ? false : true} onClick={()=>{
+        // alert("TODO: отправка файла с отчетом ...")
+        sendTelemetryReport()
+        }}>
         Отправить отчет
       </Button>
       <TableContainer>

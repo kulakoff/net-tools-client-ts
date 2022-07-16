@@ -7,6 +7,7 @@ import {
 const initialState: ICountersState = {
   dataCounters: null,
   dataReport: null,
+  reportSended: null,
   sendingResponse: null,
   selectedItem: null,
   isLoading: false,
@@ -25,7 +26,7 @@ export const countersReducer = (
       return {
         ...state,
         isLoading: false,
-        dataCounters :  action.payload,
+        dataCounters: action.payload,
       };
     case CountersActionTypes.FETCHING_COUNTERS_DATA_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
@@ -59,10 +60,20 @@ export const countersReducer = (
       return {
         ...state,
         isLoading: false,
-        dataReport:  action.payload ,
+        dataReport: action.payload,
       };
     case CountersActionTypes.SENDING_CHECK_REPORT_FAILURE:
       return { ...state, error: action.payload };
+
+    case CountersActionTypes.SENDING_TELEMETRY_REPORT:
+      return {
+        ...state, isLoading: true
+      }
+    case CountersActionTypes.SENDING_TELEMETRY_REPORT_SUCCESS:
+      return { ...state, isLoading: false, reportSended: true }
+
+    case CountersActionTypes.SENDING_TELEMETRY_REPORT_FAILURE:
+      return  {...state, error:action.payload}
 
     default:
       return state;

@@ -35,7 +35,8 @@ export interface ISendMetersDataForm {
 
 export interface ICountersState {
   dataCounters?: ResponseCounterItem[] | null;
-  dataReport?:IResponseReportItem[] | null;
+  dataReport?: IResponseReportItem[] | null;
+  reportSended: boolean | null;
   sendingResponse: any;
   selectedItem: { history: IResponseTelemetryItem[] } | null;
   isLoading: boolean;
@@ -84,6 +85,24 @@ export interface ISendingData {
   meters: [IFormCountersData];
 }
 
+
+export type ReqActionTypeValue =
+  | "REPORT_SEND"
+  | "REPORT_CHECK_DATA"
+  | "REPORT_SEND_TO_EMAIL"
+  | "REPORT_GET_DATA";
+
+export interface IRequestSendTelemetryReport {
+  customer_id: number;
+  provider_id: number;
+  action: ReqActionTypeValue;
+}
+
+
+export interface IResponseSendTelemetryReport {
+  message: string;
+}
+
 // export interface IMetersResponse {
 
 // }
@@ -105,7 +124,25 @@ export enum CountersActionTypes {
   SENDING_CHECK_REPORT = "SENDING_CHECK_REPORT",
   SENDING_CHECK_REPORT_SUCCESS = "SENDING_CHECK_REPORT_SUCCESS",
   SENDING_CHECK_REPORT_FAILURE = "SENDING_CHECK_REPORT_FAILURE",
+  SENDING_TELEMETRY_REPORT = "SENDING_TELEMETRY_REPORT",
+  SENDING_TELEMETRY_REPORT_SUCCESS = "SENDING_TELEMETRY_REPORT_SUCCESS",
+  SENDING_TELEMETRY_REPORT_FAILURE = "SENDING_TELEMETRY_REPORT_FAILURE"
 }
+
+//Отправить запрос на отправку email с отчетом в сбытовую компанию
+export interface ISendingTelemetryReport {
+  type: CountersActionTypes.SENDING_TELEMETRY_REPORT;
+  // payload: IRequestSendTelemetryReport
+}
+export interface ISendingTelemetryReportSuccess {
+  type: CountersActionTypes.SENDING_TELEMETRY_REPORT_SUCCESS;
+  // payload: IResponseSendTelemetryReport
+}
+export interface ISendingTelemetryReportFailure {
+  type: CountersActionTypes.SENDING_TELEMETRY_REPORT_FAILURE;
+  payload: ErrorType
+}
+
 
 export interface IFetchingCountersData {
   type: CountersActionTypes.FETCHING_COUNTERS_DATA;
@@ -198,4 +235,7 @@ export type CountersActions =
   | IClearCountersSelectedItem
   | ISendingCheckReport
   | ISendingCheckReportSuccess
-  | ISendingCheckReportFailure;
+  | ISendingCheckReportFailure
+  | ISendingTelemetryReport
+  | ISendingTelemetryReportSuccess
+  | ISendingTelemetryReportFailure

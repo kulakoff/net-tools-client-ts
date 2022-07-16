@@ -2,8 +2,10 @@ import { AxiosResponse } from "axios";
 import api from "../http";
 import {
   CounterFormData,
+  IRequestSendTelemetryReport,
   IResponseReportItem,
   IResponseSendCounters,
+  IResponseSendTelemetryReport,
   IResponseTelemetryItem,
   ISendMetersDataForm,
   reportActionType,
@@ -40,15 +42,31 @@ export class CoutersService {
 
     return api.post<IResponseSendCounters>("/counters/data", sendData);
   }
-
+  /**
+   * 
+   * @param id 
+   * @returns История показанйи по Id прибора учета
+   */
   static async getCounterItemHistory(
     id: number
   ): Promise<AxiosResponse<IResponseTelemetryItem[]>> {
     return api.get<IResponseTelemetryItem[]>(`counters/${id}/history`);
   }
+
   static async getReport(
     action: reportActionType
   ): Promise<AxiosResponse<IResponseReportItem[]>> {
-    return api.post<IResponseReportItem[]>("main/report",{action});
+    return api.post<IResponseReportItem[]>("main/report", { action });
   }
+
+  /**
+   * 
+   * @param action 
+   * @returns 
+   * запрос на отправку email с отчетом
+   */
+  static async sendTelemetryReport(action: IRequestSendTelemetryReport): Promise<AxiosResponse<IResponseSendTelemetryReport>> {
+    return api.post<IResponseSendTelemetryReport>("main/report",  action )
+  }
+
 }

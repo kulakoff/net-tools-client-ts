@@ -1,78 +1,56 @@
-import React, { FC, useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom"
-import { Context } from "./index";
+import { FC, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import LoginForm from "./components/LoginForm";
-import { observer } from "mobx-react-lite";
-import { IUser } from "./models/IUser";
-import UserService from "./services/UserService";
+
+import Layout from "./ui/Layout";
+import DemoPage from "./screens/DemoPage";
+import MainPage from "./screens/MainPage";
+import NotFoundPage from "./screens/NotFoundPage";
+import SignInPage from "./screens/SignInPage";
+import { useTypedSelector } from "./hooks/useTypedSelector";
+import { useActions } from "./hooks/useActions";
+import RequireAuthRoute from "./routes/RequireAuthRoute";
+import DisabledRouteWithAuth from "./routes/DisabledRouteWithAuth";
+import DevicesPage from "./screens/DevicesPage/";
+import MetersPage from "./screens/MetersPage";
+import SignUpPage from "./screens/SignUpPage";
+import SuccessfullyPage from "./screens/SuccessfullyPage";
 
 const App: FC = () => {
-  const { store } = useContext(Context);
-  //TODO разобраться с типом для useState<IUser[]>
-  const [users, setUsers] = useState<IUser[]>([]);
+  const { user } = useTypedSelector((state) => state);
+  const { checkAuth } = useActions();
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      store.checkAuth();
+      // console.log("token exist in localStorage, refresh");
+      checkAuth();
+    } else {
+      // console.log("token not found in localStorage, login please");
     }
   }, []);
-
-  const getUsers = async () => {
-    try {
-      const res: any = await UserService.fetchUsers();
-      setUsers(res.data);
-      console.log(users);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  if (store.isLoading) {
-    return <div>Загрузка ...</div>;
-  }
-
-  if (!store.isAuth) {
-    return (
-      <>
-       <nav
-        style={{
-          borderBottom: "solid 1px",
-          paddingBottom: "1rem",
-        }}
-      >
-        <Link to="/invoices">Invoices</Link> | {" "}
-        <Link to="/expenses">Expenses</Link>
-      </nav>
-        <LoginForm />
-        <div>
-          <button onClick={() => getUsers()}>Show users</button>
-          {users.map((user: any) => (
-            <div key={user.email}>{user.email}</div>
-          ))}
-        </div>
-      </>
-    );
-  }
-
   return (
     <div className="App">
-      <h1>
-        {store.isAuth
-          ? `Пользователь авторизован: ${store.user.email} `
-          : `Требуется авторизация`}
-      </h1>
-      <h1>
-        {store.user.isActivated ? "Аккаунт автивирован" : "Требуется активация"}
-      </h1>
-      <button onClick={() => store.logout()}>Выйти</button>
-      <div>
-        <button onClick={() => getUsers()}>Show users</button>
-        {users.map((user: any) => (
-          <div key={user.email}>{user.email}</div>
-        ))}
-      </div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* <Route index element={<MainPage />} /> */}
+          {/* Private routes */}
+          <Route element={<RequireAuthRoute />}>
+            <Route index element={<MainPage />} />
+            <Route path="demo" element={<DemoPage />} />
+            <Route path="meters" element={<MetersPage />} />
+            <Route path="devices" element={<DevicesPage />} />
+            <Route path="signup-succes" element={<SuccessfullyPage />} />
+          </Route>
+          {/* Public routes */}
+          <Route element={<DisabledRouteWithAuth />}>
+            <Route path="signin" element={<SignInPage />} />
+            <Route path="signup" element={<SignUpPage />} />
+          </Route>
+
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </div>
   );
 };
 
-export default observer(App);
+export default App;

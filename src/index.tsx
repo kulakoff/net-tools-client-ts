@@ -1,22 +1,17 @@
-import React, { createContext } from "react";
+// import React, { createContext } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
-import Store from "./store/store";
-
-interface State {
-  store: Store;
-}
-
-const store = new Store();
-export const Context = createContext<State>({ store });
+import { store } from "./store";
 
 ReactDOM.render(
-  <Context.Provider value={{ store }}>
+  <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Context.Provider>,
+  </Provider>,
+
   document.getElementById("root")
 );

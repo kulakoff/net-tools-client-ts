@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { AuthResponse } from "../models/response/AuthResponse";
-export const API_URL = "http://localhost:5000/api/v1";
+import { IAuthResponse } from "../types/response/IAuthResponse";
+export const API_URL = process.env.REACT_APP_API_URL
 
 const api = axios.create({
   withCredentials: true,
@@ -26,7 +26,7 @@ api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {
+        const response = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {
           withCredentials: true,
         });
         localStorage.setItem("token", response.data.accessToken);
@@ -40,3 +40,7 @@ api.interceptors.response.use(
 );
 
 export default api;
+// function REACT_APP_API_URL(REACT_APP_API_URL: any) {
+//   throw new Error("Function not implemented.");
+// }
+

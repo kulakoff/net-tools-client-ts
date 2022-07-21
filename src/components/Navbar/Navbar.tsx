@@ -30,6 +30,7 @@ const pages: any[] = [
   { name: "Абонентские устройства", url: "/devices" },
   // { name: "🚀 Demo ", url: "/demo" },
   { name: "🚀 Success registration ", url: "/signup-succes" },
+  {name:"Пользователи",url: "/user-panel"}
   // { name: "😀 Test ", url: "/test" },
   // { name: "Войти", url: "/signin" },
   // { name: "Регистрация", url: "/signup" },

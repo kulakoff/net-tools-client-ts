@@ -23,8 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 #demo
-_demo
-demo
 .env.dev
 .env.prod
+package-lock.json
 

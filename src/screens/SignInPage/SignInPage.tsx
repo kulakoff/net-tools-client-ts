@@ -16,21 +16,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { NavLink, useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { observer } from "mobx-react-lite";
-// import { Context } from "../../index";
-// import { useContext, useState } from "react";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useActions } from "../../hooks/useActions";
 import { ErrorType } from "../../types/error";
-
-// const theme = createTheme();
-
-// const handlerSingIn = () => {
-//   console.log("Вы нажали кнопку ВОЙТИ");
-// };
 
 const SignIn = () => {
   const { user } = useTypedSelector((state) => state);

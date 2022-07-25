@@ -25,5 +25,6 @@ yarn-error.log*
 #demo
 _demo
 demo
-.env.development
+.env.dev
+.env.prod
 

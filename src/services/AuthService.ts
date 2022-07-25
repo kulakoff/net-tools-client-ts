@@ -8,7 +8,7 @@ export default class AuthService {
     email: string,
     password: string
   ): Promise<AxiosResponse<IAuthResponse>> {
-    return api.post<IAuthResponse>("login", { email, password });
+    return api.post<IAuthResponse>("/auth/login", { email, password });
   }
 
   //TODO: сделать регистрацию
@@ -16,10 +16,10 @@ export default class AuthService {
     regProps:IUserSignUp
   ): Promise<AxiosResponse<IAuthResponse>> {
     console.log("auth-service registration",regProps)
-    return api.post<IAuthResponse>("registration", regProps);
+    return api.post<IAuthResponse>("/auth/registration", regProps);
   }
 
   static async logout(): Promise<void> {
-    return api.post("/logout");
+    return api.post("/auth/logout");
   }
 }

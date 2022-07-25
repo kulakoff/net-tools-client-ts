@@ -32,7 +32,7 @@ interface SendMetersProps {
   sendFormData: (data: CounterFormData) => void;
 }
 
-const SendMeters = ({
+const SendCountersForm = ({
   isLoading,
   counterItem,
   sendFormData,
@@ -164,4 +164,4 @@ const SendMeters = ({
   );
 };
 
-export default SendMeters;
+export default SendCountersForm;

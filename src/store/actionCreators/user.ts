@@ -64,7 +64,7 @@ export const checkAuth = () => {
       // TODO: dispatch setLoading true
       dispatch({ type: UserActionTypes.FETCHING_TOKEN });
       console.log("checkAuth start >>>");
-      const { data } = await axios.get<IAuthResponse>(`${API_URL}/refresh`, {
+      const { data } = await axios.get<IAuthResponse>(`${API_URL}/auth/refresh`, {
         withCredentials: true,
       });
       localStorage.setItem("token", data.accessToken);

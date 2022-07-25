@@ -15,6 +15,8 @@ import DevicesPage from "./screens/DevicesPage/";
 import MetersPage from "./screens/MetersPage";
 import SignUpPage from "./screens/SignUpPage";
 import SuccessfullyPage from "./screens/SuccessfullyPage";
+import UserPanel from "./components/UserPanel";
+import UserInfo from "./components/UserInfo";
 
 const App: FC = () => {
   const { user } = useTypedSelector((state) => state);
@@ -39,6 +41,8 @@ const App: FC = () => {
             <Route path="meters" element={<MetersPage />} />
             <Route path="devices" element={<DevicesPage />} />
             <Route path="signup-succes" element={<SuccessfullyPage />} />
+            <Route path="user-panel" element={<UserPanel />} />
+            <Route path="user-panel/me" element={<UserInfo/>} />
           </Route>
           {/* Public routes */}
           <Route element={<DisabledRouteWithAuth />}>

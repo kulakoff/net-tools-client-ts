@@ -89,6 +89,7 @@ const SendMeters = (props: Props) => {
                   <TextField
                     {...field}
                     required
+                    autoComplete="false"
                     error={Boolean(errors.metersCount?.message)}
                     type="number"
                     fullWidth={true}

@@ -4,8 +4,8 @@ import * as CounterActionCreators from "./counter"
 import * as IncrementActionCreators from "../reducers/incrementSlice"
 
 export default {
-    ...UserActionCreators,
-    ...DeviceActionCreators,
-    ...CounterActionCreators,
+    // ...UserActionCreators,
+    // ...DeviceActionCreators,
+    // ...CounterActionCreators,
     ...IncrementActionCreators
 }

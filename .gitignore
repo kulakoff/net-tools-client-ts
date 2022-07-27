@@ -22,7 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-#demo
+demo
+_demo
 .env.dev
 .env.prod
 package-lock.json

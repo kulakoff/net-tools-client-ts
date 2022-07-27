@@ -6,6 +6,7 @@ export interface IUser {
   id: string;
   role: string[];
 }
+
 export interface IAuthResponse {
   accessToken: string;
   refreshToken: string;

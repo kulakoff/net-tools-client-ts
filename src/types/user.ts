@@ -21,7 +21,7 @@ export interface IUserState {
 /**
  * Данные от формы авторизации
  */
-export interface IUserSignIn {
+export interface ISignInForm {
   email: string;
   password: string;
 }
@@ -29,7 +29,7 @@ export interface IUserSignIn {
 /**
  * Данные от формы регистрации
  */
-export interface IUserSignUp {
+export interface ISignUpForm {
   firstName: string;
   lastName: string;
   email: string;

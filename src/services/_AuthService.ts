@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IApiResponse } from "../types/response/IAuthResponse";
-import { IAuthResponse, IUserSignIn } from "../types/user";
+import { IAuthResponse, ISignInForm, ISignUpForm } from "../types/user";
 
 const BASE_AUTH_URL: string = "http://localhost:5000/api/v1/auth";
 
@@ -10,7 +10,7 @@ export const authAPI = createApi({
     baseUrl: BASE_AUTH_URL,
   }),
   endpoints: (build) => ({
-    userLogin: build.mutation<IAuthResponse, IUserSignIn>({
+    userLogin: build.mutation<IAuthResponse, ISignInForm>({
       query: (user) => ({
         url: "/login",
         method: "POST",
@@ -23,14 +23,18 @@ export const authAPI = createApi({
         method: "GET",
       }),
     }),
-    userRegistration: build.mutation<>({
-      query: () => ({
-        url:"/registration",
-        method: "POST"
+    userRegistration: build.mutation<IAuthResponse, ISignUpForm>({
+      query: (user) => ({
+        url: "/registration",
+        method: "POST",
+        body: user,
       }),
     }),
-    userRefreshToken: build.query({
-      query: () => ({}),
+    userRefreshToken: build.query<IApiResponse, null>({
+      query: () => ({
+        url: "/refresh",
+        credentials: "include",
+      }),
     }),
   }),
 });

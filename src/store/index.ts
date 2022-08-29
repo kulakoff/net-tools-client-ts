@@ -1,17 +1,30 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
-import { createLogger } from 'redux-logger'
+// import thunk from "redux-thunk";
+import { createLogger } from "redux-logger";
+import { authAPI } from "../services/_AuthService";
 import { rootReducer } from "./reducers";
 
+// export const rootReducer = combineReducers({
+//   // user: userReducer,
+//   // device: deviceReducer,
+//   // counters: countersReducer,
+//   // increment: incrementSlice,
+//   [authAPI.reducerPath]: authAPI.reducer,
+// });
 
-const middleware: any[] = [thunk]
-if (process.env.NODE_ENV !== 'production') {
-  middleware.push(createLogger())
+const middleware: any[] = [authAPI.middleware];
+if (process.env.NODE_ENV !== "production") {
+  middleware.push(createLogger());
 }
 
-export const store = configureStore({ reducer: rootReducer , middleware});
+// export const store = configureStore({ reducer: rootReducer , middleware});
+export const setupStore = () => {
+  return configureStore({
+    reducer: rootReducer,
+    middleware,
+  });
+};
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = typeof store
-export type AppDispatch = AppStore['dispatch']
-
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore["dispatch"];

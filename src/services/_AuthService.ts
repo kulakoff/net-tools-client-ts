@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { IApiResponse } from "../types/response/IAuthResponse";
 import { IAuthResponse, IUserSignIn } from "../types/user";
 
 const BASE_AUTH_URL: string = "http://localhost:5000/api/v1/auth";
@@ -9,18 +10,24 @@ export const authAPI = createApi({
     baseUrl: BASE_AUTH_URL,
   }),
   endpoints: (build) => ({
-    userLogin: build.mutation<IUserSignIn, IAuthResponse>({
+    userLogin: build.mutation<IAuthResponse, IUserSignIn>({
       query: (user) => ({
         url: "/login",
         method: "POST",
         body: user,
       }),
     }),
-    userLogout: build.query({
-      query: () => ({}),
+    userLogout: build.query<IApiResponse, null>({
+      query: () => ({
+        url: "/logout",
+        method: "GET",
+      }),
     }),
-    userRegistration: build.query({
-      query: () => ({}),
+    userRegistration: build.mutation<>({
+      query: () => ({
+        url:"/registration",
+        method: "POST"
+      }),
     }),
     userRefreshToken: build.query({
       query: () => ({}),

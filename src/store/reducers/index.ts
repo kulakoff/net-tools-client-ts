@@ -11,4 +11,4 @@ export const rootReducer = combineReducers({
   increment: incrementSlice
 });
 
-// export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof rootReducer>;

@@ -8,9 +8,9 @@ export interface IUser {
 }
 
 export interface IAuthResponse {
+  deviceId: string;
   accessToken: string;
-  refreshToken: string;
-  user: IUser;
+  sub: string;
 }
 export interface IUserState {
   user: IUser | null;

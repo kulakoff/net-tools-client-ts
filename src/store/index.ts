@@ -1,7 +1,6 @@
-import { applyMiddleware, createStore, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { createLogger } from 'redux-logger'
-import { composeWithDevTools } from '@redux-devtools/extension';
 import { rootReducer } from "./reducers";
 
 

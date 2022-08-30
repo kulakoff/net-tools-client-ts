@@ -53,13 +53,13 @@ export enum UserActionTypes {
 /**Форма авторизации */
 export interface IUserSignInAction {
   type: UserActionTypes.USER_SIGNIN;
-  payload: IUserSignIn;
+  payload: ISignInForm;
 }
 
 /**Форма регисрации */
 export interface IUserSignUpAction {
   type: UserActionTypes.USER_SIGNUP;
-  payload: IUserSignIn;
+  payload: ISignInForm;
 }
 //удалить
 export interface IAuthUserAction {

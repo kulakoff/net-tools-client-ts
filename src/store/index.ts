@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 // import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
-import { authAPI } from "../services/_AuthService";
+import { authAPI } from "./api/authApi";
 import { rootReducer } from "./reducers";
 
 // export const rootReducer = combineReducers({
@@ -12,16 +12,17 @@ import { rootReducer } from "./reducers";
 //   [authAPI.reducerPath]: authAPI.reducer,
 // });
 
-const middleware: any[] = [authAPI.middleware];
-if (process.env.NODE_ENV !== "production") {
-  middleware.push(createLogger());
-}
+// const middleware: any[] = [authAPI.middleware];
+// if (process.env.NODE_ENV !== "production") {
+//   middleware.push(createLogger());
+// }
 
 // export const store = configureStore({ reducer: rootReducer , middleware});
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(authAPI.middleware, createLogger()),
   });
 };
 

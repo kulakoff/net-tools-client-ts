@@ -1,18 +1,21 @@
-import { Button } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { FC, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
-const NotFoundPage: FC<ReactNode> = () => {
+const NotFoundPage: FC<ReactNode> = (props) => {
   const navigate = useNavigate();
+  const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    navigate("/");
+  };
   return (
-    <>
-      <h1>Запрашиваемая страница не найдена</h1>
-      <div className="notFountActions">
-        <Button variant="contained" onClick={() => navigate("/")}>
+    <Container sx={{ maxWidth: { mx: "xs", md: "lg" }, textAlign: "center" }}>
+      <Box>
+        <Typography component="h1" variant="inherit">Запрашиваемая страница не найдена</Typography>
+        <Button variant="contained" onClick={onClickHandler}>
           Вернуться на главную страницу
         </Button>
-      </div>
-    </>
+      </Box>
+    </Container>
   );
 };
 

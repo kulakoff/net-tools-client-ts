@@ -17,18 +17,26 @@ export interface IPostRequest {
 }
 
 export interface IUser {
-  _id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  phoneNumber: string;
-  isActivated: boolean;
-  activatedAt: null | string;
-  activationLink: string;
-  role: [string];
+  role: string;
   photo: string;
-  createdAt: string;
-  updatedAt: string;
+  _id: string;
+  id: string;
+  created_at: string;
+  updated_at: string;
+  __v: number;
 }
 
+export interface IPostResponse {
+  id: string;
+  title: string;
+  content: string;
+  image: string;
+  category: string;
+  user: IUser;
+  created_at: string;
+  updated_at: string;
+}
 
+///

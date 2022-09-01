@@ -1,40 +1,47 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IApiResponse } from "../../types/response/IAuthResponse";
 import { IAuthResponse, ISignInForm, ISignUpForm } from "../../types/user";
+import customFetchBase from "./customFetchBase";
+import { userApi } from "./userApi";
 
-const BASE_AUTH_URL: string = "http://localhost:5000/api/v1/auth";
+const BASE_AUTH_URL: string = "http://localhost:5000/api/v1/";
 export const authAPI = createApi({
   reducerPath: "authAPI",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_AUTH_URL,
-  }),
+  baseQuery: customFetchBase,
   endpoints: (build) => ({
     userLogin: build.mutation<IAuthResponse, ISignInForm>({
       query: (user) => ({
-        url: "/login",
+        url: "/auth/login",
         method: "POST",
         body: user,
-        credentials: 'include',
+        credentials: "include",
       }),
+      //Получаем данные пользователя в state
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          await dispatch(userApi.endpoints.getMe.initiate(null));
+        } catch (error) {}
+      },
     }),
     userLogout: build.query<IApiResponse, null>({
       query: () => ({
-        url: "/logout",
+        url: "/auth/logout",
         method: "GET",
-        credentials: 'include',
+        credentials: "include",
       }),
     }),
     userRegistration: build.mutation<IAuthResponse, ISignUpForm>({
       query: (user) => ({
-        url: "/registration",
+        url: "/auth/registration",
         method: "POST",
         body: user,
-        credentials: 'include',
+        credentials: "include",
       }),
     }),
     userRefreshToken: build.query<IApiResponse, null>({
       query: () => ({
-        url: "/refresh",
+        url: "/auth/refresh",
         credentials: "include",
       }),
     }),

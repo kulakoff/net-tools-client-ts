@@ -9,29 +9,26 @@ import {
   Box,
   CssBaseline,
 } from "@mui/material";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { ISignInForm } from "../../types/user";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
 interface ISignInFormProps {
   onSubmitHandler: (formData: ISignInForm) => void;
+  fetchError: FetchBaseQueryError;
 }
 
-const SingInForm: FC<ISignInFormProps> = ({ onSubmitHandler }) => {
+const SingInForm: FC<ISignInFormProps> = ({ onSubmitHandler, fetchError }) => {
   // const navigate = useNavigate();
   const handlerErrorForm = (errorData: any) => {
-    console.log("demo", errorData);
-    // setError("email",{type:"manual",message:errorData})
     Object.keys(errorData).forEach((key) => {
       setError(key, { type: "manual", message: errorData[key] });
     });
-    // Object.keys(errorData).forEach((key) => {
-    //   console.log(key, { type: "manual", message: errorData[key] });
-    // });
   };
 
   const {
@@ -44,12 +41,15 @@ const SingInForm: FC<ISignInFormProps> = ({ onSubmitHandler }) => {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = async (data:any) => {
-    // console.log("data on form : ", data);
+  const onSubmitForm = async (data: any) => {
     onSubmitHandler(data);
-    // singInUser(data);
-    // reset();
   };
+
+  useEffect(() => {
+    if (fetchError?.data) {
+      handlerErrorForm((fetchError.data as any).errors);
+    }
+  }, [fetchError]);
 
   return (
     <Container maxWidth="xs" component="main">
@@ -82,7 +82,7 @@ const SingInForm: FC<ISignInFormProps> = ({ onSubmitHandler }) => {
           </Grid>
         </Grid>
 
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Box component="form" onSubmit={handleSubmit(onSubmitForm)}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Controller

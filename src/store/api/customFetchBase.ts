@@ -7,7 +7,7 @@ import {
 import { Mutex } from 'async-mutex';
 import { logout } from '../features/userSlice';
 
-const baseUrl = `${process.env.REACT_APP_SERVER_ENDPOINT}${process.env.REACT_APP_API_VERSION}`;
+const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}${process.env.REACT_APP_API_VERSION}`;
 
 // Create a new mutex
 const mutex = new Mutex();
@@ -30,7 +30,7 @@ const customFetchBase: BaseQueryFn<
 
       try {
         const refreshResult = await baseQuery(
-          { credentials: 'include', url: 'auth/refresh' },
+          { credentials: 'include', url: '/auth/refresh' },
           api,
           extraOptions
         );

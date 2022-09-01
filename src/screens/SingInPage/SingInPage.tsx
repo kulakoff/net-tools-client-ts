@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import React, { FC, ReactNode, useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -6,9 +7,7 @@ import SingInForm from "../../components/SingInForm";
 import { authAPI } from "../../store/api/authApi";
 import { ISignInForm } from "../../types/user";
 
-type Props = {};
-
-const SingInPage = (props: Props) => {
+const SingInPage: FC<ReactNode> = (props) => {
   // 👇 API SingIn Mutation
   const [
     userLogin,
@@ -17,6 +16,7 @@ const SingInPage = (props: Props) => {
       isError: isLoginError,
       error: loginError,
       isSuccess: isLoginSuccess,
+      data:loginData
     },
   ] = authAPI.useUserLoginMutation();
 
@@ -25,18 +25,18 @@ const SingInPage = (props: Props) => {
 
   const from = ((location.state as any)?.from.pathname as string) || "/";
 
-  const onSubmitHandler: SubmitHandler<ISignInForm> = (values) => {
-    console.log("LOGIN PAGE >>> ", values);
+  const onSubmitFormHandler: SubmitHandler<ISignInForm> = (values) => {
     userLogin(values);
+    console.log(loginData)
   };
 
   useEffect(() => {
     if (isLoginSuccess) {
-      // toast.success("You successfully logged in");
-      console.log("You successfully logged in");
+      toast.success("You successfully logged in");
       navigate(from);
     }
     if (isLoginError) {
+      console.log("loginError: ", (loginError as any).data?.errors);
       if (Array.isArray((loginError as any).data.error)) {
         (loginError as any).data.error.forEach((el: any) =>
           toast.error(el.message, {
@@ -54,7 +54,10 @@ const SingInPage = (props: Props) => {
 
   return (
     <>
-      <SingInForm onSubmitHandler={onSubmitHandler} />
+      <SingInForm
+        onSubmitHandler={onSubmitFormHandler}
+        fetchError={loginError as FetchBaseQueryError}
+      />
     </>
   );
 };

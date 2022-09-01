@@ -12,6 +12,10 @@ import SignInPage from "./screens/SingInPage";
 // import { authAPI } from "./store/api/authApi";
 
 import "react-toastify/dist/ReactToastify.css";
+import DisabledRouteWithAuth from "./routes/DisabledRouteWithAuth";
+import UnauthorizePage from "./screens/UnauthorizePage";
+import RequireAuthRoute from "./routes/RequireAuthRoute";
+import CountersPage from "./screens/CountersPage";
 
 const App: FC = () => {
   return (
@@ -20,11 +24,17 @@ const App: FC = () => {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<MainPage />} />
-          {/* <Route element={<DisabledRouteWithAuth />}> */}
+          {/* Требуется авторизация */}
+          <Route element={<RequireAuthRoute />}>
+            <Route index element={<MainPage />} />
+            <Route path="couters" element={<CountersPage />} />
+          </Route>
+
+          {/* Роут не доступный авторизованным пользователм */}
+          <Route element={<DisabledRouteWithAuth />}></Route>
           <Route path="signin" element={<SignInPage />} />
           <Route path="signup" element={<SignUpPage />} />
-          {/* </Route> */}
+          <Route path="unauthorized" element={<UnauthorizePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

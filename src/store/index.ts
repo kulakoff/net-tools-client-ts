@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
 import { authAPI } from "./api/authApi";
+import { userApi } from "./api/userApi";
 import { rootReducer } from "./reducers";
 
 export const setupStore = () => {
@@ -10,6 +11,7 @@ export const setupStore = () => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat([
         authAPI.middleware, 
+        userApi.middleware,
         createLogger()]),
   });
 };

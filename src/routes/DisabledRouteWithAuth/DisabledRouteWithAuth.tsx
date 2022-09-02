@@ -8,12 +8,7 @@ const DisabledRouteWithAuth = () => {
   const { user } = useAppSelector((state) => state.userState);
   const location = useLocation();
   const url = new URLSearchParams(location.search.slice(1));
-console.log(user)
-  return user ? (
-    <Navigate to={url.get("redirect") || "/admin"} />
-  ) : (
-    <Outlet />
-  );
+  return cookies.loggedIn ? <Navigate to={url.get("redirect") || "/"} /> : <Outlet />;
 };
 
 export default DisabledRouteWithAuth;

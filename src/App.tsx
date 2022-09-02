@@ -16,6 +16,8 @@ import DisabledRouteWithAuth from "./routes/DisabledRouteWithAuth";
 import UnauthorizePage from "./screens/UnauthorizePage";
 import RequireAuthRoute from "./routes/RequireAuthRoute";
 import CountersPage from "./screens/CountersPage";
+import DevicesPage from "./screens/DevicesPage";
+import UserProfilePage from "./screens/UserProfilePage";
 
 const App: FC = () => {
   return (
@@ -27,11 +29,13 @@ const App: FC = () => {
           {/* Требуется авторизация */}
           <Route element={<RequireAuthRoute />}>
             <Route index element={<MainPage />} />
+            <Route path="profile" element={<UserProfilePage />} />
             <Route path="couters" element={<CountersPage />} />
+            <Route path="devices" element={<DevicesPage />} />
           </Route>
-
           {/* Роут не доступный авторизованным пользователм */}
           <Route element={<DisabledRouteWithAuth />}></Route>
+
           <Route path="signin" element={<SignInPage />} />
           <Route path="signup" element={<SignUpPage />} />
           <Route path="unauthorized" element={<UnauthorizePage />} />

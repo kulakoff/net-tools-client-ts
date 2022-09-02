@@ -22,10 +22,15 @@ import SettingsIcon from "@mui/icons-material/Settings";
 // import Box from "@mui/material/Box";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { pages, settings } from "./pages";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useCookies } from "react-cookie";
+import { authAPI } from "../../store/api/authApi";
 
 const Navbar = () => {
   const { user } = useAppSelector((state) => state.userState);
+  const [cookies] = useCookies(["loggedIn"]);
+  const [userLogout, { data: logoutData, isSuccess: isLogoutSucsess }] =
+    authAPI.useUserLogoutMutation();
   // const { singInUser, signOut } = useActions();
   const navigate = useNavigate();
 
@@ -33,7 +38,7 @@ const Navbar = () => {
     console.log("push logout button");
     handleCloseNavMenu();
     // store.logout();
-    // signOut();
+    userLogout(user?._id);
     navigate("/");
   };
 
@@ -60,16 +65,9 @@ const Navbar = () => {
       <AppBar position="relative">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {user ? (
+            {cookies.loggedIn ? (
               <>
-              <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-                >
-                  Net-tools-app desctop
-                </Typography>
+                {/* Mobile menu */}
                 <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                   <IconButton
                     size="large"
@@ -81,6 +79,7 @@ const Navbar = () => {
                   >
                     <MenuIcon />
                   </IconButton>
+
                   <Menu
                     id="menu-appbar"
                     anchorEl={anchorElNav}
@@ -112,10 +111,87 @@ const Navbar = () => {
                         {page.name}
                       </MenuItem>
                     ))}
-
                     <MenuItem onClick={onLogOut}>Выйти</MenuItem>
                   </Menu>
                 </Box>
+
+                {/* mobile header */}
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+                >
+                  <SettingsIcon sx={{ mr: 1 }} />
+                  Net-tools-app mobile
+                </Typography>
+
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                >
+                  Net-tools-app desctop
+                </Typography>
+                {/* desctop menu */}
+
+                <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                  {pages.map((page) => (
+                    <Button
+                      key={page.name}
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                      component={Link}
+                      to={page.url}
+                    >
+                      {page.name}
+                    </Button>
+                  ))}
+                </Box>
+
+                {cookies.loggedIn ? (
+                  <Box
+                    sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}
+                  >
+                    <Tooltip title="Open settings">
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
+                        <Avatar
+                          alt={user?.email}
+                          src="https://i.pravatar.cc/100"
+                        />
+                      </IconButton>
+                    </Tooltip>
+
+                    <Menu
+                      sx={{ mt: "45px" }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      {settings.map((setting, key) => (
+                        <MenuItem key={key} onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                    <Button color="inherit" onClick={onLogOut}>
+                      Выйти
+                    </Button>
+                  </Box>
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               <>

@@ -24,10 +24,10 @@ export const authAPI = createApi({
         } catch (error) {}
       },
     }),
-    userLogout: build.query<IApiResponse, null>({
+    userLogout: build.mutation<IApiResponse, any>({
       query: () => ({
+        method: "POST",
         url: "/auth/logout",
-        method: "GET",
         credentials: "include",
       }),
     }),

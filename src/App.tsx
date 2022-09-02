@@ -30,6 +30,7 @@ const App: FC = () => {
           <Route element={<RequireAuthRoute />}>
             <Route index element={<MainPage />} />
             <Route path="profile" element={<UserProfilePage />} />
+            <Route path="user-panel" element={<UserProfilePage />} />
             <Route path="couters" element={<CountersPage />} />
             <Route path="devices" element={<DevicesPage />} />
           </Route>

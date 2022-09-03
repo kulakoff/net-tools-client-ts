@@ -59,6 +59,7 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  // useEffect(() => {}, [cookies.loggedIn]);
 
   return (
     <>

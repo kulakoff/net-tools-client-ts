@@ -6,6 +6,7 @@ import { CookiesProvider } from "react-cookie";
 import App from "./App";
 import { setupStore } from "./store";
 import "./index.css";
+import AuthMiddleware from "./helpers/AuthMiddleware";
 
 const store = setupStore();
 const root = ReactDOM.createRoot(
@@ -15,9 +16,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      {/* <CookiesProvider> */}
+      <CookiesProvider>
+        <AuthMiddleware>
         <App />
-      {/* </CookiesProvider> */}
+        </AuthMiddleware>
+      </CookiesProvider>
     </BrowserRouter>
   </Provider>
 );

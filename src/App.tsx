@@ -18,8 +18,11 @@ import RequireAuthRoute from "./routes/RequireAuthRoute";
 import CountersPage from "./screens/CountersPage";
 import DevicesPage from "./screens/DevicesPage";
 import UserProfilePage from "./screens/UserProfilePage";
+import { useCookies } from "react-cookie";
 
 const App: FC = () => {
+  const [cookies] = useCookies(["loggedIn"]);
+  console.log("APP, cookies : ", cookies);
   return (
     <>
       <CssBaseline />

@@ -21,7 +21,7 @@ export const userApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log("data: >>> ",data);
+          console.log("userApi data: >>> ",data);
           dispatch(setUser(data));
         } catch (error) {}
       },

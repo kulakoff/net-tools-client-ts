@@ -1,11 +1,10 @@
 import { ErrorType } from "./error";
 import { IDeviceResponse } from "./response/IDeviceResponse";
 
-
 export interface ISetDeviceConfigMode {
   serialNumber: string;
   macAddress: string;
-  configMode: string
+  configMode: string;
 }
 
 export type getDeviceValueType = "serialNumber" | "macAddress";
@@ -49,48 +48,7 @@ export interface IDeviceState {
   error: ErrorType | null;
 }
 
-/**
- * Dispatch types
- */
-export enum DeviceActionTypes {
-  FETCHING_DEVICE_DATA = "FETCHING_DEVICE_DATA",
-  // FETCHING_DEVICE_DATA = "FETCHING_DEVICE_DATA",
-  FETCHING_DEVICE_DATA_SUCCESS = "FETCHING_DEVICE_DATA_SUCCESS",
-  FETCHING_DEVICE_DATA_FAILURE = "FETCHING_DEVICE_DATA_FAILURE",
-  CLEAR_DEVICE_DATA = "CLEAR_DEVICE_DATA",
-
-  // SENDING_DEVICE_DATA = "SENDING_DEVICE_DATA",
-  // SENDING_DEVICE_DATA_SUCCESS = "SENDING_DEVICE_DATA_SUCCESS",
-  // SENDING_DEVICE_DATA_FAILURE = "SENDING_DEVICE_DATA_FAILURE",
+export interface IFormGetDevice {
+  idType: getDeviceValueType;
+  value: string;
 }
-
-export interface IFetchingDeviceDataAtion {
-  type: DeviceActionTypes.FETCHING_DEVICE_DATA;
-}
-export interface IFetchingDeviceDataSuccessAction {
-  type: DeviceActionTypes.FETCHING_DEVICE_DATA_SUCCESS;
-  payload: IDeviceResponse;
-}
-export interface IFetchingDeviceDataFailureAction {
-  type: DeviceActionTypes.FETCHING_DEVICE_DATA_FAILURE;
-  payload: ErrorType;
-}
-export interface IClearDeviceDataAction {
-  type: DeviceActionTypes.CLEAR_DEVICE_DATA;
-}
-// export interface ISendingDeviceDataSuccessAction {
-//     type: DeviceActionTypes.SENDING_DEVICE_DATA_SUCCESS,
-//     payload: IDeviceResponse
-// }
-// export interface ISendingDeviceDataFailureAction {
-//     type: DeviceActionTypes.SENDING_DEVICE_DATA_FAILURE,
-//     payload: string
-// }
-
-export type DeviceActions =
-  | IFetchingDeviceDataAtion
-  | IFetchingDeviceDataSuccessAction
-  | IFetchingDeviceDataFailureAction
-  | IClearDeviceDataAction;
-// | ISendingDeviceDataSuccessAction
-// | ISendingDeviceDataFailureAction

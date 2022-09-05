@@ -13,6 +13,7 @@ const AuthMiddleware: React.FC<IAuthMiddleware> = ({ children }) => {
   const { isLoading } = userApi.endpoints.getMe.useQuery(null, {
     skip: !cookies.loggedIn,
   });
+  console.log("AuthMiddleware isLoading: ", isLoading);
 
   if (isLoading) {
     return <FullScreenLoader />;

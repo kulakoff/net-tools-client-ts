@@ -1,8 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { useAppDispatch } from "../../hooks/redux";
 import { IApiResponse } from "../../types/response/IAuthResponse";
 import { IAuthResponse, ISignInForm, ISignUpForm } from "../../types/user";
+import userSlice from "../reducers/userSlice";
 import customFetchBase from "./customFetchBase";
 import { userApi } from "./userApi";
+import { logout } from "../reducers/userSlice"
 
 const BASE_AUTH_URL: string = "http://localhost:5000/api/v1/";
 export const authAPI = createApi({
@@ -30,6 +33,12 @@ export const authAPI = createApi({
         url: "/auth/logout",
         credentials: "include",
       }),
+      async onQueryStarted(args,{ dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+           dispatch(logout());
+        } catch (error) {}
+      },
     }),
     userRegistration: build.mutation<IAuthResponse, ISignUpForm>({
       query: (user) => ({

@@ -1,18 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
 import { authAPI } from "./api/authApi";
+import { deviceApi } from "./api/deviceApi";
 import { userApi } from "./api/userApi";
 import { rootReducer } from "./reducers";
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    devTools: process.env.NODE_ENV === "development",
+    // devTools: process.env.NODE_ENV === "development",
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat([
-        authAPI.middleware, 
+        authAPI.middleware,
         userApi.middleware,
-        createLogger()]),
+        // deviceApi.middleware,
+        createLogger(),
+      ]),
   });
 };
 

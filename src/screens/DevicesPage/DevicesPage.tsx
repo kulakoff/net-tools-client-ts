@@ -1,11 +1,167 @@
-import React from 'react'
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Devicecard from "../../components/DeviceCard/Devicecard";
+import { deviceApi } from "../../store/api/deviceApi";
 
-type Props = {}
+import validationSchema from "./validation";
+
+type Props = {};
 
 const DevicesPage = (props: Props) => {
-  return (
-    <div>DevicesPage</div>
-  )
-}
+  const navigate = useNavigate();
+  const [getDevice, { data: cpeData, isSuccess, isLoading, isError, error }] =
+    deviceApi.useLazyGetDeviceQuery();
+  // const { device } = useTypedSelector((state) => state);
+  // const { error } = device;
+  // const { getDevice, setDevice, clearDeviceData } = useActions();
 
-export default DevicesPage
+  const notify = (message: string) =>
+    toast.info(message, {
+      position: "top-center",
+      autoClose: 5000,
+      closeButton: false,
+
+      // onClick: () => clearDeviceData(),
+    });
+
+  //Ошибка API запроса
+  useEffect(() => {
+    if (isError) {
+      console.log("error: ", (error as any).data?.message);
+      notify(`🚀  ${(error as any).data?.message}`);
+    }
+  }, [error, isError]);
+
+  const {
+    reset,
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const handlerErrorForm = (errorData: any) => {
+    //TODO: добавить всплывашку с ошибкой
+    console.log("demo", errorData);
+    // setError("email",{type:"manual",message:errorData})
+    Object.keys(errorData).forEach((key) => {
+      setError(key, { type: "manual", message: errorData[key] });
+    });
+  };
+
+  const onSubmit = async (data: any) => {
+    //TODO добавить обработку POST запроса
+    getDevice(data);
+  };
+
+  //TODO: сделаьб срос state device
+  /**
+   * Обработчик кнопки "назад" очистка state  и переход на главную
+   */
+  const handlerBackToHome = () => {
+    // clearDeviceData();
+    navigate("/devices");
+  };
+
+  return (
+    <Container maxWidth="xs" component="main">
+      {!cpeData ? (
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ mt: "1.6rem" }}
+        >
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <Typography variant="h5" component="h1">
+                Поиск абонентского роутера
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name="idType"
+                control={control}
+                defaultValue="macAddress"
+                render={({ field }) => (
+                  <Select {...field} required fullWidth size="small">
+                    <MenuItem value={"macAddress"}>MAC Address</MenuItem>
+                    <MenuItem value={"serialNumber"} disabled>
+                      Serial Number
+                    </MenuItem>
+                  </Select>
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name="value"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    inputProps={<Button>X</Button>}
+                    required
+                    size="small"
+                    error={Boolean(errors.value?.message)}
+                    fullWidth={true}
+                    type="value"
+                    label="value"
+                    variant="outlined"
+                    helperText={errors.value?.message || "Укажтите MAC роутера"}
+                  />
+                )}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth={true}
+                size="large"
+                disabled={isLoading}
+              >
+                Поиск
+              </Button>
+              <Button
+                onClick={() => reset()}
+                variant="text"
+                fullWidth={true}
+                size="large"
+                disabled={isLoading}
+              >
+                Сброс
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      ) : (
+        <Box sx={{ mt: "1.6rem" }}>
+          <Devicecard
+            {...cpeData}
+            handlerBackToHome={ handlerBackToHome}
+          />
+        </Box>
+      )}
+    </Container>
+  );
+};
+
+export default DevicesPage;

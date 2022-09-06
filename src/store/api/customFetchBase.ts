@@ -22,7 +22,6 @@ const customFetchBase: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   // wait until the mutex is available without locking it
-  console.log(":: start customFetchBase ::");
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
   if (result.error?.status === 401) {

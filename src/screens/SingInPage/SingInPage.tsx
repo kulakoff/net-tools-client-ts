@@ -27,7 +27,6 @@ const SingInPage: FC<ReactNode> = (props) => {
 
   const onSubmitFormHandler: SubmitHandler<ISignInForm> = (values) => {
     userLogin(values);
-    console.log(loginData)
   };
 
   useEffect(() => {

@@ -14,16 +14,39 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Devicecard from "../../components/DeviceCard/Devicecard";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { deviceApi } from "../../store/api/deviceApi";
+import { IFormSetDevice } from "../../types/cpe";
+import { setCPE,clearCPE } from "../../store/reducers/deviceSlice";
 
 import validationSchema from "./validation";
 
 type Props = {};
 
 const DevicesPage = (props: Props) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [getDevice, { data: cpeData, isSuccess, isLoading, isError, error }] =
-    deviceApi.useLazyGetDeviceQuery();
+  const { cpe:cpeData } = useAppSelector((state) => state.deviceState);
+  const [
+    getDevice,
+    {
+      // data: cpeData,
+      isSuccess: isGetDeviceSiccess,
+      isLoading: isGetDeviceLoading,
+      isError: isGetDeviceError,
+      error: getDeviceError,
+    },
+  ] = deviceApi.useLazyGetDeviceQuery();
+  const [
+    setDevice,
+    {
+      data: isSetDeviceData,
+      isLoading: isSetDeviceLoading,
+      isError: isSetDeviceError,
+      error: setDeviceError,
+    },
+  ] = deviceApi.useSetDeviceMutation();
+
   // const { device } = useTypedSelector((state) => state);
   // const { error } = device;
   // const { getDevice, setDevice, clearDeviceData } = useActions();
@@ -39,11 +62,13 @@ const DevicesPage = (props: Props) => {
 
   //Ошибка API запроса
   useEffect(() => {
-    if (isError) {
-      console.log("error: ", (error as any).data?.message);
-      notify(`🚀  ${(error as any).data?.message}`);
+    if (isGetDeviceError) {
+      console.log("error: ", (getDeviceError as any).data?.message);
+      notify(`🚀  ${(getDeviceError as any).data?.message}`);
     }
-  }, [error, isError]);
+  }, [getDeviceError, isGetDeviceError]);
+
+  // useEffect(()=>dispatch(setCPE(cpeData)),[cpeData])
 
   const {
     reset,
@@ -66,7 +91,7 @@ const DevicesPage = (props: Props) => {
 
   const onSubmit = async (data: any) => {
     //TODO добавить обработку POST запроса
-    getDevice(data);
+    await getDevice(data);
   };
 
   //TODO: сделаьб срос state device
@@ -75,6 +100,8 @@ const DevicesPage = (props: Props) => {
    */
   const handlerBackToHome = () => {
     // clearDeviceData();
+    dispatch(clearCPE())
+    dispatch(deviceApi.util.resetApiState());
     navigate("/devices");
   };
 
@@ -136,18 +163,27 @@ const DevicesPage = (props: Props) => {
                 type="submit"
                 fullWidth={true}
                 size="large"
-                disabled={isLoading}
+                disabled={isGetDeviceLoading}
               >
                 Поиск
               </Button>
               <Button
                 onClick={() => reset()}
+                variant="outlined"
+                fullWidth={true}
+                size="large"
+                disabled={isGetDeviceLoading}
+              >
+                Сброс
+              </Button>
+              <Button
+                onClick={() => navigate("/")}
                 variant="text"
                 fullWidth={true}
                 size="large"
-                disabled={isLoading}
+                disabled={isGetDeviceLoading}
               >
-                Сброс
+                Назад
               </Button>
             </Grid>
           </Grid>
@@ -155,8 +191,9 @@ const DevicesPage = (props: Props) => {
       ) : (
         <Box sx={{ mt: "1.6rem" }}>
           <Devicecard
-            {...cpeData}
-            handlerBackToHome={ handlerBackToHome}
+            cpeData={cpeData}
+            handlerBackToHome={handlerBackToHome}
+            setCpe={async (data: IFormSetDevice) => await setDevice(data)}
           />
         </Box>
       )}

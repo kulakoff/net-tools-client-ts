@@ -52,3 +52,9 @@ export interface IFormGetDevice {
   idType: getDeviceValueType;
   value: string;
 }
+
+export interface IFormSetDevice {
+  serialNumber: string;
+  macAddress: string;
+  configMode: configModeValuesType;
+}

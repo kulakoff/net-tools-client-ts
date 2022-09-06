@@ -13,6 +13,7 @@ export const setupStore = () => {
       getDefaultMiddleware().concat([
         authAPI.middleware,
         userApi.middleware,
+        deviceApi.middleware,
         // deviceApi.middleware,
         createLogger(),
       ]),

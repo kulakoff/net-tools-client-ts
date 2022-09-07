@@ -20,6 +20,7 @@ export interface IResponseReportItem {
   counters_data: IResponseTelemetryItem[];
 }
 
+//Показание прибота учета
 export interface IResponseTelemetryItem {
   id: number;
   value: string;
@@ -85,7 +86,6 @@ export interface ISendingData {
   meters: [IFormCountersData];
 }
 
-
 export type ReqActionTypeValue =
   | "REPORT_SEND"
   | "REPORT_CHECK_DATA"
@@ -97,7 +97,6 @@ export interface IRequestSendTelemetryReport {
   provider_id: number;
   action: ReqActionTypeValue;
 }
-
 
 export interface IResponseSendTelemetryReport {
   message: string;
@@ -126,7 +125,7 @@ export enum CountersActionTypes {
   SENDING_CHECK_REPORT_FAILURE = "SENDING_CHECK_REPORT_FAILURE",
   SENDING_TELEMETRY_REPORT = "SENDING_TELEMETRY_REPORT",
   SENDING_TELEMETRY_REPORT_SUCCESS = "SENDING_TELEMETRY_REPORT_SUCCESS",
-  SENDING_TELEMETRY_REPORT_FAILURE = "SENDING_TELEMETRY_REPORT_FAILURE"
+  SENDING_TELEMETRY_REPORT_FAILURE = "SENDING_TELEMETRY_REPORT_FAILURE",
 }
 
 //Отправить запрос на отправку email с отчетом в сбытовую компанию
@@ -140,9 +139,8 @@ export interface ISendingTelemetryReportSuccess {
 }
 export interface ISendingTelemetryReportFailure {
   type: CountersActionTypes.SENDING_TELEMETRY_REPORT_FAILURE;
-  payload: ErrorType
+  payload: ErrorType;
 }
-
 
 export interface IFetchingCountersData {
   type: CountersActionTypes.FETCHING_COUNTERS_DATA;
@@ -238,4 +236,4 @@ export type CountersActions =
   | ISendingCheckReportFailure
   | ISendingTelemetryReport
   | ISendingTelemetryReportSuccess
-  | ISendingTelemetryReportFailure
+  | ISendingTelemetryReportFailure;

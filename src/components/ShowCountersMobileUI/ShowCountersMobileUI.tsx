@@ -16,12 +16,11 @@ import React, { useEffect, useState } from "react";
 import { countersAPI } from "../../store/api/countersAPI";
 import { CounterFormData, ResponseCounterItem } from "../../types/counters";
 import CountersPopup from "../CountersPopup";
+import { ShowMetersItemHistory1 } from "../ShowMetersItemHistory/ShowMetersItemHistory";
 
 type Props = {};
 
 const ShowCountersMobileUI = (props: Props) => {
-  //TODO: получить приботы учета
-  // const { counters } = useTypedSelector((state) => state);
   const [
     getCounters,
     {
@@ -31,6 +30,19 @@ const ShowCountersMobileUI = (props: Props) => {
       error: countersError,
     },
   ] = countersAPI.useLazyGetCountersQuery();
+
+  //История показаний прибора учета
+  const [
+    getCounterItemHistory,
+    {
+      data: counterHistoryData,
+      isSuccess:isGetHistorySuccess,
+      isLoading: isGetHistoryLoading,
+      isError: isGetHistoryError,
+      error: getHistoryError,
+    },
+  ] = countersAPI.useLazyGetCounterItemHistoryQuery();
+
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupHitory, setOpenPopupHitory] = useState(false);
   const [counterItem, setCounterItem] = useState<ResponseCounterItem | null>(
@@ -43,8 +55,9 @@ const ShowCountersMobileUI = (props: Props) => {
   const handleOpenPopupHitory = () => setOpenPopupHitory(true);
   const handleClosePopupHitory = () => setOpenPopupHitory(false);
 
-  const showCounterHistoryPopup = (item: any) => {
+  const showCounterHistoryPopup = (item: ResponseCounterItem) => {
     console.log(item);
+    getCounterItemHistory(item.id);
     handleOpenPopupHitory();
     // getCounterHistory(item.id);
   };
@@ -133,6 +146,7 @@ const ShowCountersMobileUI = (props: Props) => {
         title={"История переданных показаний"}
       >
         {/* <ShowMetersItemHistory /> */}
+        {/* <ShowMetersItemHistory1 telemetryItems={ counterHistoryData?.counters_data}/> */}
       </CountersPopup>
     </Container>
   );

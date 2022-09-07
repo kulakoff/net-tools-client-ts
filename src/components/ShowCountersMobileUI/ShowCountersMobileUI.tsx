@@ -13,6 +13,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useAppSelector } from "../../hooks/redux";
 import { countersAPI } from "../../store/api/countersAPI";
 import { CounterFormData, ResponseCounterItem } from "../../types/counters";
 import CountersPopup from "../CountersPopup";
@@ -36,12 +37,14 @@ const ShowCountersMobileUI = (props: Props) => {
     getCounterItemHistory,
     {
       data: counterHistoryData,
-      isSuccess:isGetHistorySuccess,
+      isSuccess: isGetHistorySuccess,
       isLoading: isGetHistoryLoading,
       isError: isGetHistoryError,
       error: getHistoryError,
     },
   ] = countersAPI.useLazyGetCounterItemHistoryQuery();
+
+  const { telemetry } = useAppSelector((state) => state.countersState);
 
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupHitory, setOpenPopupHitory] = useState(false);
@@ -146,7 +149,7 @@ const ShowCountersMobileUI = (props: Props) => {
         title={"История переданных показаний"}
       >
         {/* <ShowMetersItemHistory /> */}
-        {/* <ShowMetersItemHistory1 telemetryItems={ counterHistoryData?.counters_data}/> */}
+        <ShowMetersItemHistory1 telemetryItems={telemetry} />
       </CountersPopup>
     </Container>
   );

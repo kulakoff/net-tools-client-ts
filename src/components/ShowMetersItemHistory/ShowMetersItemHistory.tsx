@@ -55,24 +55,26 @@ const ItemHistory = () => {
   );
 };
 
-export interface HistoryProps {}
-export const ShowMetersItemHistory1: FC<HistoryProps> = (props) => {
-  console.log("history: ", props);
+export interface HistoryProps {
+  telemetryItems: IResponseTelemetryItem[];
+}
+export const ShowMetersItemHistory1: FC<HistoryProps> = ({telemetryItems}) => {
+  console.log("history: ", telemetryItems);
   //   const { selectedItem } = useTypedSelector((state) => state.counters);
   return (
     <div>
-        "История !!!"
-        {/*  
+      "История !!!"
+      
       "История !!!"
       {telemetryItems ? (
         <pre>{JSON.stringify(telemetryItems, null, 2)}</pre>
       ) : (
         <>
-          {/* Загрузка ... 
+           Загрузка ... 
           <CircularProgress />
         </>
       )}
-    */}
+    
     </div>
   );
 };

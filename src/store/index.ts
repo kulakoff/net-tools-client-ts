@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
 import { authAPI } from "./api/authApi";
+import { countersAPI } from "./api/countersAPI";
 import { deviceApi } from "./api/deviceApi";
 import { userApi } from "./api/userApi";
 import { rootReducer } from "./reducers";
@@ -14,6 +15,7 @@ export const setupStore = () => {
         authAPI.middleware,
         userApi.middleware,
         deviceApi.middleware,
+        countersAPI.middleware,
         // deviceApi.middleware,
         createLogger(),
       ]),

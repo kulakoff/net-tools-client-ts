@@ -1,9 +1,36 @@
+import {
+  Box,
+  Container,
+  FormControlLabel,
+  FormGroup,
+  Switch,
+  Button,
+  Stack,
+  Typography,
+  Paper,
+  Divider,
+  Tooltip,
+  Checkbox,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { countersAPI } from "../../store/api/countersAPI";
 import { CounterFormData, ResponseCounterItem } from "../../types/counters";
+import CountersPopup from "../CountersPopup";
 
 type Props = {};
 
 const ShowCountersMobileUI = (props: Props) => {
+  //TODO: получить приботы учета
+  // const { counters } = useTypedSelector((state) => state);
+  const [
+    getCounters,
+    {
+      data: countersData,
+      isLoading: isCountersLoading,
+      isError: isCountersError,
+      error: countersError,
+    },
+  ] = countersAPI.useLazyGetCountersQuery();
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupHitory, setOpenPopupHitory] = useState(false);
   const [counterItem, setCounterItem] = useState<ResponseCounterItem | null>(
@@ -36,10 +63,8 @@ const ShowCountersMobileUI = (props: Props) => {
   };
 
   useEffect(() => {
-    // getCounters();
+    getCounters(null);
   }, []);
-
-
 
   return (
     <Container maxWidth="xs">
@@ -49,12 +74,12 @@ const ShowCountersMobileUI = (props: Props) => {
             control={<Switch />}
             label="Только счетчики без телеметрии"
           />
-          <Button >Добавить</Button>
+          <Button>Добавить</Button>
         </FormGroup>
 
         <Stack spacing={2}>
-          {counters.dataCounters &&
-            counters.dataCounters.map((item) => (
+          {countersData &&
+            countersData.map((item) => (
               <Paper
                 sx={{ textAlign: "left", p: "1rem" }}
                 elevation={5}
@@ -95,19 +120,19 @@ const ShowCountersMobileUI = (props: Props) => {
         handleClose={handleClosePopup}
         title={"Передать показания прибора учета"}
       >
-        <SendCountersForm
+        {/* <SendCountersForm
           isLoading={counters.isLoading}
           counterItem={counterItem}
           sendFormData={(data) => handleSendCounterData(data)}
           // sendCountersData_={((data:CounterFormData)=>console.log(data))}
-        />
+        /> */}
       </CountersPopup>
       <CountersPopup
         openPopup={openPopupHitory}
         handleClose={closeCounterHistoryPopup}
         title={"История переданных показаний"}
       >
-        <ShowMetersItemHistory />
+        {/* <ShowMetersItemHistory /> */}
       </CountersPopup>
     </Container>
   );

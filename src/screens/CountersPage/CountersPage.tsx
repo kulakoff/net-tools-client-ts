@@ -1,5 +1,6 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { FC, ReactNode, useState } from "react";
+import ShowCountersMobileUI from "../../components/ShowCountersMobileUI";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -64,6 +65,7 @@ const CountersPage: FC<ReactNode> = (props) => {
       </Box>
       <TabPanel value={value} index={0}>
         "ShowMetersAll"
+        <ShowCountersMobileUI/>
         {/* <ShowMetersAll /> */}
       </TabPanel>
       <TabPanel value={value} index={1}>

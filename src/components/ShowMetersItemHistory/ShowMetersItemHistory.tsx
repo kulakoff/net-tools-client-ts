@@ -9,19 +9,21 @@ import {
   TableCell,
   TableBody,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import {
   IResponseReportItem,
   IResponseTelemetryItem,
 } from "../../types/counters";
 
-type Props = {};
+export interface HistoryProps {
+  telemetryItems: IResponseTelemetryItem[];
+}
 
-const ItemHistory = () => {
-  //   const { selectedItem } = useTypedSelector((state) => state.counters);
+const ShowMetersItemHistory: FC<HistoryProps> = ({ telemetryItems }) => {
   return (
     <TableContainer component={Paper}>
-      {/* <Table size="small">
+      <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell align="left">Переденные показания</TableCell>
@@ -29,8 +31,9 @@ const ItemHistory = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {selectedItem ? (
-            selectedItem.history.map((row) => (
+          {telemetryItems ? (
+            telemetryItems.length>0?
+            telemetryItems.map((row) => (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row" align="left">
                   {row.value}
@@ -39,7 +42,10 @@ const ItemHistory = () => {
                   {new Date(row.timestamp).toLocaleString("RU")}
                 </TableCell>
               </TableRow>
-            ))
+            )):
+            <Typography  variant="button" component="text" >
+            Данные отсутствуют
+          </Typography>
           ) : (
             <TableRow key={"row.id"}>
               <TableCell component="th" scope="row">
@@ -50,33 +56,9 @@ const ItemHistory = () => {
             </TableRow>
           )}
         </TableBody>
-      </Table> */}
+      </Table>
     </TableContainer>
   );
 };
 
-export interface HistoryProps {
-  telemetryItems: IResponseTelemetryItem[];
-}
-export const ShowMetersItemHistory1: FC<HistoryProps> = ({telemetryItems}) => {
-  console.log("history: ", telemetryItems);
-  //   const { selectedItem } = useTypedSelector((state) => state.counters);
-  return (
-    <div>
-      "История !!!"
-      
-      "История !!!"
-      {telemetryItems ? (
-        <pre>{JSON.stringify(telemetryItems, null, 2)}</pre>
-      ) : (
-        <>
-           Загрузка ... 
-          <CircularProgress />
-        </>
-      )}
-    
-    </div>
-  );
-};
-
-export default ItemHistory;
+export default ShowMetersItemHistory;

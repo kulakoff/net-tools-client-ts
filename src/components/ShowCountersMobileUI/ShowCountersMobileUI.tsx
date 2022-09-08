@@ -13,15 +13,25 @@ import {
   Checkbox,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../../hooks/redux";
+import { toast } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { countersAPI } from "../../store/api/countersAPI";
-import { CounterFormData, ResponseCounterItem } from "../../types/counters";
+import { clearCounterHistory } from "../../store/reducers/countersSlice";
+import {
+  CounterFormData,
+  IResponseSendTelemetryReport,
+  ISendMetersDataForm,
+  ResponseCounterItem,
+} from "../../types/counters";
 import CountersPopup from "../CountersPopup";
-import { ShowMetersItemHistory1 } from "../ShowMetersItemHistory/ShowMetersItemHistory";
+import SendCountersForm from "../SendCountersForm";
+import ShowMetersItemHistory from "../ShowMetersItemHistory/ShowMetersItemHistory";
 
 type Props = {};
 
 const ShowCountersMobileUI = (props: Props) => {
+  const dispatch = useAppDispatch();
+  //Получение приборов учета
   const [
     getCounters,
     {
@@ -32,7 +42,7 @@ const ShowCountersMobileUI = (props: Props) => {
     },
   ] = countersAPI.useLazyGetCountersQuery();
 
-  //История показаний прибора учета
+  //Получение истории показаний выбранного прибора учета
   const [
     getCounterItemHistory,
     {
@@ -44,6 +54,18 @@ const ShowCountersMobileUI = (props: Props) => {
     },
   ] = countersAPI.useLazyGetCounterItemHistoryQuery();
 
+  //Отправка показаний прибора учета
+  const [
+    sentTelemetry,
+    {
+      data: sendTelemetryData,
+      isLoading: isSendTelemetryLoading,
+      isError: isSendTelemetryError,
+      error: sendTelemetryError,
+    },
+  ] = countersAPI.useSentTelemetryMutation();
+
+  //История показаний выбранного счетчика
   const { telemetry } = useAppSelector((state) => state.countersState);
 
   const [openPopup, setOpenPopup] = useState(false);
@@ -67,6 +89,8 @@ const ShowCountersMobileUI = (props: Props) => {
 
   const closeCounterHistoryPopup = () => {
     handleClosePopupHitory();
+    //TODO: сделать очистку state истории показаний прибора учета
+    dispatch(clearCounterHistory());
     // clearCountersSelectedItem();
   };
   const showMetersPopup = (item: any) => {
@@ -74,8 +98,20 @@ const ShowCountersMobileUI = (props: Props) => {
     handleOpenPopup();
   };
   const handleSendCounterData = (data: CounterFormData) => {
-    // sendCountersData(data);
-    handleClosePopup();
+    console.log(":: Data from counter form: ", data);
+    const telemetryData: ISendMetersDataForm = {
+      payload: {
+        serial_number: data.serial_number,
+        value: data.value,
+      },
+    };
+    console.log(":: Data modifyed: ", telemetryData);
+    sentTelemetry(telemetryData)
+      .then((response) => {
+        console.log("sendTelemetryData: ", (response as any).data.message);
+        toast.success((response as any).data.message);
+      })
+      .finally(() => handleClosePopup());
   };
 
   useEffect(() => {
@@ -84,6 +120,9 @@ const ShowCountersMobileUI = (props: Props) => {
 
   return (
     <Container maxWidth="xs">
+      <Typography component="div" variant="overline">
+        Приборы учета | версия mobile
+      </Typography>
       <Box>
         <FormGroup sx={{ pb: "1rem" }}>
           <FormControlLabel
@@ -136,20 +175,19 @@ const ShowCountersMobileUI = (props: Props) => {
         handleClose={handleClosePopup}
         title={"Передать показания прибора учета"}
       >
-        {/* <SendCountersForm
-          isLoading={counters.isLoading}
+        <SendCountersForm
+          isLoading={isCountersLoading}
           counterItem={counterItem}
           sendFormData={(data) => handleSendCounterData(data)}
           // sendCountersData_={((data:CounterFormData)=>console.log(data))}
-        /> */}
+        />
       </CountersPopup>
       <CountersPopup
         openPopup={openPopupHitory}
         handleClose={closeCounterHistoryPopup}
         title={"История переданных показаний"}
       >
-        {/* <ShowMetersItemHistory /> */}
-        <ShowMetersItemHistory1 telemetryItems={telemetry} />
+        <ShowMetersItemHistory telemetryItems={telemetry} />
       </CountersPopup>
     </Container>
   );

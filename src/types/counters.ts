@@ -30,7 +30,7 @@ export interface IResponseTelemetryItem {
 export interface ISendMetersDataForm {
   payload: {
     serial_number: string;
-    value: number;
+    value: string;
   };
 }
 

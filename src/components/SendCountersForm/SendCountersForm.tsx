@@ -52,9 +52,9 @@ const SendCountersForm = ({
   });
 
   const onSubmit = async (data: CounterFormData) => {
-    // console.log("data on form : ", data);
+    console.log("data on form : ", data);
     sendFormData(data);
-    // reset();
+    reset();
   };
 
   return (

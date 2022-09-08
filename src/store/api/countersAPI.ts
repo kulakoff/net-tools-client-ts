@@ -1,7 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   IResponseReportItem,
+  IResponseSendTelemetryReport,
   IResponseTelemetryItem,
+  ISendMetersDataForm,
   ResponseCounterItem,
 } from "../../types/counters";
 import { setCounterHistory } from "../reducers/countersSlice";
@@ -41,6 +43,17 @@ export const countersAPI = createApi({
           console.log(error);
         }
       },
+    }),
+    sentTelemetry: builder.mutation<
+      IResponseSendTelemetryReport,
+      ISendMetersDataForm
+    >({
+      query: (payload) => ({
+        url: "/counters/data",
+        method: "POST",
+        body: payload,
+        credentials: "include",
+      }),
     }),
   }),
 });

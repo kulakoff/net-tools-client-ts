@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Devicecard from "../../components/DeviceCard/Devicecard";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { deviceApi } from "../../store/api/deviceApi";
+import { deviceAPI } from "../../store/api/deviceApi";
 import { IFormSetDevice } from "../../types/cpe";
 import { setCPE,clearCPE } from "../../store/reducers/deviceSlice";
 
@@ -36,7 +36,7 @@ const DevicesPage = (props: Props) => {
       isError: isGetDeviceError,
       error: getDeviceError,
     },
-  ] = deviceApi.useLazyGetDeviceQuery();
+  ] = deviceAPI.useLazyGetDeviceQuery();
   const [
     setDevice,
     {
@@ -45,7 +45,7 @@ const DevicesPage = (props: Props) => {
       isError: isSetDeviceError,
       error: setDeviceError,
     },
-  ] = deviceApi.useSetDeviceMutation();
+  ] = deviceAPI.useSetDeviceMutation();
 
   // const { device } = useTypedSelector((state) => state);
   // const { error } = device;
@@ -101,7 +101,7 @@ const DevicesPage = (props: Props) => {
   const handlerBackToHome = () => {
     // clearDeviceData();
     dispatch(clearCPE())
-    dispatch(deviceApi.util.resetApiState());
+    dispatch(deviceAPI.util.resetApiState());
     navigate("/devices");
   };
 

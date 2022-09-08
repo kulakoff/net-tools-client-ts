@@ -3,8 +3,8 @@ import { setUser } from '../reducers/userSlice';
 import customFetchBase from './customFetchBase';
 import { IUser } from './types';
 
-export const userApi = createApi({
-  reducerPath: 'userApi',
+export const userAPI = createApi({
+  reducerPath: 'userAPI',
   baseQuery: customFetchBase,
   tagTypes: ['User'],
   endpoints: (builder) => ({

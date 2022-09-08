@@ -146,7 +146,7 @@ const SingInForm: FC<ISignInFormProps> = ({ onSubmitHandler, fetchError }) => {
                 size="large"
                 component={NavLink}
                 to="/signup"
-                // sx={{ ml: 2 }}
+                disabled
               >
                 Создать учетную запись
               </Button>

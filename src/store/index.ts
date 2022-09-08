@@ -2,8 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
 import { authAPI } from "./api/authApi";
 import { countersAPI } from "./api/countersAPI";
-import { deviceApi } from "./api/deviceApi";
-import { userApi } from "./api/userApi";
+import { deviceAPI } from "./api/deviceApi";
+import { reportAPI } from "./api/reportAPI";
+import { userAPI } from "./api/userApi";
 import { rootReducer } from "./reducers";
 
 export const setupStore = () => {
@@ -13,9 +14,10 @@ export const setupStore = () => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat([
         authAPI.middleware,
-        userApi.middleware,
-        deviceApi.middleware,
+        userAPI.middleware,
+        deviceAPI.middleware,
         countersAPI.middleware,
+        reportAPI.middleware,
         // deviceApi.middleware,
         createLogger(),
       ]),

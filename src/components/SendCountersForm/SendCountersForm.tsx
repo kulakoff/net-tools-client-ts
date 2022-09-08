@@ -20,12 +20,9 @@ import {
 import { Controller, useForm } from "react-hook-form";
 
 import validationSchema from "./validation";
-import { useState } from "react";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-// import { useTypedSelector } from "../../hooks/useTypedSelector";
-// import { useActions } from "../../hooks/useActions";
+
 import { CounterFormData, ResponseCounterItem } from "../../types/counters";
-import { useAppSelector } from "../../hooks/redux";
 
 interface SendMetersProps {
   isLoading: boolean;
@@ -38,9 +35,6 @@ const SendCountersForm = ({
   counterItem,
   sendFormData,
 }: SendMetersProps) => {
-  // debugger
-  // const { counters } = useAppSelector((state) => state);
-  // const { sendCountersData } = useActions();
   const {
     control,
     handleSubmit,
@@ -52,7 +46,6 @@ const SendCountersForm = ({
   });
 
   const onSubmit = async (data: CounterFormData) => {
-    console.log("data on form : ", data);
     sendFormData(data);
     reset();
   };

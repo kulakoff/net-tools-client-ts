@@ -4,8 +4,8 @@ import { IDeviceResponse } from "../../types/response/IDeviceResponse";
 import { setCPE } from "../reducers/deviceSlice";
 import customFetchBase from "./customFetchBase";
 
-export const deviceApi = createApi({
-  reducerPath: "deviceApi",
+export const deviceAPI = createApi({
+  reducerPath: "deviceAPI",
   baseQuery: customFetchBase,
   tagTypes: ["device"],
   endpoints: (builder) => ({

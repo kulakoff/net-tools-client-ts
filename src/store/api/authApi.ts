@@ -4,7 +4,7 @@ import { IApiResponse } from "../../types/response/IAuthResponse";
 import { IAuthResponse, ISignInForm, ISignUpForm } from "../../types/user";
 import userSlice from "../reducers/userSlice";
 import customFetchBase from "./customFetchBase";
-import { userApi } from "./userApi";
+import { userAPI } from "./userApi";
 import { logout } from "../reducers/userSlice"
 
 const BASE_AUTH_URL: string = "http://localhost:5000/api/v1/";
@@ -23,7 +23,7 @@ export const authAPI = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          await dispatch(userApi.endpoints.getMe.initiate(null));
+          await dispatch(userAPI.endpoints.getMe.initiate(null));
         } catch (error) {}
       },
     }),

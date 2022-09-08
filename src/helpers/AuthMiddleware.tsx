@@ -1,6 +1,6 @@
 import React from "react";
 import { useCookies } from "react-cookie";
-import { userApi } from "../store/api/userApi";
+import { userAPI } from "../store/api/userApi";
 import FullScreenLoader from "../components/FullScreenLoader";
 
 type IAuthMiddleware = {
@@ -10,7 +10,7 @@ type IAuthMiddleware = {
 const AuthMiddleware: React.FC<IAuthMiddleware> = ({ children }) => {
   const [cookies] = useCookies(["loggedIn"]);
 
-  const { isLoading } = userApi.endpoints.getMe.useQuery(null, {
+  const { isLoading } = userAPI.endpoints.getMe.useQuery(null, {
     skip: !cookies.loggedIn,
   });
   console.log("AuthMiddleware isLoading: ", isLoading);

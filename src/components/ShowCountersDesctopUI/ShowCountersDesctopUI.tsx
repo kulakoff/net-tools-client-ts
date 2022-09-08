@@ -96,13 +96,6 @@ const ShowCountersDesctopUI = (props: Props) => {
   //История показаний выбранного счетчика
   const { telemetry } = useAppSelector((state) => state.countersState);
 
-  //   const { counters } = useTypedSelector((state) => state);
-  //   const {
-  //     getCounters,
-  //     sendCountersData,
-  //     getCounterHistory,
-  //     clearCountersSelectedItem,
-  //   } = useActions();
 
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupHitory, setOpenPopupHitory] = useState(false);
@@ -133,14 +126,12 @@ const ShowCountersDesctopUI = (props: Props) => {
     handleOpenPopup();
   };
   const handleSendCounterData = (data: CounterFormData) => {
-    console.log(":: Data from counter form: ", data);
     const telemetryData: ISendMetersDataForm = {
       payload: {
         serial_number: data.serial_number,
         value: data.value,
       },
     };
-    console.log(":: Data modifyed: ", telemetryData);
     sentTelemetry(telemetryData)
       .then((response) => {
         console.log("sendTelemetryData: ", (response as any).data.message);
@@ -231,12 +222,6 @@ const ShowCountersDesctopUI = (props: Props) => {
           </TableContainer>
         </Grid>
       </Grid>
-      {/* <BasicModal
-        open={open}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-        payload={counterItem}
-      /> */}
       <CountersPopup
         openPopup={openPopup}
         handleClose={handleClosePopup}

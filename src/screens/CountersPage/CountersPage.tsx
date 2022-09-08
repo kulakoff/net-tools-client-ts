@@ -2,6 +2,7 @@ import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { FC, ReactNode, useState } from "react";
 import ShowCountersDesctopUI from "../../components/ShowCountersDesctopUI";
 import ShowCountersMobileUI from "../../components/ShowCountersMobileUI";
+import TelemetryReport from "../../components/TelemetryReport";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -55,13 +56,7 @@ const CountersPage: FC<ReactNode> = (props) => {
         >
           <Tab label="Приборы учета (mobile)" {...a11yProps(0)} />
           <Tab label="Приборы учета (desctop)" {...a11yProps(1)} />
-          {/* <Tab label="Просмотр показаний" {...a11yProps(2)} /> */}
-          {/* <Tab label="Передать показания" {...a11yProps(3)} /> */}
-          <Tab label="Отчеты в сбытовую компанию" {...a11yProps(4)} />
-          {/* <Tab label="Приборы учета (desctop2)" {...a11yProps(5)} /> */}
-          {/* <Tab label="Приборы учета (mobile)" {...a11yProps(2)} />
-          <Tab label="Приборы учета (desctop)" {...a11yProps(3)} />
-          <Tab label="Отчеты в сбытовую компанию" {...a11yProps(4)} /> */}
+          <Tab label="Отчеты в сбытовую компанию" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -71,12 +66,13 @@ const CountersPage: FC<ReactNode> = (props) => {
         <ShowCountersDesctopUI />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {/* <ShowMeters /> */}
+        <TelemetryReport/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         {/* <SendMeters /> */}
       </TabPanel>
       <TabPanel value={value} index={4}>
+        {/* Отчеты в сбытовую компанию будут тут! */}
         {/* <TelemetryReport/> */}
       </TabPanel>
       <TabPanel value={value} index={5}>

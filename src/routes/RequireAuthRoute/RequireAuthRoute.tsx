@@ -9,19 +9,14 @@ const RequireAuthRoute: FC = () => {
   const location = useLocation();
   const url = new URLSearchParams();
   url.set("redirect", location.pathname + location.search);
-
-  console.log(":: RequireAuthRoute user: ", user);
-  console.log(":: RequireAuthRoute cookies: ", cookies.loggedIn);
+  // console.log(":: RequireAuthRoute user: ", user);
+  // console.log(":: RequireAuthRoute cookies: ", cookies.loggedIn);
   return cookies.loggedIn || user ? (
     <Outlet />
   ) : (
     <Navigate
       to={"/signin"}
       state={{ from: location }}
-      // to={{
-      //   pathname: "/signin",
-      //   search: url.toString(),
-      // }}
     />
   );
 };

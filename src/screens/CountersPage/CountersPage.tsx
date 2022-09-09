@@ -38,7 +38,7 @@ const a11yProps = (index: number) => {
 };
 
 const CountersPage: FC<ReactNode> = (props) => {
-  const [value, setValue] = useState(4);
+  const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -67,16 +67,6 @@ const CountersPage: FC<ReactNode> = (props) => {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <TelemetryReport/>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        {/* <SendMeters /> */}
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        {/* Отчеты в сбытовую компанию будут тут! */}
-        {/* <TelemetryReport/> */}
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        {/* <ShowMetersAll3 /> */}
       </TabPanel>
     </Box>
   );

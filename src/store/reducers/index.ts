@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { authAPI } from "../api/authApi";
-import { deviceAPI } from "../api/deviceApi";
+import { authAPI } from "../api/authAPI";
+import { deviceAPI } from "../api/deviceAPI";
 import { userAPI } from "../api/userApi";
 import { countersAPI } from "../api/countersAPI";
 

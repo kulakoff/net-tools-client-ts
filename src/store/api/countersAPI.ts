@@ -17,19 +17,19 @@ export const countersAPI = createApi({
     getCounters: builder.query<ResponseCounterItem[], null>({
       query: () => ({
         url: "/counters",
-        credentials: "include",
+        // credentials: "include",
       }),
     }),
     getCounterItem: builder.query<ResponseCounterItem, number>({
       query: (counterId) => ({
         url: `/counters/${counterId}`,
-        credentials: "include",
+        // credentials: "include",
       }),
     }),
     getCounterItemHistory: builder.query<IResponseReportItem[], number>({
       query: (counterId) => ({
         url: `/counters/${counterId}/data`,
-        credentials: "include",
+        // credentials: "include",
       }),
       // transformResponse: (res: {
       //   data: { counters_data: any };
@@ -52,7 +52,7 @@ export const countersAPI = createApi({
         url: "/counters/data",
         method: "POST",
         body: payload,
-        credentials: "include",
+        // credentials: "include",
       }),
     }),
   }),

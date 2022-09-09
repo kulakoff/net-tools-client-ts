@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Devicecard from "../../components/DeviceCard/Devicecard";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { deviceAPI } from "../../store/api/deviceApi";
+import { deviceAPI } from "../../store/api/deviceAPI";
 import { IFormSetDevice } from "../../types/cpe";
 import { setCPE,clearCPE } from "../../store/reducers/deviceSlice";
 

@@ -17,9 +17,9 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <CookiesProvider>
-        <AuthMiddleware>
+        {/* <AuthMiddleware> */}
         <App />
-        </AuthMiddleware>
+        {/* </AuthMiddleware> */}
       </CookiesProvider>
     </BrowserRouter>
   </Provider>

@@ -4,7 +4,7 @@ import { SubmitHandler } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SingInForm from "../../components/SingInForm";
-import { authAPI } from "../../store/api/authApi";
+import { authAPI } from "../../store/api/authAPI";
 import { ISignInForm } from "../../types/user";
 
 const SingInPage: FC<ReactNode> = (props) => {

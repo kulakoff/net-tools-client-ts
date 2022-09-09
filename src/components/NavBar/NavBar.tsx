@@ -24,7 +24,7 @@ import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { pages, settings } from "./pages";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useCookies } from "react-cookie";
-import { authAPI } from "../../store/api/authApi";
+import { authAPI } from "../../store/api/authAPI";
 
 const Navbar = () => {
   const { user } = useAppSelector((state) => state.userState);

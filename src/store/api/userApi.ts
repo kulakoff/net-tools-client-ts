@@ -12,7 +12,7 @@ export const userAPI = createApi({
       query() {
         return {
           url: '/auth/me',
-          credentials: 'include',
+          // credentials: 'include',
         };
       },
 

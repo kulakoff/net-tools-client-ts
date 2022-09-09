@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createLogger } from "redux-logger";
-import { authAPI } from "./api/authApi";
+import { authAPI } from "./api/authAPI";
 import { countersAPI } from "./api/countersAPI";
-import { deviceAPI } from "./api/deviceApi";
+import { deviceAPI } from "./api/deviceAPI";
 import { reportAPI } from "./api/reportAPI";
 import { userAPI } from "./api/userApi";
 import { rootReducer } from "./reducers";

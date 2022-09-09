@@ -17,13 +17,17 @@ const baseQuery = fetchBaseQuery({
 });
 
 const customFetchBase: BaseQueryFn<
-  string | FetchArgs,
+  FetchArgs,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock();
-  let result = await baseQuery(args, api, extraOptions);
+  let result = await baseQuery(
+    { ...args, credentials: "include" },
+    api,
+    extraOptions
+  );
   if (result.error?.status === 401) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
@@ -40,7 +44,7 @@ const customFetchBase: BaseQueryFn<
           result = await baseQuery(args, api, extraOptions);
         } else {
           api.dispatch(logout());
-          window.location.href = "/login";
+          window.location.href = "/signin";
         }
       } finally {
         // release must be called once the mutex should be released again.

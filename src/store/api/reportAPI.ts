@@ -12,7 +12,7 @@ export const reportAPI = createApi({
         url: "/report",
         method: "POST",
         body: payload,
-        credentials: "include",
+        // credentials: "include",
       }),
     }),
     sendReport: builder.mutation({
@@ -20,7 +20,7 @@ export const reportAPI = createApi({
         url: "/report",
         method: "POST",
         body: payload,
-        credentials: "include",
+        // credentials: "include",
       }),
     }),
   }),

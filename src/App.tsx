@@ -22,7 +22,7 @@ import { useCookies } from "react-cookie";
 
 const App: FC = () => {
   const [cookies] = useCookies(["loggedIn"]);
-  console.log("APP, cookies : ", cookies);
+  console.log("APP, DEBUG cookies : ", cookies);
   return (
     <>
       <CssBaseline />

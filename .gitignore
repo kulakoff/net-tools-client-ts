@@ -28,3 +28,5 @@ demo
 .env.dev
 .env.prod
 
+.idea/
+
